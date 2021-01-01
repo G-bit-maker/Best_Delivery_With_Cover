@@ -1,0 +1,101 @@
+.homecomponent {
+  background-image: url("../images/banner/dental.jpg") !important;
+  min-height: 600px !important;
+  min-width: 500px !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  padding-top: 70px !important;
+  padding-bottom: 70px !important;
+  padding-right: 25px !important;
+  padding-left: 25px !important;
+}
+.backimg {
+  max-width: 100% !important;
+  height: 57pc !important;
+  background-attachment: fixed !important;
+}
+.home_comp {
+  margin: 75px !important;
+  color: white !important;
+  text-align: left !important;
+  margin-bottom: 20pc !important;
+}
+.first_h {
+  font-size: 70px !important;
+}
+.p-15 {
+  padding: 15px !important;
+}
+.font-size-2 {
+  font-size: 2.5rem !important;
+}
+.font-size-1 {
+  font-size: 1.4rem !important;
+}
+.font-size-15 {
+  font-size: 1.5rem !important;
+}
+.font-size--5 {
+  font-size: 0.5rem !important;
+}
+.color-code {
+  color: #28a745 !important;
+}
+.b-r-30 {
+  border-radius: 30px !important;
+}
+.buttons {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.padding-rl-0 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.hero-btn {
+  padding: 16px 40px !important;
+}
+.header-a {
+  padding-left: 10px !important;
+  font-size: 25px !important;
+  padding-right: 50px !important;
+  border-left: solid black 1px !important;
+}
+.padd50 {
+  padding: 50px !important;
+}
+.second-home {
+  background-color: white;
+}
+.btn:hover {
+  color: #28a745 !important;
+}
+.actives {
+  border-bottom: solid #28a745 2px !important;
+}
+.rl_padd_o {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.easyoutclass {
+  overflow: hidden;
+  position: relative;
+}
+.easyoutclass h3 {
+  position: absolute;
+  /* Apply animation to this element */
+  animation: easyoutclass 5s ease-out;
+}
+/* Move it (define the animation) */
+@keyframes easyoutclass {
+  0% {
+    transform: translateX(200%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
