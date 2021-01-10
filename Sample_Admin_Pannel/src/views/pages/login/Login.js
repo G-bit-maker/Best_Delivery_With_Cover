@@ -16,7 +16,12 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
+//for redux
+import { connect } from 'react-redux'
+import { bindActionCreators } from "redux";
+import * as loginAction from '../../../action/loginAction'
+
+const Login = (props) => {
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -46,7 +51,7 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">Login</CButton>
+                        <CButton onClick={()=>props.login()} color="primary" className="px-4">Login</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>
@@ -75,4 +80,24 @@ const Login = () => {
   )
 }
 
-export default Login
+
+const mapStateToProps = (state /*, ownProps*/) => {
+  console.log(state)
+  return {
+    counter: state.counter
+  }
+  }
+
+  const mapDispatchToProps =(dispatch)=> { 
+    return bindActionCreators(
+        Object.assign({}, loginAction),
+        dispatch
+    )
+  }
+
+  export default connect(
+    mapStateToProps ,
+    mapDispatchToProps 
+  )(Login)
+
+
