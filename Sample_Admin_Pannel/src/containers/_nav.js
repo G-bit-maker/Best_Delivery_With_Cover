@@ -14,6 +14,16 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavTitle',
+    _children: ['Client Details']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Manage Clients',
+    to: '/add-clients',
+    icon: 'cil-drop',
+  },
+  {
+    _tag: 'CSidebarNavTitle',
     _children: ['Theme']
   },
   {
