@@ -10,4 +10,4 @@ let adminLoginSchema = mongoose.Schema({
    },
 });
 
-let LoginModel = module.exports = mongoose.model("adminLogin",adminLoginSchema,"adminLogin")
+module.exports = mongoose.model("adminLogin",adminLoginSchema,"adminLogin")
