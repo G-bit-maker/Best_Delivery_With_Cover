@@ -1,20 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CInput,
-  CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
-  CRow
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 //Components
 
@@ -28,7 +12,7 @@ const Login = () => {
       <div className="c-wrapper">
             <Header/>
             <div className="c-body">
-            <Body/>
+              <Body/>
             </div>
       </div>
     </div>
