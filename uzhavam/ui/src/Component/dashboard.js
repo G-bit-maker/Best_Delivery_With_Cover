@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
-import * as profileAction from '../Action/profileAction'
+import * as DashboardAction from '../Action/DashboardAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import Button from "./Common/button"
@@ -29,7 +29,7 @@ function Profile(props) {
       })
   }
   useEffect(() => {
-    props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
   }, []);
 
   
@@ -81,7 +81,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps =(dispatch)=> { 
     return bindActionCreators(
-        Object.assign({}, profileAction),
+        Object.assign({}, DashboardAction),
         dispatch
     )
  }

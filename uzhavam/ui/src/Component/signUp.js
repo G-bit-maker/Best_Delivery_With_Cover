@@ -12,18 +12,31 @@ import React, { useState } from 'react';
 
 function SignUP(props) {
       const [state,setState] = useState({
-        name:"",
         userName:"",
-        password:"",
-        cpassword:"",
+        gender:"",
+        address1:"",
+        address2:"",
+        mobile:"",
         email:""
       })
-      const onChange=(e)=>{
+      
+  const onChange=(e)=>{
+    let id = e.target.id
+    const re = /^[0-9\b]+$/;
+    if(id === "mobile"){
+        if(re.test(e.target.value) || e.target.value===""){
+             setState({
+                  ...state,
+                  [e.target.id]:e.target.value 
+              })
+        }
+    }else{
         setState({
             ...state,
             [e.target.id]:e.target.value
           })
-      }
+    }
+}
     return (
       <div className="Loginfullpage">
       <Container>
@@ -31,36 +44,52 @@ function SignUP(props) {
           <Col className={"textAlignCenter"}>
           <Col lg={5} className={"ShadowBox p10 mt80 mb30px login"}>
               <div>
-                  <Label text="Sign up" className={"loginCaption mb20px"} />
+                  <h3 className={"textAlignCenter"}>Sign up</h3>
 
-                  <Label text="Name" />
-                  <InputBox className={"mb15px"} id={"name"} onChange={onChange} />
+                  <div className="form-group">
+                      <label>Email</label>
+                      <input type="email" id="email" onChange={onChange} className="form-control" placeholder="Enter email" />
+                  </div>
 
-                  <Label text="Email" />
-                  <InputBox className={"mb15px"} id={"email"} onChange={onChange} />
+                  <div className="form-group">
+                      <label>User Name</label>
+                      <input type="text" id="userName" onChange={onChange} className="form-control" placeholder="Enter user name" />
+                  </div>
 
-                  <Label text="User Name" />
-                  <InputBox className={"mb15px"} id={"userName"} onChange={onChange} />
+                  <div className="form-group">
+                      <label>Mobile</label>
+                      <input type="text" id="mobile" value={state.mobile} onChange={onChange} className="form-control" placeholder="Enter mobile number" />
+                  </div>
 
-                  <Label text="Password" />
-                  <InputBox type={"Password"} className={"mb15px"} id={"password"} onChange={onChange} />
+                  <div className="form-group">
+                      <label>Gender</label>
+                      <select id="gender" onChange={onChange} className="form-control">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                  </div>
 
-                  <Label text="Confirm Password" />
-                  <InputBox type={"Password"} className={"mb30px"} id={"cpassword"} onChange={onChange} />
+                  <div className="form-group">
+                      <label>Address 1</label>
+                      <input type="text" id="address1" onChange={onChange} className="form-control" placeholder="Address line 1" />
+                  </div>
 
-                <Button 
-                    className={"loginBtn mb15px"}
-                    text={"Sign up"}
-                    onClick={()=>props.signUp(state)} 
-                />
+                  <div className="form-group">
+                      <label>Address 2</label>
+                      <input type="text" id="address2" onChange={onChange} className="form-control" placeholder="Address line 2" />
+                  </div>
 
-                <div className={"textAlignCenter"}>
-                  <a className={"mb30px"} href={"/login"}>
-                    Already have an account?
-                  </a>
-                </div>
-                  
-              </div>
+                  <button type="submit" className="btn btn-dark btn-lg btn-block"
+                        onClick={()=>props.signUp(state)} >
+                          SignUp
+                    </button>
+                    <br/>
+                  <p className="forgot-password mb15px">
+                      Already have an <a href="/login">Account?</a>
+                  </p>
+                      
+                  </div>
           </Col>
           </Col>
         </Row>

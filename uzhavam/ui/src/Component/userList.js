@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
-import * as profileAction from '../Action/profileAction'
+import * as profileAction from '../Action/DashboardAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import ButtonCus from "./Common/button"
@@ -27,7 +27,7 @@ function Profile(props) {
       })
   }
   useEffect(() => {
-    props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
   }, []);
 
   

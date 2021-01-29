@@ -2,13 +2,13 @@
 export default function profileReducer(state,action){
     console.log(action.type)
     switch (action.type){
-        case "GET_USER_DETAILS":
+        case "GET_PRODUCT_LIST":
             console.log(action.payload)
             return {
                 ...state,
-                userDetails:action.payload
+                productList:action.payload
             }
-        case "GET_USER_LIST":
+        case "ADD_PRODUCT_SUCCESS":
             console.log(action.payload)
             return {
                 ...state,

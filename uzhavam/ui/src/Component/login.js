@@ -54,7 +54,8 @@ function App(props) {
                     onClick={()=>props.login({userName:state.uname,password:state.pass})} >
                       Login
                 </button>
-              <p className="forgot-password text-right mb15px">
+                <br/>
+              <p className="forgot-password text-right">
                   Forgot <a href="#">password?</a>
               </p>
                   
