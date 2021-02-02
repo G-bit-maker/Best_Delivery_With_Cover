@@ -13,7 +13,7 @@ import {
   CLink
 } from  '@coreui/react'
 import CIcon from '@coreui/icons-react'
-
+import Row from 'react-bootstrap/Row'
 
 class MyCards extends React.Component {
 
@@ -78,9 +78,9 @@ class MyCards extends React.Component {
                         </CCardHeader>
 
                         <CCollapse show={this.state.collapsed}>
-
-                            <CCardBody>
-                                {this.props.content}
+                            
+                            <CCardBody className={"dispalyFlex overflowAuto"} >
+                                    {this.props.content}
                             </CCardBody>
 
                         </CCollapse>
