@@ -11,6 +11,7 @@ import Login from './Component/login'
 import SignUp from './Component/signUp'
 //import Profile from './Component/profile'
 import Dashboard from './Component/dashboard'
+import ViewProducts from './Component/viewProduct'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -21,6 +22,7 @@ ReactDOM.render(
        <Route exact path="/signUp" component={SignUp} /> 
       {/*  <Route exact path="/profile" component={Profile} />  */}
        <Route exact path="/AdminDashboard" component={Dashboard} /> 
+       <Route exact path="/ViewProducts" component={ViewProducts} /> 
        </Switch>
     </Router>
   </Provider>,
