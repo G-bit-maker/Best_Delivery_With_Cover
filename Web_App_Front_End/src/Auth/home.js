@@ -44,32 +44,7 @@ class Home extends React.Component {
                 userType = {this.state.userType}
                 pageName = {"Home"}
             />
-            {this.state.userType === "admin" ? 
-            (
-                <div>
-                    
-                </div>
-            )
-            :   <div className={"padding-rl-0"}>
-                    <div className={"col-lg-12 col-md-12 col-sm-12 col-xs-12 homecomponent rl_padd_o"}>
-                        <div className={"col-lg-7 col-md-7 col-sm-7 col-xs-7 home_comp"}>
-                            <h3 className={"first_h p-t-100 p-b-50 easyoutclass"}>Quality Dental service in Our Thuraiyur</h3>
-                            <p className="fs-35 p-b-50 easyoutclass" >We take care about your tooth</p>
-                            <ButtonComp
-                                btnVariant="success" 
-                                btnParentClass={"col-lg-12 col-md-12 col-sm-12 col-xs-12 font-size-1 text-left padding-rl-0"}
-                                btnClass={"b-r-30 hero-btn font-size-1"}
-                                btnText={"Explore Services"}
-                                onClick={this.onExplore}
-                            />
-                        </div>
-                        <div className={"col-lg-12 col-md-12 col-sm-12 col-xs-12 second-home padd50"} id="welcome">
-                        <h1>welcome</h1>
-                    </div>
-                    </div>
-                    
-                </div>
-            }
+            
         </div>
 
         )
