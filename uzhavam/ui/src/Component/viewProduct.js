@@ -4,7 +4,7 @@ import * as DashboardAction from '../Action/DashboardAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import Button from "./Common/button"
-import "./products.scss"
+import "./style/products.scss"
 import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 import Product from "./products"
@@ -16,7 +16,7 @@ import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
 
-function Profile(props) {
+function ViewProduct(props) {
     
   const [state,setState] = useState({
     uname:"",
@@ -31,19 +31,11 @@ function Profile(props) {
       })
   }
   useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    props.getProductList()
   }, []);
 
   
-  const tabChange=(e)=>{
-        console.log(e)
-    setState({
-        ...state,
-        tab:e
-        })
-    }
 
-    const tempdata = [1,2,3]
 
     return (
         <>
@@ -61,35 +53,31 @@ function Profile(props) {
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Quentity</th>
-                    <th>Price</th>
-                    <th>h4</th>
+                    <th>Category id</th>
+                    <th>Product Category</th>
+                    <th>Product Name</th>
+                    <th>Brand</th>
+                    <th>Available Qty</th>
+                    <th>Max Sale Qty</th>
+                    <th>Mrp</th>
+                    <th>Sgst %</th>
+                    <th>Cgst %</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>Lengthy product name for testing</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>data</td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>data</td>
-                    <td>data</td>
-                    </tr>
-                    <tr>
-                    <td>3</td>
-                    <td >Larry the Bird</td>
-                    <td >Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    </tr>
+                  {props.productList && props.productList.length != 0 ? props.productList.map((data,i)=>{
+                    return <tr key={i}>
+                              <td>{i}</td>
+                              <td>{data.category || ""}</td>
+                              <td>{data.productName || ""}</td>
+                              <td>{data.brand || ""}</td>
+                              <td>{data.avail_quantity || ""}</td>
+                              <td>{data.max_sale_quantity || ""}</td>
+                              <td>{data.mrp || ""}</td>
+                              <td>{data.sgst || ""}</td>
+                              <td>{data.cgst || ""}</td>
+                            </tr>
+                  }) : <tr><td colspan="100%"> <div className="textAlignCenter">No data available. click <a href="/AddProduct">here</a> to add </div></td></tr> }
                 </tbody>
             </Table>
             </Col>
@@ -101,9 +89,8 @@ function Profile(props) {
   
 
 const mapStateToProps = (state /*, ownProps*/) => {
-    console.log(state)
   return {
-    counter: state.counter
+    productList: state.dashboardReducer.productList ? state.dashboardReducer.productList : []
   }
 }
 
@@ -117,5 +104,5 @@ const mapDispatchToProps =(dispatch)=> {
 export default connect(
   mapStateToProps ,
   mapDispatchToProps 
-)(Profile)
+)(ViewProduct)
 

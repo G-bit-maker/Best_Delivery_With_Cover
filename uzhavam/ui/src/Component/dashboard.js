@@ -4,7 +4,7 @@ import * as DashboardAction from '../Action/DashboardAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import Button from "./Common/button"
-import "./dashboard.scss"
+import "./style/dashboard.scss"
 import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 import Product from "./products"
@@ -57,14 +57,7 @@ function Profile(props) {
       <Container>
         <Row className={"profileFullpage"}>
             <Col xs={12} sm={3} md={3} lg={12} className={" adjustRow"}>
-                <Tabs onSelect={tabChange} >
-                    <Tab eventKey={0} title="Product">
-                        <Product productData={tempdata} />
-                    </Tab>
-                    <Tab eventKey={1} title="User">
-                        <UserList userList={tempdata} />
-                    </Tab>
-                </Tabs>
+                <h3 className={"textAlignCenter"}>We are working on it..</h3>
             </Col>
         </Row>
          

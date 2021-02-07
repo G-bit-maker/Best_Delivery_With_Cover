@@ -58,6 +58,9 @@ body, html {
 .mt20{
     margin-top: 20px;
 }
+.mt33{
+    margin-top: 33px;
+}
 .mt40{
     margin-top: 40px;
 }
@@ -114,6 +117,8 @@ body, html {
         padding: 10px 20px;
         a{
             cursor: pointer;
+            text-decoration: none;
+            color: black;
         }
     }
     .sli:hover{

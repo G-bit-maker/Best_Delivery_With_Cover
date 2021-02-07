@@ -8,9 +8,23 @@
     line-height: 1.2;
 }
 
-.btnclass{
+.SecondryBtn,.primaryBtn:hover{
     outline: none;
-    padding: 5px 10px;
+    padding: 5px 20px;
+    color: #111;
     background-color: white;
     border: 1px solid #666;
+}
+.primaryBtn,.SecondryBtn:hover{
+    outline: none;
+    padding: 5px 20px;
+    color: #fff;
+    background-color: #666;
+    border: 1px solid #666;
+}
+
+.tagClass{
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #ddd;
 }

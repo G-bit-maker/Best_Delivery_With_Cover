@@ -48,14 +48,9 @@ function Header(props) {
           url:"/AddProduct",
           subHeader:[
             {
-              id:"temp",
-              name:"Check",
-              url:"/Checking"
-            },
-            {
-              id:"temp2",
-              name:"Check2",
-              url:"/Checking2"
+              id:"Updatetags",
+              name:"Update tags",
+              url:"/UpdateTags"
             }
           ]
         },
@@ -84,7 +79,7 @@ function Header(props) {
     return <ul className="sul">
         {array.map((data,i)=>{
           return (<li className="sli" key={i}>
-                    <a>
+                    <a href={data.url}>
                     {data.name}
                     </a>
                     {data.subHeader ? subHeaderIteration(data.subHeader): ""}
@@ -99,7 +94,7 @@ function Header(props) {
                <ul  className="ul">
                  {subData.map((data,i)=>{
                    return (<li className="li" key={i}>
-                            <a className={"a"}>
+                            <a href={data.url} className={"a"}>
                               {data.name}
                             </a>
                             

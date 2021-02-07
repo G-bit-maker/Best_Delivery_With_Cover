@@ -1,17 +1,36 @@
 import DashboardApi from "../Api/DashboardApi"
 
-export function addProduct(data){
+export function SaveCategory(data){
+    return function(dispatch){
+        DashboardApi.SaveCategoryApi(data)
+        .then((res)=>{
+            console.log(res)
+            dispatch({type:"ADD_CATEGORY",payload:res})
+            return res
+        })
+    } 
+}
+export function getCategory(){
+    return function(dispatch){
+        DashboardApi.getCategoryApi()
+        .then((res)=>{
+            console.log(res)
+            dispatch({type:"GET_CATEGORY",payload:res})
+            return res
+        })
+    } 
+}
+export function addProductDetails(data){
     return function(dispatch){
         DashboardApi.addProductApi(data)
         .then((res)=>{
             console.log(res)
             dispatch({type:"ADD_PRODUCT_SUCCESS",payload:res})
-            dispatch(getProductlist())
             return res
         })
     } 
 }
-export function getProductlist(){
+export function getProductList(){
     return function(dispatch){
         DashboardApi.getProductlistApi()
         .then((res)=>{
