@@ -1,7 +1,51 @@
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
+var TeleSignSDK = require('telesignsdk');
+
+/* let plivo = require('plivo');
+let client = new plivo.Client(); */
+
+
+
 exports.login = async (req, res, next) => {
     try {
+        client.messages.create(
+            '8270925532',
+            '9597172065',
+            'Hello, world!'
+          ).then(function(message_created) {
+            console.log(message_created)
+          });
+          
+        /* const { userName, password } = req.body;
+        let details = await userModel.findOne({ userName });
+        const customerId = "13902ABF-3126-4A03-A4DC-7C5CAC8E2F74";
+        const apiKey = "d8oMo5HVQkhN2GzkKf/lpCyXU+VWXuw/4VnwbqlavJhYC+5NEO3Of/DCpj6zUepIMVhqWXxDi2h0PmxAqYReRQ==";
+        const rest_endpoint = "https://rest-api.telesign.com";
+        const timeout = 10*1000; // 10 secs
+
+        const client = new TeleSignSDK( customerId,
+            apiKey,
+            rest_endpoint,
+            timeout // optional
+            // userAgent
+        );
+        const phoneNumber = "9597172065";
+        const message = "You're scheduled for a dentist appointment at 2:30PM.";
+        const messageType = "ARN";
+      
+        console.log("## MessagingClient.message ##");
+      
+        function messageCallback(error, responseBody) {
+            if (error === null) {
+                console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+                    ` => code: ${responseBody['status']['code']}` +
+                    `, description: ${responseBody['status']['description']}`);
+            } else {
+                console.error("Unable to send message. " + error);
+            }
+        }
+        client.sms.message(messageCallback, phoneNumber, message, messageType); */
         const { userName, password } = req.body;
         let details = await userModel.findOne({ userName });
         if (details.userName === userName) {
