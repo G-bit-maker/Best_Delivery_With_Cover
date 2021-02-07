@@ -9,6 +9,8 @@ import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 import Product from "./products"
 import UserList from "./userList"
+import Header from "./Common/header"
+import SubHeader from "./Common/subHeader"
 
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
@@ -45,11 +47,12 @@ function Profile(props) {
 
     return (
         <>
+      <Header />
+      <SubHeader />
           <div className="bgDesign">
              
           </div>
       <div className="profileBackground">
-
 
       <Container>
         <Row className={"profileFullpage"}>
