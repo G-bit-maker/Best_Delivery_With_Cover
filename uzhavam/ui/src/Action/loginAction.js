@@ -4,6 +4,10 @@ export function login(data){
     return function(dispatch){
         LoginApi.login(data)
         .then((res)=>{
+            console.log(res)
+            if(res.success){
+                window.location ="/Dashboard"
+            }
             dispatch({type:"LOGIN",payload:res})
         })
     } 

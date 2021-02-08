@@ -4,7 +4,7 @@ import * as DashboardAction from '../Action/DashboardAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import ButtonCus from "./Common/button"
-import "./dashboard.scss"
+import "./style/dashboard.scss"
 import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 

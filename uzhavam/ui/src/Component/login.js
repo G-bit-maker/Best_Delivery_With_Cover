@@ -4,7 +4,7 @@ import * as loginAction from '../Action/loginAction'
 import InputBox from "./Common/inputbox"
 import Label from "./Common/label"
 import Button from "./Common/button"
-import "./login.scss"
+import "./style/login.scss"
 
 import { Container, Col, Row } from 'react-bootstrap';
 

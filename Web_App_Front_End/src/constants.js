@@ -1,6 +1,6 @@
 
 const Constants = {
-    site_Name:"Punnagai Dental",
+    site_Name:"Best Delivery",
     nav_Menus:{
         first_Menu: "Home",
         second_Menu: "Registation",

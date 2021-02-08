@@ -51,18 +51,60 @@ exports.createlogin = async (req, res, next) => {
     }
 };
 
+exports.createCategory = async (req, res, next) => {
+    try {
+        const { category } = req.body;
+        let List = {};
+        List.category = category;
+        console.log(List)
+        let categoryDetails = new productModel.category(List);
+        console.log(categoryDetails)
+        categoryDetails.save()
+            .then(function (data) {
+                res.status(200).json({
+                    list:data,
+                    success: "Created Successfully"
+                });
+            })
+            .catch(function (error) {
+                res.status(500).json({
+                    failure: "Not Added"
+                });
+            });
+    } catch (err) {
+        return res.status(500).json({
+            failure: "Invalid Details"
+        });
+    }
+};
+
+exports.getCategories = async (req, res, next) => {
+    try {
+        let details = await productModel.category.find();
+        if(details && details.length !== 0){
+            res.status(200).json({
+                list:details
+            });
+        }else{
+            res.status(200).json({
+                message:"No lists are available"
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
+        });
+    }
+};
+
 exports.createProductDetails = async (req, res, next) => {
     try {
-        const { productName, productImage,productType,rate,description,quantity,createdAt } = req.body;
-        let List = {};
-        List.productName = productName;
-        List.productImage = productImage;
-        List.productType = productType;
-        List.rate = rate;
-        List.description = description;
-        List.quantity = quantity;
-        List.createdAt = createdAt;
-        let productDetails = new productModel(List);
+        let List = req.body;
+        const category = await productModel.category.find({category:List.category});
+        List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
+        console.log(List)
+        let productDetails = new productModel.product(List);
+        console.log(productDetails)
         productDetails.save()
             .then(function (data) {
                 res.status(200).json({
@@ -84,7 +126,7 @@ exports.createProductDetails = async (req, res, next) => {
 
 exports.getproductDetails = async (req, res, next) => {
     try {
-        let details = await productModel.find();
+        let details = await productModel.product.find();
         if(details && details.length !== 0){
             res.status(200).json({
                 list:details
