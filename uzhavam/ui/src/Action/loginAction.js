@@ -6,7 +6,7 @@ export function login(data){
         .then((res)=>{
             console.log(res)
             if(res.success){
-                window.location ="/Dashboard"
+                window.location = data.userName === "Admin" ? "/Dashboard" : "/User/Dashboard"
             }
             dispatch({type:"LOGIN",payload:res})
         })
@@ -19,6 +19,9 @@ export function signUp(data){
         .then((res)=>{
             console.log(res)
             dispatch({type:"SIGN_UP_SUCCESS",payload:res})
+            if(res.success){
+                window.location = "/User/Dashboard"
+            }
         })
     } 
 }

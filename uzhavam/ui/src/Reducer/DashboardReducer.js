@@ -2,6 +2,23 @@
 export default function profileReducer(state,action){
     console.log(action.type)
     switch (action.type){
+        case "ADD_REMOVE_CATEGORY":
+            if(action.flag === "Add"){
+                let list = state.productList || []
+                list.push(action.payload.list ? action.payload.list[0] : null)
+                return {
+                    ...state,
+                    productList:list || []
+                }
+            }else if(action.flag === "Remove"){
+                let list = state.productList || []
+                list.push(action.payload.list ? action.payload.list[0] : null)
+                return {
+                    ...state,
+                    productList:list || []
+                }
+            }
+            
         case "GET_PRODUCT_LIST":
             console.log(action.payload)
             return {
@@ -13,11 +30,11 @@ export default function profileReducer(state,action){
                 ...state,
                 categoryList:action.payload.list ? action.payload.list : []
             }
-        case "ADD_PRODUCT_SUCCESS":
+        case "GET_USER_LIST":
             console.log(action.payload)
             return {
                 ...state,
-                userList:action.payload
+                userList:action.payload.list ? action.payload.list : []
             }
 
         default:

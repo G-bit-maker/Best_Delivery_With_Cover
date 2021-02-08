@@ -3,7 +3,8 @@ const urls={
     userLogin:"/user/signin",
     getCategory:"/admin/getCategories",
     addProductList:"/admin/createProductDetails",
-    getProductList:"/admin/getProductList"
+    getProductList:"/admin/getProductList",
+    getUserList:"/admin/getUserList"
 }
 
 export default urls

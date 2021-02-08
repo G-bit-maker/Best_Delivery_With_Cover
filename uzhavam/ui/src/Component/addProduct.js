@@ -73,7 +73,11 @@ function AddProduct(props) {
   
     const onSubmit=()=>{
         console.log(state)
-        props.addProductDetails(state)
+        props.addProductDetails(state).then(res=>{
+            if(res.success){
+                window.location = "/ViewProduct"
+            }
+        })
     }
 
     return (

@@ -1,11 +1,10 @@
 import DashboardApi from "../Api/DashboardApi"
 
-export function SaveCategory(data){
+export function AddCategory(data,flag){
     return function(dispatch){
-        DashboardApi.SaveCategoryApi(data)
+        DashboardApi.SaveCategoryApi(data,flag)
         .then((res)=>{
-            console.log(res)
-            dispatch({type:"ADD_CATEGORY",payload:res})
+            dispatch({type:"ADD_REMOVE_CATEGORY",payload:res,flag})
             return res
         })
     } 
@@ -24,8 +23,9 @@ export function addProductDetails(data){
     return function(dispatch){
         DashboardApi.addProductApi(data)
         .then((res)=>{
-            console.log(res)
-            dispatch({type:"ADD_PRODUCT_SUCCESS",payload:res})
+            if(res.success){
+                window.location = "/ViewProduct"
+            }
             return res
         })
     } 
@@ -36,6 +36,15 @@ export function getProductList(){
         .then((res)=>{
             console.log(res)
             dispatch({type:"GET_PRODUCT_LIST",payload:res})
+        })
+    } 
+}
+export function getUserList(){
+    return function(dispatch){
+        DashboardApi.getUserListApi()
+        .then((res)=>{
+            console.log(res)
+            dispatch({type:"GET_USER_LIST",payload:res})
         })
     } 
 }

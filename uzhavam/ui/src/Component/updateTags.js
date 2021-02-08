@@ -20,8 +20,7 @@ import React, { useState,useEffect } from 'react';
 function UpdateTags(props) {
     
   const [state,setState] = useState({
-    Category:"",
-    CategoryList:[]
+    Category:""
   })
 
   const onChange=(e)=>{
@@ -31,39 +30,21 @@ function UpdateTags(props) {
       })
   }
   useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    props.getCategory()
   }, []);
 
-  const addCategory=()=>{
+  const addRemoveCategory=(flag)=>{
       if(state.Category){
-          let CategoryList = state.CategoryList
-            CategoryList.push(state.Category)
             setState({
                 ...state,
-                CategoryList,
                 Category:""
             })
+            props.AddCategory(state.Category,flag)
       }
   }
 
-  const onRemoveCategory=(data)=>{
-        let i = state.CategoryList.indexOf(data)
-      if(i != -1){
-          let CategoryList = state.CategoryList
-            CategoryList.splice(i,1)
-            setState({
-                ...state,
-                CategoryList,
-                Category:""
-            })
-      }
-  }
 
-  const SaveCategory=()=>{
-      if(state.CategoryList.length != 0){
-          props.SaveCategory(state.CategoryList)
-      }
-  }
+  
 
     return (
         <>
@@ -80,21 +61,18 @@ function UpdateTags(props) {
             <Row>
                 <Col xs={12} sm={6} md={3} lg={5} className={" "}>
                     <Row>
-                        <Col xs={12} sm={6} md={3} lg={8} className={" "}>
+                        <Col xs={12} sm={6} md={3} lg={10} className={" "}>
                             <div className="form-group">
                                 <label>Category</label>
                                 <input type="text" id="Category" value={state.Category} onChange={onChange} className="form-control" placeholder="Add Category" />
                             </div>
                         </Col>
                         <Col xs={12} sm={6} md={3} lg={2} className={" "}>
-                            <Button text="Add" onClick={addCategory} className={"mt33"} />
-                        </Col>
-                        <Col xs={12} sm={6} md={3} lg={2} className={" "}>
-                            <Button text="Save" primary onClick={SaveCategory} className={"mt33"} />
+                            <Button text="Add" onClick={()=>addRemoveCategory("Add")} className={"mt33"} />
                         </Col>
                         <Col xs={12} sm={6} md={3} lg={12} className={" "}>
-                            {state.CategoryList ? state.CategoryList.map(data=>{
-                                return <Tags text={data} onClose={onRemoveCategory} />
+                            {props.categoryList ? props.categoryList.map((data,i)=>{
+                                return <Tags key={i} text={data.category} onClose={()=>addRemoveCategory("Remove",data._id)} />
                             }) : ""}
                         </Col>
                     </Row>
@@ -108,9 +86,8 @@ function UpdateTags(props) {
   
 
 const mapStateToProps = (state /*, ownProps*/) => {
-    console.log(state)
   return {
-    counter: state.counter
+    categoryList: state.dashboardReducer.categoryList ? state.dashboardReducer.categoryList : []
   }
 }
 

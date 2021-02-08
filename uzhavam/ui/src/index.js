@@ -11,9 +11,11 @@ import Login from './Component/login'
 import SignUp from './Component/signUp'
 //import Profile from './Component/profile'
 import Dashboard from './Component/dashboard'
+import Temp from './Component/tempDashboard'
 import ViewProducts from './Component/viewProduct'
 import AddProduct from './Component/addProduct'
 import UpdateTags from './Component/updateTags'
+import Users from './Component/userList'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -23,10 +25,12 @@ ReactDOM.render(
        <Route exact path="/login" component={Login} /> 
        <Route exact path="/signUp" component={SignUp} /> 
       {/*  <Route exact path="/profile" component={Profile} />  */}
+       <Route exact path="/User/Dashboard" component={Temp} /> 
        <Route exact path="/Dashboard" component={Dashboard} /> 
        <Route exact path="/ViewProduct" component={ViewProducts} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 
        <Route exact path="/UpdateTags" component={UpdateTags} /> 
+       <Route exact path="/ViewUser" component={Users} /> 
        </Switch>
     </Router>
   </Provider>,
