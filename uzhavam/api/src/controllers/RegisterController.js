@@ -8,7 +8,7 @@ const timeout = 10*1000; // 10 secs
 
 exports.Registration = async (req, res, next) => {
     try {
-        const client = new TeleSignSDK( customerId,
+        /* const client = new TeleSignSDK( customerId,
             apiKey,
             rest_endpoint,
             timeout // optional
@@ -30,8 +30,8 @@ exports.Registration = async (req, res, next) => {
             }
         }
         client.sms.message(messageCallback, phoneNumber, message, messageType);
-
-        /* const { userName, mobile,email,dob,gender,address1,address2} = req.body;
+ */
+        const { userName, mobile,email,dob,gender,address1,address2} = req.body;
         let List = {};
         List.userName = userName;
         List.mobile = mobile;
@@ -52,7 +52,7 @@ exports.Registration = async (req, res, next) => {
                 res.status(500).json({
                     failure: "Not Added"
                 });
-            }); */
+            });
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"
