@@ -65,7 +65,7 @@ class Register extends React.Component {
             onSubmit={(inputData)=>this.props.registerAction(inputData)}
             render={
                 ({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-             <div className = "regcon">
+             <div className = "">
                         {this.props.pageLoading ? 
                         (
                             <Backdrop
@@ -133,12 +133,12 @@ class Register extends React.Component {
 
 
                                 <Button 
-                                    btnVariant="success" 
+                                    btnVariant="primary" 
                                     btnSize="medium" 
                                     btnColor="secondary" 
                                     btnText={"Submit"}
                                     onClick={handleSubmit}>
-                                    </Button>
+                                </Button>
 
                                 <div className="link">
                                     <a

@@ -7,7 +7,6 @@ import * as BaseAction from "../Actions/BaseAction";
 import Constants from "../constants";
 import Navbars from "../Commponets/Common/navBar";
 import "../css/homeless.css";
-import ButtonComp from "../Commponets/Common/Buttons/ButtonOut"
 
 
 
@@ -42,7 +41,7 @@ class Home extends React.Component {
                 DropDown = {Constants.DropMenu}
                 UserName = {this.state.name}
                 userType = {this.state.userType}
-                pageName = {"Home"}
+                Lable = {"Home"}
             />
             
         </div>
