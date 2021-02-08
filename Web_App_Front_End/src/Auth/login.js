@@ -50,16 +50,15 @@ class Login extends React.Component {
             }}
             render={
                 ({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-                    <div className = "regcon">
+                    <div className = "">
                         {this.props.pageLoading ? 
                         (
                             <Backdrop
                             enable = {true}/>
                         ): ""}
                         <Navbars
-                        SiteName={Constants.site_Name}
-                        Menus = {Constants.nav_Menus}
-                        DropDown = {Constants.DropMenu}></Navbars>
+                            SiteName={Constants.site_Name}
+                        />
                         <Row>
                             <Col lg={3} xs={3} sm={3}>
 
@@ -109,12 +108,13 @@ class Login extends React.Component {
                                     </Form.Group>
                                     
                                     {/* material ui button components */}
-                                    <Button btnVariant="contained" 
-                                    btnSize="medium" 
-                                    btnColor="secondary" 
-                                    type="submit"
-                                    btnText={"Submit"}
-                                    onClick={handleSubmit}>
+                                    <Button 
+                                        btnVariant="primary" 
+                                        btnSize="medium" 
+                                        btnColor="secondary" 
+                                        type="submit"
+                                        btnText={"Submit"}
+                                        onClick={handleSubmit}>
                                     </Button>
 
                                     <div className="link">

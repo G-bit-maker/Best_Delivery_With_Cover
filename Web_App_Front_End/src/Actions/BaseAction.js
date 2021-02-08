@@ -46,7 +46,7 @@ export const loginAction = (inputData) => {
             type: "LOGIN_REQUEST",
             payload: true,
         })
-        axios.post("http://localhost:5000/api/login", inputData)
+        axios.post("http://localhost:5000/admin/login", inputData)
         .then(responce=>{
             let res = responce.data;
             if(res.err){

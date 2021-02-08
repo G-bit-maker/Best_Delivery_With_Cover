@@ -1,19 +1,20 @@
 import React from "react";
 import { Button,Form,Navbar,Nav,FormControl, NavDropdown, Row, Col} from 'react-bootstrap';
-import { } from "react-router-dom";
-import Backto from "../../Commponets/Common/Buttons/BackToTop";
-import Drawer from "../../Commponets/Common/Drawer/DrawerComp";
-import ButtonComp from "../../Commponets/Common/Buttons/ButtonOut";
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import Constants from "../../constants";
-
+import NavBarConstant from "../../Navconstants"
+import { } from "react-router-dom";
 
 class Navbars extends React.Component {
 
     constructor(props) {
         super(props);
         this.state={
+            NavbarData: NavBarConstant[this.props.Lable]
         }
+    }
+
+    componentDidMount = () => {
+        
     }
 
     redirectNav=()=>{
@@ -26,9 +27,22 @@ class Navbars extends React.Component {
 
     render() {
         return( 
-        <div>
-            "NAv BAr"
-        </div>
+            <Navbar bg="primary" variant="dark">
+                
+                <Col xs={6} xl={6} sm={4} md={6} lg={6} className={"text-left"}>
+                    <Navbar.Brand href="#home">{Constants.site_Name}</Navbar.Brand>
+                </Col>
+                <Col xs={6} xl={6} sm={8} md={6} lg={6}>
+                    <div className={"dis-flex float-r"}>
+                        {this.state.NavbarData ? this.state.NavbarData.map((data, i)=>(
+                            <Nav className="">
+                                <Nav.Link href={data.Url} className={"m-l-10"}>{data.Name}</Nav.Link>
+                            </Nav>   
+                        )): ""}
+                    </div>
+                </Col>
+                
+            </Navbar>
 
         )
     }
