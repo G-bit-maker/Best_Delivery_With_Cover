@@ -1,4 +1,5 @@
 import axios from "axios"
+import apiCall from "../api/Baseapi"
 
 
 export const show_name = (val)=>
@@ -46,22 +47,26 @@ export const loginAction = (inputData) => {
             type: "LOGIN_REQUEST",
             payload: true,
         })
-        axios.post("http://localhost:5000/admin/login", inputData)
+        apiCall.loginActionApi(inputData)
         .then(responce=>{
+            console.log(responce)
             let res = responce.data;
-            if(res.err){
+            if(res.failure){
                 dispatch({
                     type: "LOGIN_FAILUR",
-                    err: res.err,
+                    failure: res.failure,
                 })
             }else{
-                localStorage.setItem("auth", JSON.stringify(res.userToken));
-                localStorage.setItem("name", res.name);
-                localStorage.setItem("email", res.email);
+                localStorage.setItem("auth", JSON.stringify(res.token));
                 localStorage.setItem("userType", res.userType);
                 dispatch({
                     type: "LOGIN_SUCCESS",
                 })
+                if(res.userType === "Admin"){
+                    window.open("/dashboard", "_self")
+                }else if(res.userType === "Admin"){
+
+                }
             }
         })
         .catch(err => {

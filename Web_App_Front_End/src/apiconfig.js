@@ -1,3 +1,3 @@
-export default class Url{
-    static apihint = "http://localhost:5000";
-}
+ const apihint = "http://localhost:8080";
+ 
+ export default apihint

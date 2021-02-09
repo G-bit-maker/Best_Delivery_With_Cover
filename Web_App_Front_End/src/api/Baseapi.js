@@ -1,16 +1,14 @@
 import axios from "axios";
 import setting from "./setting"
-
-const Settings = setting.value;
+import apihint from "../../src/apiconfig"
 
 class BaseApi {
     static registerActionApi(inputData){
-        return axios.post(Settings.userAuth.register, inputData)
+        return axios.post(apihint + setting.userAuth.register, inputData)
     }
 
     static loginActionApi(inputData){
-        alert(Settings.userAuth.login)
-        return axios.post(Settings.userAuth.login, inputData)
+        return axios.post(apihint + setting.userAuth.login, inputData)
     }
 }
 

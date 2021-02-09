@@ -1,12 +1,9 @@
-import api from "../apiconfig"
 
-const Api = api.apihint;
-
-export default class setting{
-    static value = Api + {
-        userAuth:{
-            register:"/api/register",
-            login:"/api/login"
-        }
+const setting = {
+    userAuth:{
+        register:"/api/register",
+        login:"/admin/login"
     }
 }
+
+export default setting;

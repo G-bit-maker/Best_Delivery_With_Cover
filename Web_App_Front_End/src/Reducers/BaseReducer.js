@@ -20,7 +20,7 @@ const BaseReducer = (state, actions) =>{
 
         case "LOGIN_FAILUR":{
             return {
-                err: actions.err
+                err: actions.failure
             }
         }
 

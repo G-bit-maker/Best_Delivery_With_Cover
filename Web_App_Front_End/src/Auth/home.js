@@ -34,18 +34,9 @@ class Home extends React.Component {
 
     render() {
         return( 
-        <div>
-            <Navbars
-                SiteName={Constants.site_Name}
-                Menus = {Constants.nav_Menus}
-                DropDown = {Constants.DropMenu}
-                UserName = {this.state.name}
-                userType = {this.state.userType}
-                Lable = {"Home"}
-            />
-            
-        </div>
-
+            <div>
+                
+            </div>
         )
     }
   }

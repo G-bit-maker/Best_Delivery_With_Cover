@@ -9,7 +9,7 @@ class Navbars extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            NavbarData: NavBarConstant[this.props.Lable]
+            NavbarData: NavBarConstant[localStorage.getItem("userType") ?  localStorage.getItem("userType") : "Home"]
         }
     }
 
@@ -27,7 +27,7 @@ class Navbars extends React.Component {
 
     render() {
         return( 
-            <Navbar bg="primary" variant="dark">
+            <Navbar bg="primary" variant="dark" className={""} fixed={this.props.fixed}>
                 
                 <Col xs={6} xl={6} sm={4} md={6} lg={6} className={"text-left"}>
                     <Navbar.Brand href="#home">{Constants.site_Name}</Navbar.Brand>

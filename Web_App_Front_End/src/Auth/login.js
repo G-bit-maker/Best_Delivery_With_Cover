@@ -1,146 +1,86 @@
 import React from "react";
 import {Formik} from "formik";
-import {Form,Alert,Row, Col} from 'react-bootstrap';
+import {Form,Alert,Row, Jumbotron, Col} from 'react-bootstrap';
 import Button from "../Commponets/Common/Buttons/ButtonOut";
-import * as yup from "yup";
 import {bindActionCreators } from "redux";
-import Navbars from "../Commponets/Common/navBar";
-import Constants from "../constants";   
 import {connect} from "react-redux";
 import * as BaseAction from "../Actions/BaseAction";
-import Backdrop from "../Commponets/Common/ProgresBar/Backdrop"
 
 
 class Login extends React.Component {
     constructor(){
         super();
         this.state={
-
+            userName: "",
+            password: ""
         }
     }
 
-    componentDidUpdate = () => {    
-        // document.title = `You clicked ${this.state.count} times`;  
-        // this.props.redirectToHome ? this.props.history.push({ pathname: "/home"}) : null    
+    componentDidMount = () => {  
+        let hasToken = localStorage.getItem("auth")
+        let hasUserType = localStorage.getItem("userType")
+        if(hasToken && hasUserType){
+            window.open("/dashboard", "_self")
+        }
     }
 
+    onClick = () => {
+        let loginData = {
+            userName: this.state.userName,
+            password: this.state.password,
+        }
+        this.props.loginAction(loginData)
+    }
+
+    onChange= (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+    }
 
     render(){
         return(
-            <Formik
-            initialValues = {
-                {email: "",
-                password: "",}
-            }
-    
-            validationSchema = {yup.object({
-                email: yup.string()
-                    .strict()
-                    .trim()
-                    .min(3, " minimum 3 characters required")
-                    .required("Please enter your register email id or user name"),
-                password: yup.string()
-                    .required("Please enter your password")
-                    .min(5, "Minimum 5 letters required")
-                    .max(15, "Maximum 15 letters required"),
-            })} 
-    
-            onSubmit={(inputData) => {
-                this.props.loginAction(inputData)
-            }}
-            render={
-                ({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-                    <div className = "">
-                        {this.props.pageLoading ? 
-                        (
-                            <Backdrop
-                            enable = {true}/>
-                        ): ""}
-                        <Navbars
-                            SiteName={Constants.site_Name}
-                        />
-                        <Row>
-                            <Col lg={3} xs={3} sm={3}>
+            <div>
+                <Col  xs={12} xl={12} sm={12} md={12} lg={12} className={"text-web-center m-t-50"}>
+                    <Col xs={12} xl={4} sm={12} md={4} lg={4} className={"text-left"}>
+                        
+                        {this.props.Error ? <Alert variant="danger">
+                            {this.props.Error}
+                        </Alert> : null}
+                        
+                        <Jumbotron>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>User Name</Form.Label>
+                                <Form.Control 
+                                    id = "userName"
+                                    type = "email" 
+                                    placeholder = "userName" 
+                                    onChange = {this.onChange}
+                                />
+                            </Form.Group>
 
-                            </Col>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control 
+                                    id = "password"
+                                    type = "password" 
+                                    placeholder = "Password" 
+                                    onChange = {this.onChange}
+                                />
+                            </Form.Group>
 
-                            <Col lg={6} xs={6} sm={6} className="jumbotron bgwhite m-t-32 border_radius_25 fadin">
-                                {this.props.Error ? 
-                                <Alert variant="danger">
-                                    {this.props.Error}
-                                </Alert> : null}
-                                {this.props.success ? <Alert variant="success">
-                                    {this.props.success}
-                                </Alert> : null}    
-                                <h2>WELCOME BACK</h2>
-                                <Form autoComplete="off" onSubmit = {handleSubmit} className={"m-t-35"}>
-                                    <Form.Group controlId="formBasicEmail">
-
-                                        <div>
-                                            <Form.Label className={"fload_left m-t-15"}>Email Or UserName</Form.Label>
-                                            <Form.Control 
-                                            type="text" 
-                                            name="email"
-                                            onChange = {handleChange}
-                                            value = {values.email}
-                                            />
-                                                {errors.email?
-                                                <div className = "text-danger">
-                                                    {errors.email}
-                                                </div>
-                                                : null}
-                                        </div>
-                                        
-                                        <div>
-                                            <Form.Label className={"fload_left m-t-15"}>Password</Form.Label>
-                                            <Form.Control 
-                                            type="text" 
-                                            name="password"
-                                            onChange = {handleChange}
-                                            value = {values.password}
-                                            />
-                                                {errors.password ? 
-                                                <div className = "text-danger">
-                                                    {errors.password}
-                                                </div>
-                                                : null}
-                                        </div>
-                                    </Form.Group>
-                                    
-                                    {/* material ui button components */}
-                                    <Button 
-                                        btnVariant="primary" 
-                                        btnSize="medium" 
-                                        btnColor="secondary" 
-                                        type="submit"
-                                        btnText={"Submit"}
-                                        onClick={handleSubmit}>
-                                    </Button>
-
-                                    <div className="link">
-                                        <a
-                                        href= "#"
-                                        onClick = {()=>{
-                                            window.location.href = "register"
-                                        }}
-                                        >
-                                        create new user
-                                        </a>
-                                    </div>
-                                </Form>
-                            </Col>
-
-                            <Col lg={3} xs={3} sm={3}>
-
-                            </Col>
-
-                            </Row>
-                            
-                            {this.props.redirectToHome ? this.props.history.push({ pathname: "/Dashboard"}) : null}
-                        </div>
-                )
-            }
-        />
+                            <Button
+                                variant="primary" 
+                                type="submit"
+                                btnText={"Submit"}
+                                onClick={this.onClick}
+                                btnLoading={this.props.pageLoading}
+                            />
+                        </Jumbotron>
+                    </Col>
+                    <a>Copyright © 2021 Best Delivery</a>
+                </Col>
+            </div>
         )
     }
 }

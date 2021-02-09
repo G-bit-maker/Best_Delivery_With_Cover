@@ -71,12 +71,6 @@ class Register extends React.Component {
                             <Backdrop
                             enable = {true}/>
                         ): ""}
-                        <Navbars
-                        SiteName={Constants.site_Name}
-                        Menus = {Constants.nav_Menus}
-                        DropDown = {Constants.DropMenu}
-                        pageName = {"Registation"}
-                        ></Navbars>
                         <Row>
                             <Col lg={3} xs={3} sm={3}>
 

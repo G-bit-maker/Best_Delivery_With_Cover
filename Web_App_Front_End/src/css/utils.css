@@ -6671,6 +6671,9 @@
 .text-middle {
   vertical-align: middle;
 }
+.text-web-center {
+  text-align: -webkit-center;
+}
 /* ------------------------------------ */
 .lh-1-0 {
   line-height: 1;
@@ -7461,4 +7464,7 @@
   position: absolute;
   right: 0px;
   bottom: 0px;
+}
+.outline-n {
+  outline: none !important;
 }

@@ -1,5 +1,5 @@
 
-const NavBarConstant = {
+const SubNavBarConstant = {
     Home:[
     {
         id: 1,
@@ -17,13 +17,16 @@ const NavBarConstant = {
     Admin:[
         {
             id: 1,
-            Name: "Welcome Admin",
+            Name: "DashBoard",
             Url: "/dashboard"
-        },
-        {
-            id: 1,
-            Name: "Logout",
-            Url: "/logout"
+        },{
+            id: 2,
+            Name: "Product",
+            Url: "/prodect"
+        },{
+            id: 3,
+            Name: "Order",
+            Url: "/order"
         }],
     User:[
         {
@@ -41,4 +44,4 @@ const NavBarConstant = {
         }],
 }
 
-export default NavBarConstant ;
+export default SubNavBarConstant ;

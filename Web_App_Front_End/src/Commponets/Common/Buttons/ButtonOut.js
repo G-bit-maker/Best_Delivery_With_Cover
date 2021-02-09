@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../css/common.css";
 import "../../../css/utils.css";
-import { Button,Form,Navbar,Nav,FormControl, NavDropdown, Row, Col} from 'react-bootstrap';
+import { Button, Spinner} from 'react-bootstrap';
 
 
 class ButtonOut extends React.Component {
@@ -28,8 +28,15 @@ class ButtonOut extends React.Component {
                         color={this.state.btnColor} 
                         className={this.state.btnClass}
                         onClick={this.onClick}
+                        disabled={this.props.btnLoading ? true : false}
                         >
-                    {this.props.btnText}
+
+                    {this.props.btnLoading ? 
+                        <div>
+                            <Spinner animation="grow" size="sm"/>
+                            Loading!.
+                        </div>
+                    :this.props.btnText}
                 </Button>
             </div>
         )
