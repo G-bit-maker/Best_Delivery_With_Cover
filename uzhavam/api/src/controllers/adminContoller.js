@@ -53,24 +53,37 @@ exports.createlogin = async (req, res, next) => {
 
 exports.createCategory = async (req, res, next) => {
     try {
-        const { category } = req.body;
+        const { category,status,category_id } = req.body;
         let List = {};
         List.category = category;
-        console.log(List)
-        let categoryDetails = new productModel.category(List);
-        console.log(categoryDetails)
-        categoryDetails.save()
-            .then(function (data) {
+        if(status === "Add"){
+            let categoryDetails = new productModel.category(List);
+            categoryDetails.save()
+                .then(function (data) {
+                    res.status(200).json({
+                        list:data,
+                        success: "Created Successfully"
+                    });
+                })
+                .catch(function (error) {
+                    res.status(500).json({
+                        failure: "Not Added"
+                    });
+                });
+        }else{
+            productModel.category.findOneAndDelete({"_id":category_id})
+            .then(function(data){
                 res.status(200).json({
-                    list:data,
-                    success: "Created Successfully"
+                    success:"List deleted Successfully"
+                })     
+            })
+            .catch(function(error){
+                res.status(500).json({
+                    success:"Not deleted"
                 });
             })
-            .catch(function (error) {
-                res.status(500).json({
-                    failure: "Not Added"
-                });
-            });
+        }
+        
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"
@@ -100,23 +113,35 @@ exports.getCategories = async (req, res, next) => {
 exports.createProductDetails = async (req, res, next) => {
     try {
         let List = req.body;
-        const category = await productModel.category.find({category:List.category});
-        List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
-        console.log(List)
-        let productDetails = new productModel.product(List);
-        console.log(productDetails)
-        productDetails.save()
-            .then(function (data) {
+        if(List.addStatus === "Add"){
+            const category = await productModel.category.find({category:List.category});
+            List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
+            let productDetails = new productModel.product(List);
+            productDetails.save()
+                .then(function (data) {
+                    res.status(200).json({
+                        list:data,
+                        success: "Created Successfully"
+                    });
+                })
+                .catch(function (error) {
+                    res.status(500).json({
+                        failure: "Not Added"
+                    });
+                });   
+        }else{
+            productModel.product.findOneAndDelete({"_id":List.product_id})
+            .then(function(data){
                 res.status(200).json({
-                    list:data,
-                    success: "Created Successfully"
+                    success:"List deleted Successfully"
+                })     
+            })
+            .catch(function(error){
+                res.status(500).json({
+                    success:"Not deleted"
                 });
             })
-            .catch(function (error) {
-                res.status(500).json({
-                    failure: "Not Added"
-                });
-            });
+        }
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"

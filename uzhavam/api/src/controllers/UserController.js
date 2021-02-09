@@ -1,7 +1,8 @@
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
 var TeleSignSDK = require('telesignsdk');
-
 /* let plivo = require('plivo');
 let client = new plivo.Client(); */
 
@@ -9,13 +10,13 @@ let client = new plivo.Client(); */
 
 exports.login = async (req, res, next) => {
     try {
-        client.messages.create(
+        /* client.messages.create(
             '8270925532',
             '9597172065',
             'Hello, world!'
           ).then(function(message_created) {
             console.log(message_created)
-          });
+          }); */
           
         /* const { userName, password } = req.body;
         let details = await userModel.findOne({ userName });
@@ -48,7 +49,9 @@ exports.login = async (req, res, next) => {
         client.sms.message(messageCallback, phoneNumber, message, messageType); */
         const { userName, password } = req.body;
         let details = await userModel.findOne({ userName });
+    
         if (details.userName === userName) {
+            console.log(details)
             let token = jwt.sign({ id: details._id }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
             });

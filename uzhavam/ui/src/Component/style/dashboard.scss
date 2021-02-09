@@ -58,7 +58,7 @@
     overflow-y: auto;
 }
 
-.productcon{
+.userList{
     .Imagecon{
         padding:10px 0 0 10px;
     }
@@ -71,18 +71,22 @@
   }
   .procreated{
       color: #666;
-      margin-right: 10px;
+      margin-right: 25px;
   }
   .proRate{
       font-weight: 600;
   }
 }
 .userCon{
+    .borderBottom:hover{
+        box-shadow: 0px 0px 10px 0px #aaa;
+        cursor: pointer;
+    } 
     .detail{
         padding: 10px 0 15px;
     }
     .useName{
-        font-size: 17px;
+        font-size: 23px;
     }
     .userType{
         margin-right: 17px;

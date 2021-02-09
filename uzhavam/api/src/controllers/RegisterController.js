@@ -29,8 +29,8 @@ exports.Registration = async (req, res, next) => {
                 console.error("Unable to send message. " + error);
             }
         }
-        client.sms.message(messageCallback, phoneNumber, message, messageType); */
-
+        client.sms.message(messageCallback, phoneNumber, message, messageType);
+ */
         const { userName, mobile,email,dob,gender,address1,address2} = req.body;
         let List = {};
         List.userName = userName;
