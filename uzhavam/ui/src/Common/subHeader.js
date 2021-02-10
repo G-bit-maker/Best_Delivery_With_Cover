@@ -2,6 +2,9 @@
 import {Navbar, Nav, Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
+import session from "../session"
+
+const JsonData = require("./subHeaderData.json")
 
 function Header(props) {
     
@@ -31,49 +34,6 @@ function Header(props) {
     }
 
     
-  const subData = [
-    {
-      id:"dashboard",
-      name:"Dashboard",
-      url:"/Dashboard"
-    },
-    {
-      id:"product",
-      name:"Product",
-      url:"/AddProduct",
-      subHeader:[
-        {
-          id:"addProduct",
-          name:"Add Product",
-          url:"/AddProduct",
-          subHeader:[
-            {
-              id:"Updatetags",
-              name:"Update tags",
-              url:"/UpdateTags"
-            }
-          ]
-        },
-        {
-          id:"viewProduct",
-          name:"View Product",
-          url:"/ViewProduct"
-        }
-      ]
-    },
-    {
-      id:"user",
-      name:"User",
-      url:"/ViewUser",
-      subHeader:[
-        {
-          id:"viewUser",
-          name:"View User",
-          url:"/ViewUser"
-        }
-      ]
-    }
-  ]
   
   const subHeaderIteration = array =>{
     return <ul className="sul">
@@ -92,7 +52,7 @@ function Header(props) {
         <>
             <div className="subHeaderCon">
                <ul  className="ul">
-                 {subData.map((data,i)=>{
+                 {JsonData[session.getCookie("UserType")].map((data,i)=>{
                    return (<li className="li" key={i}>
                             <a href={data.url} className={"a"}>
                               {data.name}

@@ -7,6 +7,7 @@ export function login(data){
         .then((res)=>{
             console.log(res)
             if(res.success){
+                session.setCookie("UserType",data.userName === "Admin" ? "Admin" : "User",30)
                 session.setCookie("TOKEN",res.token,30)
                 window.location = data.userName === "Admin" ? "/Dashboard" : "/User/Dashboard"
             }

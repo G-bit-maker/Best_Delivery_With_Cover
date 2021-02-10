@@ -1,86 +1,51 @@
-import { connect } from 'react-redux'
-import { bindActionCreators } from "redux";
-import * as DashboardAction from '../Action/DashboardAction'
-import InputBox from "../Common/inputbox"
-import Label from "../Common/label"
-import Button from "../Common/button"
-import "./style/dashboard.scss"
-import userimage from "../Image/userimage.png"
-//import userimage from "../Image/user.jpg"
-import Product from "./products"
-import UserList from "./userList"
-import Header from "../Common/header"
-import SubHeader from "../Common/subHeader"
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+});
 
-import React, { useState,useEffect } from 'react';
+export default function MediaCard() {
+  const classes = useStyles();
 
-function Profile(props) {
-    
-  const [state,setState] = useState({
-    uname:"",
-    pass:"",
-    tab:0
-  })
-
-  const onChange=(e)=>{
-    setState({
-        ...state,
-        [e.target.id]:e.target.value
-      })
-  }
-  useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
-  }, []);
-
-  
-  const tabChange=(e)=>{
-        console.log(e)
-    setState({
-        ...state,
-        tab:e
-        })
-    }
-
-    return (
-        <>
-      
-
-      <Container>
-        <Row className={""}>
-            <Col xs={12} sm={3} md={3} lg={12} className={" adjustRow"}>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-                <h3 className={"textAlignCenter"}>We are working on it..</h3>
-            </Col>
-        </Row>
-         
-      </Container>
-      </>
-    );
-  }
-  
-
-const mapStateToProps = (state /*, ownProps*/) => {
-    console.log(state)
-  return {
-    counter: state.counter
-  }
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image="/static/images/cards/contemplative-reptile.jpg"
+          title="Contemplative Reptile"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            Lizard
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+            across all continents except Antarctica
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
+    </Card>
+  );
 }
-
-const mapDispatchToProps =(dispatch)=> { 
-    return bindActionCreators(
-        Object.assign({}, DashboardAction),
-        dispatch
-    )
- }
-
-export default connect(
-  mapStateToProps ,
-  mapDispatchToProps 
-)(Profile)
-
