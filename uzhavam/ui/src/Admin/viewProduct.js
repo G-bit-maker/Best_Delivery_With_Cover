@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as DashboardAction from '../Action/DashboardAction'
-import InputBox from "./Common/inputbox"
-import Label from "./Common/label"
-import Button from "./Common/button"
+import InputBox from "../Common/inputbox"
+import Label from "../Common/label"
+import Button from "../Common/button"
 import "./style/products.scss"
 import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 import Product from "./products"
 import UserList from "./userList"
-import Header from "./Common/header"
-import SubHeader from "./Common/subHeader"
+import Header from "../Common/header"
+import SubHeader from "../Common/subHeader"
 
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as profileAction from '../Action/DashboardAction'
-import InputBox from "./Common/inputbox"
-import Label from "./Common/label"
-import ButtonCus from "./Common/button"
+import InputBox from "../Common/inputbox"
+import Label from "../Common/label"
+import ButtonCus from "../Common/button"
 import "./style/dashboard.scss"
 import userimage from "../Image/userimage.png"
-import Header from "./Common/header"
-import SubHeader from "./Common/subHeader"
+import Header from "../Common/header"
+import SubHeader from "../Common/subHeader"
 //import userimage from "../Image/user.jpg"
 
 import { Container, Col, Row, Tabs, Tab, Button } from 'react-bootstrap';

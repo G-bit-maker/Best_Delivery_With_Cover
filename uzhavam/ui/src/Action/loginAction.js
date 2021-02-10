@@ -1,4 +1,5 @@
 import LoginApi from "../Api/loginApi"
+import session from "../session"
 
 export function login(data){
     return function(dispatch){
@@ -6,6 +7,7 @@ export function login(data){
         .then((res)=>{
             console.log(res)
             if(res.success){
+                session.setCookie("TOKEN",res.token,30)
                 window.location = data.userName === "Admin" ? "/Dashboard" : "/User/Dashboard"
             }
             dispatch({type:"LOGIN",payload:res})

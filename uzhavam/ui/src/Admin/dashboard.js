@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as DashboardAction from '../Action/DashboardAction'
-import InputBox from "./Common/inputbox"
-import Label from "./Common/label"
-import Button from "./Common/button"
+import InputBox from "../Common/inputbox"
+import Label from "../Common/label"
+import Button from "../Common/button"
 import "./style/dashboard.scss"
 import userimage from "../Image/userimage.png"
 //import userimage from "../Image/user.jpg"
 import Product from "./products"
 import UserList from "./userList"
-import Header from "./Common/header"
-import SubHeader from "./Common/subHeader"
+import Header from "../Common/header"
+import SubHeader from "../Common/subHeader"
 
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
@@ -43,23 +43,26 @@ function Profile(props) {
         })
     }
 
+    const tempdata = [1,2,3]
+
     return (
         <>
-      
+      <Header />
+      <SubHeader />
+          <div className="bgDesign">
+             
+          </div>
+      <div className="profileBackground">
 
       <Container>
-        <Row className={""}>
+        <Row className={"profileFullpage"}>
             <Col xs={12} sm={3} md={3} lg={12} className={" adjustRow"}>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
                 <h3 className={"textAlignCenter"}>We are working on it..</h3>
             </Col>
         </Row>
          
       </Container>
+      </div>
       </>
     );
   }

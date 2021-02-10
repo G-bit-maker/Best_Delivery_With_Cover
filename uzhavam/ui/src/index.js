@@ -7,15 +7,15 @@ import "./style/common.scss"
 import { Provider } from "react-redux";
 import store from "./store";
 
-import Login from './Component/login'
-import SignUp from './Component/signUp'
+import Login from './Pages/login'
+import SignUp from './Pages/signUp'
 //import Profile from './Component/profile'
-import Dashboard from './Component/dashboard'
-import Temp from './Component/tempDashboard'
-import ViewProducts from './Component/viewProduct'
-import AddProduct from './Component/addProduct'
-import UpdateTags from './Component/updateTags'
-import Users from './Component/userList'
+import Dashboard from './Admin/dashboard'
+import Temp from './User/tempDashboard'
+import ViewProducts from './Admin/viewProduct'
+import AddProduct from './Admin/addProduct'
+import UpdateTags from './Admin/updateTags'
+import Users from './Admin/userList'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
