@@ -45,7 +45,7 @@ function Profile(props) {
 
     return (
           <>
-          <Header />
+          <Header {...props} />
           <SubHeader />
               <div className="bgDesign">
                 

@@ -1,12 +1,18 @@
-.listContainer{
-    //border: 1px solid #aaa;
-    padding: 10px;
-    .header{
-        background-color: #aaa;
+.proCon{
+    //padding:10px;
+    margin: 10px 0;
+    .offer{
+        font-size: 15px;
+        color:#02b3ff
     }
-}
-
-.AddProBtn{
-    width: 100%;
-    height: 50px;
+    .img{
+        height: 150px;
+    }
+    .Addbtn{
+        margin: 10px;
+        background-image: linear-gradient(to bottom right, #0252ff, #02ffff);
+    }
+    button{
+        outline: none;
+    }
 }

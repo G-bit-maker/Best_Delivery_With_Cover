@@ -76,7 +76,7 @@ function AddProduct(props) {
 
     return (
         <>
-      <Header />
+      <Header {...props} />
       <SubHeader />
          
 

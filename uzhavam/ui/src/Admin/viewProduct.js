@@ -39,7 +39,7 @@ function ViewProduct(props) {
 
     return (
         <>
-      <Header />
+      <Header {...props} />
       <SubHeader />
          
 

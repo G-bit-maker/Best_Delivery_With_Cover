@@ -11,7 +11,7 @@ import Login from './Pages/login'
 import SignUp from './Pages/signUp'
 //import Profile from './Component/profile'
 import Dashboard from './Admin/dashboard'
-import Temp from './User/tempDashboard'
+import UserDashboard from './User/UserDashboard'
 import ViewProducts from './Admin/viewProduct'
 import AddProduct from './Admin/addProduct'
 import UpdateTags from './Admin/updateTags'
@@ -26,7 +26,7 @@ ReactDOM.render(
        <Route exact path="/login" component={Login} /> 
        <Route exact path="/signUp" component={SignUp} /> 
       {/*  <Route exact path="/profile" component={Profile} />  */}
-       <Route exact path="/User/Dashboard" component={Temp} /> 
+       <Route exact path="/User/Dashboard" component={UserDashboard} /> 
        <Route exact path="/Dashboard" component={Dashboard} /> 
        <Route exact path="/ViewProduct" component={ViewProducts} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 

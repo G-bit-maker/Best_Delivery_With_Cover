@@ -2,13 +2,12 @@
 import {Navbar, Nav, Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
+import session from "../session"
 
 function Header(props) {
     
   const [state,setState] = useState({
-    uname:"",
-    pass:"",
-    tab:0
+    userType:session.getCookie("UserType")
   })
 
   const onChange=(e)=>{
@@ -21,21 +20,15 @@ function Header(props) {
     //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
   }, []);
 
+  const logoutAction=()=>{
+    session.delteCookies()
+    props.history.push("/Login")
+  }
   
-  const tabChange=(e)=>{
-        console.log(e)
-    setState({
-        ...state,
-        tab:e
-        })
-    }
-
-    const tempdata = [1,2,3]
-
     return (
         <>
          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">Admin</Navbar.Brand>
+            <Navbar.Brand href="#home">Uzhalavam</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
@@ -50,8 +43,9 @@ function Header(props) {
                 </NavDropdown> */}
                 </Nav>
                 <Nav>
-                <Nav.Link href="#deets">Last seen: 21-02-2021</Nav.Link>
-                <Nav.Link eventKey={2} href="#memes">
+                  {state.userType === "Admin" ? <Nav.Link href="#deets">Last seen: 21-02-2021</Nav.Link> : ""}
+                
+                <Nav.Link eventKey={2} onClick={logoutAction}>
                     Logout
                 </Nav.Link>
                 </Nav>

@@ -48,7 +48,7 @@ function UpdateTags(props) {
 
     return (
         <>
-      <Header />
+      <Header {...props} />
       <SubHeader />
          
 

@@ -1,16 +1,11 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as DashboardAction from '../Action/DashboardAction'
-import InputBox from "../Common/inputbox"
-import Label from "../Common/label"
-import Button from "../Common/button"
 import "./style/dashboard.scss"
-import userimage from "../Image/userimage.png"
-//import userimage from "../Image/user.jpg"
-import Product from "./products"
-import UserList from "./userList"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
+
+import ProductContainer from "./Components/ProductContainer"
 
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
@@ -34,35 +29,35 @@ function Profile(props) {
     //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
   }, []);
 
-  
-  const tabChange=(e)=>{
-        console.log(e)
-    setState({
-        ...state,
-        tab:e
-        })
-    }
-
-    const tempdata = [1,2,3]
-
+  console.log(props)
     return (
         <>
-      <Header />
-      <SubHeader />
-          <div className="bgDesign">
-             
-          </div>
-      <div className="profileBackground">
+      <Header {...props} />
+      <br/>
+      <br/>
+      <br/>
 
       <Container>
-        <Row className={"profileFullpage"}>
+        <Row className={""}>
             <Col xs={12} sm={3} md={3} lg={12} className={" adjustRow"}>
-                <h3 className={"textAlignCenter"}>We are working on it..</h3>
+              <Row className={""}>
+                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                      <ProductContainer />
+                  </Col>
+                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                      <ProductContainer />
+                  </Col>
+                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                      <ProductContainer />
+                  </Col>
+                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                      <ProductContainer />
+                  </Col>
+              </Row>
             </Col>
         </Row>
          
       </Container>
-      </div>
       </>
     );
   }
