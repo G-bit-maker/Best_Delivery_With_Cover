@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
+const message = require("../Common/constants");
 var TeleSignSDK = require('telesignsdk');
 /* let plivo = require('plivo');
 let client = new plivo.Client(); */
@@ -73,16 +74,23 @@ exports.login = async (req, res, next) => {
 };
 exports.getProducts = async (req, res, next) => {
     try {
-        let details = await productModel.find();
-        if(details && details.length !== 0){
-            res.status(200).json({
-                list:details
-            });
+        const { id } = req.user;
+        if(id){
+            let details = await productModel.find();
+            if(details && details.length !== 0){
+                res.status(200).json({
+                    list:details
+                });
+            }else{
+                res.status(200).json({
+                    message:"No lists are available"
+                });
+            }
         }else{
-            res.status(200).json({
-                message:"No lists are available"
-            });
-        }
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }        
     } catch (err) {
         return res.status(500).json({
             message:"No lists are available"

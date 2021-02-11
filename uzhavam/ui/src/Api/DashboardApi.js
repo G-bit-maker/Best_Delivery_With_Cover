@@ -8,7 +8,7 @@ class ProfileApi{
     }
     static SaveCategoryApi(data){
         console.log(data)
-        return axios.post("/admin/createCategory",qs.stringify({category:data}))
+        return axios.post("/admin/createCategory",qs.stringify({category:data,status:"Add"}))
     }
     static addProductApi(data){
         let data2 ={
@@ -52,6 +52,7 @@ class ProfileApi{
             product_visible:data.proVisible,
             country_of_manufacture:data.country,
             ean:data.ean,
+            addStatus:"Add"
         }
         return axios.post(urls.addProductList,qs.stringify(data2))
     }
