@@ -3,6 +3,7 @@ const config = require("../config");
 const LoginModel = require("../models/adminloginModel");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
+const message = require("../Common/constants");
 exports.login = async (req, res, next) => {
     try {
         const { userName, password } = req.body;
@@ -53,37 +54,43 @@ exports.createlogin = async (req, res, next) => {
 
 exports.createCategory = async (req, res, next) => {
     try {
+        const { id } = req.user;
         const { category,status,category_id } = req.body;
         let List = {};
         List.category = category;
-        if(status === "Add"){
-            let categoryDetails = new productModel.category(List);
-            categoryDetails.save()
-                .then(function (data) {
+        if(id){
+            if(status === "Add"){
+                let categoryDetails = new productModel.category(List);
+                categoryDetails.save()
+                    .then(function (data) {
+                        res.status(200).json({
+                            list:data,
+                            success: "Created Successfully"
+                        });
+                    })
+                    .catch(function (error) {
+                        res.status(500).json({
+                            failure: "Not Added"
+                        });
+                    });
+            }else{
+                productModel.category.findOneAndDelete({"_id":category_id})
+                .then(function(data){
                     res.status(200).json({
-                        list:data,
-                        success: "Created Successfully"
+                        success:"List deleted Successfully"
+                    })     
+                })
+                .catch(function(error){
+                    res.status(500).json({
+                        success:"Not deleted"
                     });
                 })
-                .catch(function (error) {
-                    res.status(500).json({
-                        failure: "Not Added"
-                    });
-                });
+            }
         }else{
-            productModel.category.findOneAndDelete({"_id":category_id})
-            .then(function(data){
-                res.status(200).json({
-                    success:"List deleted Successfully"
-                })     
-            })
-            .catch(function(error){
-                res.status(500).json({
-                    success:"Not deleted"
-                });
-            })
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
         }
-        
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"
@@ -93,15 +100,22 @@ exports.createCategory = async (req, res, next) => {
 
 exports.getCategories = async (req, res, next) => {
     try {
-        let details = await productModel.category.find();
-        if(details && details.length !== 0){
-            res.status(200).json({
-                list:details
-            });
+        const { id } = req.user;
+        if(id){
+            let details = await productModel.category.find();
+            if(details && details.length !== 0){
+                res.status(200).json({
+                    list:details
+                });
+            }else{
+                res.status(200).json({
+                    message:"No lists are available"
+                });
+            }
         }else{
-            res.status(200).json({
-                message:"No lists are available"
-            });
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
         }
     } catch (err) {
         return res.status(500).json({
@@ -113,34 +127,41 @@ exports.getCategories = async (req, res, next) => {
 exports.createProductDetails = async (req, res, next) => {
     try {
         let List = req.body;
-        if(List.addStatus === "Add"){
-            const category = await productModel.category.find({category:List.category});
-            List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
-            let productDetails = new productModel.product(List);
-            productDetails.save()
-                .then(function (data) {
+        const { id } = req.user;
+        if(id){
+            if(List.addStatus === "Add"){
+                const category = await productModel.category.find({category:List.category});
+                List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
+                let productDetails = new productModel.product(List);
+                productDetails.save()
+                    .then(function (data) {
+                        res.status(200).json({
+                            list:data,
+                            success: "Created Successfully"
+                        });
+                    })
+                    .catch(function (error) {
+                        res.status(500).json({
+                            failure: "Not Added"
+                        });
+                    });   
+            }else{
+                productModel.product.findOneAndDelete({"_id":List.product_id})
+                .then(function(data){
                     res.status(200).json({
-                        list:data,
-                        success: "Created Successfully"
+                        success:"List deleted Successfully"
+                    })     
+                })
+                .catch(function(error){
+                    res.status(500).json({
+                        success:"Not deleted"
                     });
                 })
-                .catch(function (error) {
-                    res.status(500).json({
-                        failure: "Not Added"
-                    });
-                });   
+            }
         }else{
-            productModel.product.findOneAndDelete({"_id":List.product_id})
-            .then(function(data){
-                res.status(200).json({
-                    success:"List deleted Successfully"
-                })     
-            })
-            .catch(function(error){
-                res.status(500).json({
-                    success:"Not deleted"
-                });
-            })
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
         }
     } catch (err) {
         return res.status(500).json({
@@ -151,15 +172,22 @@ exports.createProductDetails = async (req, res, next) => {
 
 exports.getproductDetails = async (req, res, next) => {
     try {
-        let details = await productModel.product.find();
-        if(details && details.length !== 0){
-            res.status(200).json({
-                list:details
-            });
+        const { id } = req.user;
+        if(id){
+            let details = await productModel.product.find();
+            if(details && details.length !== 0){
+                res.status(200).json({
+                    list:details
+                });
+            }else{
+                res.status(200).json({
+                    message:"No lists are available"
+                });
+            }
         }else{
-            res.status(200).json({
-                message:"No lists are available"
-            });
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
         }
     } catch (err) {
         return res.status(500).json({
@@ -169,15 +197,22 @@ exports.getproductDetails = async (req, res, next) => {
 };
 exports.getUserList = async (req, res, next) => {
     try {
-        let details = await userModel.find();
-        if(details && details.length !== 0){
-            res.status(200).json({
-                list:details
-            });
+        const { id } = req.user;
+        if(id){
+            let details = await userModel.find();
+            if(details && details.length !== 0){
+                res.status(200).json({
+                    list:details
+                });
+            }else{
+                res.status(200).json({
+                    message:"No lists are available"
+                });
+            }
         }else{
-            res.status(200).json({
-                message:"No lists are available"
-            });
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
         }
     } catch (err) {
         return res.status(500).json({
