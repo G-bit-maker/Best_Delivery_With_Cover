@@ -14,7 +14,7 @@ api.interceptors.request.use(
         if(AUTH_TOKEN){
             res.headers["Accept"] = "application/json";
             res.headers["Content-Type"] = "application/x-www-form-urlencoded";
-            res.headers["Authorization"] = "Bearer " + AUTH_TOKEN;
+            res.headers["Authorization"] = AUTH_TOKEN;
         }
         return res
     }
