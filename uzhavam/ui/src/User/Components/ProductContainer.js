@@ -33,41 +33,45 @@ export default function MediaCard() {
   }
 
   return (
-      <Col xs={12} sm={12} md={12} lg={12} className={"proCon "}>
+      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
           <CardMedia
             className={"img"}
             image={userimage}
             title="Contemplative Reptile"
           />
-          <div className={"proName mt20"}>
-              Product Name lengthy product
-          </div>
-          <div>
-              <span className={"proPrice1"}>$6990</span> <span className={"offer"}>&nbsp;&nbsp;&nbsp;90% off</span>
-          </div>
-          <div className={"proPrice"}>
-              $699
-          </div>
+          <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow"}>
+              <div className={"proName mt20"}>
+                  Product Name lengthy product
+              </div>
+              <div>
+                  <span className={"proPrice1"}>$6990</span> <span className={"offer"}>&nbsp;&nbsp;&nbsp;90% off</span>
+              </div>
+              <div className={"proPrice"}>
+                  $699
+              </div>
           
-          {/* <Box component="fieldset" mb={2} borderColor="transparent"> */}
                 <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
                 <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label>
-            {/* </Box> */}
-            {/* <Button className={"Addbtn"} variant="contained" color="primary">
-                Add to cart
-            </Button> */}
-          <Col xs={12} sm={12} md={12} lg={12} className={" addCartbtn "}>
+           
+            </Col>
+          <Col xs={12} sm={12} md={8} lg={6} className={" addCartbtn "}>
             {/* <div>Add</div> */}
             {state.count ? 
-            <>
-              <Button className={"remove"} onClick={()=>cartUpdate(state.count-1)}>
-                <Remove/> 
-              </Button>
-              <span className={"count"} >{state.count}</span>
-              <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
-                <Add />
-              </Button>
-            </> 
+            <Row>
+              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow "}>
+                <Button className={"remove"}>
+                  <Remove fontSize="small" onClick={()=>cartUpdate(state.count-1)} /> 
+                </Button>
+              </Col>
+              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow count"}>
+                <span className={""} >{state.count}</span>
+              </Col>
+              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow "}>
+                <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
+                  <Add fontSize="small"  />
+                </Button>
+              </Col>
+            </Row> 
            :
               <Button onClick={()=>cartUpdate(1)}>
                   Add

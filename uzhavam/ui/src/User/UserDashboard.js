@@ -5,6 +5,8 @@ import "./style/dashboard.scss"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
 
+import Tags from "../Common/tags"
+
 import ProductContainer from "./Components/ProductContainer"
 
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
@@ -37,20 +39,38 @@ function Profile(props) {
       <br/>
       <br/>
 
-      <Container>
+      <Container fluid>
         <Row className={""}>
-            <Col xs={12} sm={3} md={3} lg={12} className={" adjustRow"}>
+            <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+              <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+                <h3>
+                  Category
+                </h3>
+                <br/>
+              </Col>
+              <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+                <Tags text={"Category 1"} />
+                <Tags text={"Category 1"} />
+                <Tags text={"Category 1"} />
+                <Tags text={"Category 1"} />
+                <Tags text={"Category 1"} />
+              </Col>
+            </Col>
+            <Col xs={12} sm={8} md={9} lg={9} className={" "}>
               <Row className={""}>
-                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={3} md={3} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                      <ProductContainer />
+                  </Col>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer />
                   </Col>
               </Row>

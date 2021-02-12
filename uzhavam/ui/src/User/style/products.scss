@@ -1,5 +1,9 @@
+.proCon:hover{
+    box-shadow: 0px 0px 30px -11px #aaa;
+    cursor: pointer;
+}
 .proCon{
-    //padding:10px;
+    padding:15px;
     margin: 10px 0;
     .offer{
         font-size: 15px;
@@ -29,23 +33,26 @@
         margin-top: -2px;
     }
     .addCartbtn{
-        border: 1px solid #111;
+        border: 1px solid #d7d7d7;
         //padding: 10px;
         text-align: center;
         background-color: #fff;
         //color: #fff;
-        .add{
-            //position: absolute;
-            padding: 6px;
-            right:0
-        }
         .count{
             font-weight: 600;
+            padding: 6px;
+        }
+        
+        .add,.remove{
+            min-width: 0;
+            //position: absolute;
+            padding: 8px;
+        }
+       /*  .add{
+            right:0
         }
         .remove{
-           // position: absolute;
-            padding: 6px;
             left:0
-        }
+        } */
     }
 }
