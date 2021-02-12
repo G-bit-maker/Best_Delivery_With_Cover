@@ -9,6 +9,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
+
+import {Add,Remove} from '@material-ui/icons';
+
+import { useState,useEffect } from 'react';
 
 import userimage from "../../Image/userimage.png"
 import "../style/products.scss"
@@ -16,35 +21,59 @@ import "../style/products.scss"
 
 export default function MediaCard() {
 
+  const [state,setState] = useState({
+    count:0
+  })
+
+  const cartUpdate=(data)=>{
+    setState({
+      ...state,
+      count:data
+    })
+  }
+
   return (
-    <Card className={" proCon"}>
-      <CardActionArea>
-        <CardMedia
-          className={"img"}
-          image={userimage}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
-            Lizard
-          </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            $699 <span className={"offer"}>&nbsp;&nbsp;&nbsp;30% off</span>
-          </Typography>
-            <Box component="fieldset" mb={3} borderColor="transparent">
-                <Rating name="read-only" value={3.9} readOnly />
-            </Box>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button className={"Addbtn"} variant="contained" color="primary">
-            Add to cart
-        </Button>
-      </CardActions>
-    </Card>
+      <Col xs={12} sm={12} md={12} lg={12} className={"proCon "}>
+          <CardMedia
+            className={"img"}
+            image={userimage}
+            title="Contemplative Reptile"
+          />
+          <div className={"proName mt20"}>
+              Product Name lengthy product
+          </div>
+          <div>
+              <span className={"proPrice1"}>$6990</span> <span className={"offer"}>&nbsp;&nbsp;&nbsp;90% off</span>
+          </div>
+          <div className={"proPrice"}>
+              $699
+          </div>
+          
+          {/* <Box component="fieldset" mb={2} borderColor="transparent"> */}
+                <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
+                <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label>
+            {/* </Box> */}
+            {/* <Button className={"Addbtn"} variant="contained" color="primary">
+                Add to cart
+            </Button> */}
+          <Col xs={12} sm={12} md={12} lg={12} className={" addCartbtn "}>
+            {/* <div>Add</div> */}
+            {state.count ? 
+            <>
+              <Button className={"remove"} onClick={()=>cartUpdate(state.count-1)}>
+                <Remove/> 
+              </Button>
+              <span className={"count"} >{state.count}</span>
+              <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
+                <Add />
+              </Button>
+            </> 
+           :
+              <Button onClick={()=>cartUpdate(1)}>
+                  Add
+              </Button>
+            }
+        </Col>
+      </Col>
   );
 }

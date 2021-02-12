@@ -15,4 +15,37 @@
     button{
         outline: none;
     }
+    .proPrice1{
+        color: #666;
+        text-decoration: line-through;
+    }
+    .proPrice{
+        font-size: 23px;
+    }
+    .rateUserCount{
+        position: absolute;
+        color: #666;
+        font-size: 14px;
+        margin-top: -2px;
+    }
+    .addCartbtn{
+        border: 1px solid #111;
+        //padding: 10px;
+        text-align: center;
+        background-color: #fff;
+        //color: #fff;
+        .add{
+            //position: absolute;
+            padding: 6px;
+            right:0
+        }
+        .count{
+            font-weight: 600;
+        }
+        .remove{
+           // position: absolute;
+            padding: 6px;
+            left:0
+        }
+    }
 }
