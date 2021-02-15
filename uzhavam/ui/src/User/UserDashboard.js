@@ -58,19 +58,19 @@ function Profile(props) {
             </Col>
             <Col xs={12} sm={8} md={9} lg={9} className={" "}>
               <Row className={""}>
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
                       <ProductContainer />
                   </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
                       <ProductContainer />
                   </Col>
               </Row>

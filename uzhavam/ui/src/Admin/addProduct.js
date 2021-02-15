@@ -70,21 +70,30 @@ function AddProduct(props) {
 
   
     const onSubmit=()=>{
-        console.log(state)
-        props.addProductDetails(state)
+        if(state.productName !=="" && state.brand !== "" && state.mrp !== ""){
+            props.addProductDetails(state)
+        }else{
+            alert("Please enter Product name and mrp")
+        }
+        
     }
 
     return (
         <>
       <Header {...props} />
       <SubHeader />
-         
-
       <Container fluid>
-            <Col xs={12} sm={12} md={12} lg={12} className={" adjustRow"}>
-                <h4>
-                    Add Products
-                </h4>
+            <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow disFlex"}>
+                <Col xs={12} sm={6} md={6} lg={6} className={"adjustRow"}>
+                    <h4>
+                        Add Products
+                    </h4>
+                </Col>
+                <Col xs={12} sm={6} md={6} lg={6} className={"adjustRow textCenter"}>
+                    <a href="/ViewProduct">
+                        View Products
+                    </a>
+                </Col>
             </Col>
             <Row>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>

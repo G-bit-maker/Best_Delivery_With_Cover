@@ -4,6 +4,7 @@ export function AddCategory(data,flag){
     return function(dispatch){
         DashboardApi.SaveCategoryApi(data,flag)
         .then((res)=>{
+            dispatch(getCategory())
             dispatch({type:"ADD_REMOVE_CATEGORY",payload:res,flag})
             return res
         })
@@ -24,7 +25,7 @@ export function addProductDetails(data){
         DashboardApi.addProductApi(data)
         .then((res)=>{
             if(res.success){
-                window.location = "/ViewProduct"
+               alert("Product added successfully")
             }
             return res
         })

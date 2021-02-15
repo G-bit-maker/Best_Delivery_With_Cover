@@ -53,7 +53,7 @@ function App(props) {
                 </button>
                 <br/>
               <p className="forgot-password text-right">
-                  Forgot <a href="#">password?</a>
+                  <a href="/signUp">Sign up</a>
               </p>
                   
               </div>
