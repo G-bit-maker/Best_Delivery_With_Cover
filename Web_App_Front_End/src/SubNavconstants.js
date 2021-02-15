@@ -25,8 +25,24 @@ const SubNavBarConstant = {
             Url: "/prodect"
         },{
             id: 3,
-            Name: "Order",
-            Url: "/order"
+            Name: "Orders",
+            Url: "/orders"
+        },{
+            id: 4,
+            Name: "Update Tags",
+            Url: "/updateTags"
+        },{
+            id: 5,
+            Name: "Users",
+            Url: "/users"
+        },{
+            id: 6,
+            Name: "Clients",
+            Url: "/clients"
+        },{
+            id: 7,
+            Name: "Raiders",
+            Url: "/raiders"
         }],
     User:[
         {

@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from "./Auth/register"
 import Login from './Auth/login';
-import Home from "./Auth/home"
+import Home from "./Auth/home";
 import {Switch,Route} from "react-router-dom";
 import ProductRouter from "./Auth/prodect";
 import Dashboard from "./pages/Dashboard"

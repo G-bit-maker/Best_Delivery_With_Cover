@@ -1,12 +1,11 @@
 import React from "react";
-import { Button,Form,Navbar,Nav,FormControl, NavDropdown, Row, Col} from 'react-bootstrap';
 import { } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect} from "react-redux";
 import * as BaseAction from "../Actions/BaseAction";
-import Constants from "../constants";
-import Navbars from "../Commponets/Common/navBar";
 import "../css/homeless.css";
+import Dashboard from "../pages/Dashboard"
+
 
 
 
@@ -35,7 +34,14 @@ class Home extends React.Component {
     render() {
         return( 
             <div>
-                
+                {this.state.userType === "Admin" ? 
+                <div>
+                    <Dashboard/>
+                </div>
+                 : 
+                 <div>
+                    User Page!..
+                </div>}
             </div>
         )
     }
