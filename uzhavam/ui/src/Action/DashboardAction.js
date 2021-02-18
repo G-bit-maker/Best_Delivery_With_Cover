@@ -1,8 +1,8 @@
 import DashboardApi from "../Api/DashboardApi"
 
-export function AddCategory(data,flag){
+export function AddCategory(data,flag,id){
     return function(dispatch){
-        DashboardApi.SaveCategoryApi(data,flag)
+        DashboardApi.SaveCategoryApi(data,flag,id)
         .then((res)=>{
             dispatch(getCategory())
             dispatch({type:"ADD_REMOVE_CATEGORY",payload:res,flag})
