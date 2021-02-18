@@ -13,19 +13,17 @@
             {
               "id":"addProduct",
               "name":"Add Product",
-              "url":"/AddProduct",
-              "subHeader":[
-                {
-                  "id":"Updatetags",
-                  "name":"Update tags",
-                  "url":"/UpdateTags"
-                }
-              ]
+              "url":"/AddProduct"
             },
             {
               "id":"viewProduct",
               "name":"View Product",
               "url":"/ViewProduct"
+            },
+            {
+              "id":"Manage_Attributes",
+              "name":"Manage Attributes",
+              "url":"/Attributes"
             }
           ]
         },

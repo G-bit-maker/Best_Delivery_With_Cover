@@ -8,6 +8,7 @@ import "./style/dashboard.scss"
 import userimage from "../Image/userimage.png"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
+import UserTable from "./Components/userListTable"
 //import userimage from "../Image/user.jpg"
 
 import { Container, Col, Row, Tabs, Tab, Button } from 'react-bootstrap';
@@ -46,7 +47,7 @@ function Profile(props) {
     return (
           <>
           <Header {...props} />
-          <SubHeader />
+          <SubHeader  {...props} />
               <div className="bgDesign">
                 
               </div>
@@ -56,9 +57,12 @@ function Profile(props) {
             <Row className={""}>
                 <Col xs={12} sm={3} md={3} lg={12} className={" "}>
                 <Row>
-              <Col xs={12} sm={3} md={3} lg={6} className={"p20 userList"}>
+              <Col xs={12} sm={3} md={3} lg={12} className={"p20 userList"}>
                 <Row>
-                {props.userList && props.userList.length != 0 ? props.userList.map(data=>{
+                  {props.userList && props.userList.length != 0 ? <UserTable list={props.userList} /> : 
+                  <h3 className="m10">No user found..</h3>}
+                  
+                {/* {props.userList && props.userList.length != 0 ? props.userList.map(data=>{
                       return <Col xs={12} sm={3} md={3} lg={12} className={" userCon"}>
                                     <div className={"borderBottom "}>
                                         <Row>
@@ -100,7 +104,7 @@ function Profile(props) {
                                         </Row>
                                     </div>
                                 </Col>
-                }):<h3 className="m10">No user found..</h3>}
+                }):<h3 className="m10">No user found..</h3>} */}
                 </Row>
                 </Col>
                 

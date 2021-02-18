@@ -6,9 +6,9 @@ class ProfileApi{
     static getCategoryApi(data){
         return axios.get(urls.getCategory)
     }
-    static SaveCategoryApi(data){
-        console.log(data)
-        return axios.post("/admin/createCategory",qs.stringify({category:data,status:"Add"}))
+    static SaveCategoryApi(data,flag,id){
+        console.log(data,flag,id)
+        return axios.post("/admin/createCategory",qs.stringify({category:data,status:flag,category_id:id}))
     }
     static addProductApi(data){
         let data2 ={

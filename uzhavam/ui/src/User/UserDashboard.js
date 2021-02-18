@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
-import * as DashboardAction from '../Action/DashboardAction'
+import * as UserAction from '../Action/UserAction'
 import "./style/dashboard.scss"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
@@ -28,8 +28,12 @@ function Profile(props) {
       })
   }
   useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    props.getCategory()
+    props.getProductList("all")
   }, []);
+  const tagActive =(data)=>{
+    console.log(data)
+  }
 
   console.log(props)
     return (
@@ -49,11 +53,10 @@ function Profile(props) {
                 <br/>
               </Col>
               <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
-                <Tags text={"Category 1"} />
-                <Tags text={"Category 1"} />
-                <Tags text={"Category 1"} />
-                <Tags text={"Category 1"} />
-                <Tags text={"Category 1"} />
+              <Tags active onActive={()=>tagActive("all")} text={"All"} />
+                {props.categoryList.length != 0 ? props.categoryList.map((data,i)=>(
+                    <Tags active={data.active} onActive={()=>tagActive(data,i)} text={data.category} />
+                )):""}
               </Col>
             </Col>
             <Col xs={12} sm={8} md={9} lg={9} className={" "}>
@@ -86,13 +89,13 @@ function Profile(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
     console.log(state)
   return {
-    counter: state.counter
+    categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : []
   }
 }
 
 const mapDispatchToProps =(dispatch)=> { 
     return bindActionCreators(
-        Object.assign({}, DashboardAction),
+        Object.assign({}, UserAction),
         dispatch
     )
  }
