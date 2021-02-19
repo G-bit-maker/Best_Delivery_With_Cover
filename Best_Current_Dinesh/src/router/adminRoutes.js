@@ -5,7 +5,9 @@ const {login,
     createShopDetails, 
     getShopDetails, 
     saveCategories,
-    getAllCategories} = require('../controllers/adminContoller');
+    getAllCategories,
+    deleteCategories,
+    updateCategories} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -24,5 +26,12 @@ router.route("/saveCategories").post(saveCategories);
 
 //getAllCategories
 router.route("/getAllCategories").get(getAllCategories);
+
+//Delete Categories
+router.route("/deleteCategories/:id").delete(deleteCategories);
+
+//Update Categories
+router.route("/updateCategories").put(updateCategories);
+
 
 module.exports = router;

@@ -14,6 +14,10 @@ class BaseApi {
     static SaveCategorieActionApi(userType, methode, processName, inputData){
         return axios[methode](apihint + setting[userType][processName], inputData)
     }
+
+    static apiForDelete(userType, methode, processName, inputData){
+        return axios[methode](apihint + setting[userType][processName]+"/"+inputData)
+    }
 }
 
 export default BaseApi

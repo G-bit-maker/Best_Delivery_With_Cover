@@ -69,6 +69,7 @@ const BaseReducer = (state, actions) =>{
                     ...state,
                     buttonLoading: false,
                     successObj: actions.payload.success,
+                    clearStatus: true,
                     toster: true,
                     error: false
                 }
@@ -91,13 +92,15 @@ const BaseReducer = (state, actions) =>{
                     ...state,
                     pageLoading: false,
                     listData: "",
-                    failure: actions.payload.failure.message
+                    failure: actions.payload.failure.message,
+                    clearStatus: false
                 }
             }else{
                 return{
                     ...state,
                     pageLoading: false,
-                    listData: actions.payload.success.list
+                    listData: actions.payload.success.list,
+                    clearStatus: false
                 }
             }
         }
@@ -107,7 +110,8 @@ const BaseReducer = (state, actions) =>{
                 ...state,
                 pageLoading: false,
                 listData: "",
-                failure: actions.payload.message
+                failure: actions.payload.message,
+                clearStatus: false
             }
         }
 

@@ -34,14 +34,6 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount = () => {
-      const {
-          match: { params }
-      } = this.props;
-      this.setState({
-        tabId: params.id
-      },()=>{
-        this.handleChange(this.state.tabId)
-      })
     }
 
     render(){

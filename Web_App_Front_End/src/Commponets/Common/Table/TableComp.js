@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Col, Table} from "react-bootstrap"
+import {Form, Col, Table, Spinner} from "react-bootstrap"
 import {bindActionCreators } from "redux";
 import {connect} from "react-redux";
 import * as BaseAction from "../../../Actions/BaseAction";
@@ -31,8 +31,8 @@ class TableComponent extends React.Component {
       console.warn(this.state)
     }
 
-    onClickAction = (action, id) => {
-        this.props.onClickAction(action, id)
+    onClickAction = (action, id, i) => {
+        this.props.onClickAction(action, id, this.props.listData, i)
     }
 
     render(){
@@ -40,15 +40,19 @@ class TableComponent extends React.Component {
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
-                  <th>S.No</th>
-                  <th>Categories</th>
-                  <th>Discription</th>
-                  <th>Show Status</th>
-                  <th>Actions</th>
+                  {this.props.headList ? 
+                  this.props.headList.map((data, i)=>(
+                    <th>{data}</th>
+                  )) : ""}
                 </tr>
               </thead>
               <tbody> 
-                {this.props.listData 
+                {this.props.pageLoading ? 
+                <td colSpan="5">
+                  <Spinner animation="border" variant="dark" />
+                </td>
+                :
+                this.props.listData 
                 && this.props.listData.length !== 0 ? 
                 this.props.listData.map((data, i)=>(
                     <tr>
@@ -59,12 +63,12 @@ class TableComponent extends React.Component {
                       <td>
                         <a 
                           href={"#"}
-                          onClick={()=>this.onClickAction("Edit", data._id)}>
+                          onClick={()=>this.onClickAction("Edit", data._id, i)}>
                             Edit
                         </a> / 
                         <a
                           href={"#"}                       
-                          onClick={()=>this.onClickAction("Delete", data._id)}>
+                          onClick={()=>this.onClickAction("Delete", data._id, i)}>
                           Delete
                         </a>
                       </td>
@@ -74,7 +78,6 @@ class TableComponent extends React.Component {
                   <td colSpan="5">{this.props.failure}</td>
                 </tr> 
                 }
-              
                 
               </tbody>
             </Table>

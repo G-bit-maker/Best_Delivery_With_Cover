@@ -135,3 +135,27 @@ export const clearMessage = (status) => {
         })
     }
 }
+
+export const ActionDelete = (userType, methode, processName, inputData) => {
+
+    return dispatch =>{
+        dispatch({
+            type: "ACTION_REQUEST_DELETE",
+        })
+        apiCall.apiForDelete(userType, methode, processName, inputData)
+        .then((responce)=>{
+            if(responce.data.success){
+                dispatch({
+                    type: "SAVE_CATEGORIE_SUCCESS",
+                    payload: responce.data,
+                })
+                dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+            }else {
+
+            }
+        })
+        .catch(err => {
+
+        })
+    }
+}

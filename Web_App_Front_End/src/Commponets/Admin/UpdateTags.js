@@ -8,7 +8,13 @@ import {connect} from "react-redux";
 import * as BaseAction from "../../Actions/BaseAction";
 import Toster from "../Common/TosterComponent"
 
-
+const headList = [
+  "S.No", 
+  "Categories",
+  "Discription",
+  "Show Status",
+  "Actions"
+]
 class Ordercomponent extends React.Component { 
     constructor(){
         super();
@@ -17,6 +23,7 @@ class Ordercomponent extends React.Component {
           categorieName: "",
           categorieDecr: "",
           fileImage: "",
+          status: ""
         }
     }
 
@@ -33,23 +40,50 @@ class Ordercomponent extends React.Component {
     }
 
     onSubmit = () => {
-      this.props.SaveCategorieAction(this.props.userType, "post", "saveCategorie", this.state)
+      let urlPicker = this.state.status === "Edit" ? "updateCategorie" : "saveCategorie"
+      let methodePicker = this.state.status === "Edit" ? "put" : "post"
+      this.props.SaveCategorieAction(this.props.userType, methodePicker, urlPicker, this.state)
     }
 
-    onClickAction = (action, id) => {
-      alert(action + id)
+    onClickAction = (action, id, listData, i) => {
+      if(action === "Delete"){
+        this.props.ActionDelete(this.props.userType, "delete", "deleteCategore", id)
+      }else if(action === "Edit"){
+        let data = listData[i]
+        this.setState({
+          swithStatus: data.swithStatus,
+          categorieName: data.categorieName,
+          categorieDecr: data.categorieDecr,
+          fileImage: data.fileImage,
+          status: "Edit",
+          _id: id
+        })
+      }
+    }
+
+    componentWillReceiveProps = (nextProps) => { 
+        if(nextProps.clearStatus){
+          this.setState({
+            swithStatus: true,
+            categorieName: "",
+            categorieDecr: "",  
+            fileImage: "",
+            status: ""
+          })
+        }
     }
 
     render(){
       return(
         <div className={"dis-flex"}>
           <Col xl={3} lg={4} md={12} sm={12} xs={12} className={"text-left border-r-2-black p-r-25 "}>
-            <h4>Add Categories</h4>
+            {this.state.status === "Edit" ? <h4>Edit Categories</h4> : <h4>Add Categories</h4>}
             <Form.Group controlId="formBasicEmail" className={"m-t-30"}>
               <Form.Label>Categories</Form.Label>
               <Form.Control 
                 id={"categorieName"}
                 type="text" 
+                value={this.state.categorieName}
                 placeholder="Categories Name" 
                 onChange={this.onChangeHandle}/>
             </Form.Group>
@@ -59,6 +93,7 @@ class Ordercomponent extends React.Component {
               <Form.Control 
                 id={"categorieDecr"}
                 as="textarea"
+                value={this.state.categorieDecr}
                 placeholder="Catergories Discription" 
                 onChange={this.onChangeHandle}/>
             </Form.Group>
@@ -67,6 +102,7 @@ class Ordercomponent extends React.Component {
               <Form.File.Label>Categories Image</Form.File.Label>
               <Form.File.Input 
                 id={"fileImage"}
+                value={this.state.fileImage}
                 onChange={this.onChangeHandle}/>
             </Form.File>
 
@@ -85,7 +121,7 @@ class Ordercomponent extends React.Component {
             <Button 
               variant="primary" 
               type="submit"
-              btnText={"submit"}
+              btnText={this.state.status === "Edit" ? "Update" : "Submit"}
               onClick={this.onSubmit}
               btnLoading={this.props.buttonLoading}/>
 
@@ -97,7 +133,8 @@ class Ordercomponent extends React.Component {
 
           <Col xl={9} lg={8} md={12} sm={12} xs={12}>
             <TableComp
-              onClickAction={this.onClickAction}/>
+              onClickAction={this.onClickAction}
+              headList={headList}/>
           </Col>
         </div>
       )
@@ -111,6 +148,7 @@ const mapStateToProps = (state) => {
     successObj: state && state.successObj ? state.successObj : {},
     toster: state && state.toster ? true : false,
     error: state && state.error ? true : false,
+    clearStatus: state && state.clearStatus ? true : false,
   }
 }
 

@@ -4,6 +4,8 @@ const LoginModel = require("../models/adminloginModel");
 const shopModel = require("../models/ShopModel");
 const saveCategories = require("../models/categorieModel");
 const bcrypt = require("bcryptjs");
+const mongodb = require("mongodb");
+const ObjectID = require('mongodb').ObjectID;
 
 
 exports.login = async (req, res, next) => {
@@ -57,20 +59,7 @@ exports.createlogin = async (req, res, next) => {
 
 exports.createShopDetails = async (req, res, next) => {
     try {
-        const { ownerName, shopName,address1,address2,phone,email,category,shopType,brochure,gst,createdAt } = req.body;
-        let List = {};
-        List.ownerName = ownerName;
-        List.shopName = shopName;
-        List.address1 = address1;
-        List.address2 = address2;
-        List.phone = phone;
-        List.email = email;
-        List.category = category;
-        List.shopType = shopType;
-        List.brochure = brochure;
-        List.gst = gst;
-        List.createdAt = createdAt;
-        let shopDetails = new shopModel(List);
+        let shopDetails = new shopModel(req.body);
         shopDetails.save()
             .then(function (data) {
                 res.status(200).json({
@@ -174,7 +163,75 @@ exports.getAllCategories = async (req, res, next) => {
         }
     } catch (err) {
         return res.status(500).json({
-            message:"No lists are available"
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.deleteCategories = async (req, res, next) => {
+    try {
+        let _id= req.params.id
+        let result = await saveCategories.deleteOne({_id : new mongodb.ObjectId(_id)}, function(err, obj) {
+            if (err){
+                res.json({
+                    failure:{
+                        message: err
+                    }
+                })
+            }
+            else{
+                res.status(200).json({
+                    success: {
+                        message : "deleted successfully"
+                    }
+                })
+            }
+            });
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.updateCategories = async (req, res, next) => {
+    try {
+        let {_id} = req.body;
+        let objData = {
+            categorieName:  req.body.categorieName,
+            categorieDecr:  req.body.categorieDecr,
+            swithStatus:  req.body.swithStatus,
+            fileImage:  req.body.fileImage
+        }
+        let result = await saveCategories.updateOne(
+            {_id : new mongodb.ObjectId(_id)},
+            { $set: objData }, function(err, obj){
+                if (err) {
+                    res.json({
+                        failure:{
+                            message: err
+                        }
+                    })
+                }
+                else{
+                    res.status(200).json({
+                        success: {
+                            message : "Updated successfully"
+                        }
+                    })
+                }
+            }
+        );
+        console.log(result)
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
         });
     }
 };
