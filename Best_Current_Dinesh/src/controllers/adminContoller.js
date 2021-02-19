@@ -3,6 +3,7 @@ const config = require("../config");
 const LoginModel = require("../models/adminloginModel");
 const shopModel = require("../models/ShopModel");
 const saveCategories = require("../models/categorieModel");
+const users = require("../models/RegisterModel")
 const bcrypt = require("bcryptjs");
 const mongodb = require("mongodb");
 const ObjectID = require('mongodb').ObjectID;
@@ -227,6 +228,88 @@ exports.updateCategories = async (req, res, next) => {
             }
         );
         console.log(result)
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.getUserList = async (req, res, next) => {
+    try {
+        let details = await users.find();
+        if(details && details.length !== 0){
+            res.status(200).json({
+                    users: details,
+                    message:"seccess"
+            });
+        }else{
+            res.status(200).json({
+                failure:{
+                    message:"No user are available"
+                }
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.updateShop = async (req, res, next) => {
+    try {
+        let {shopId,ownerName,shopName,address1,address2,phone,email,category,shopType,brochure,gst} = req.body;
+        let List = {
+            shopName,
+            ownerName,
+            address1,
+            address2,
+            phone,
+            email,
+            category,
+            shopType,
+            brochure,
+            gst
+        }
+        shopModel.findOneAndUpdate({_id : shopId},List)
+        .then(function(data){
+            res.status(200).json({
+                success:"Shop edited Successfully"
+            })     
+         })
+         .catch(function(error){
+            res.status(500).json({
+                success:"Not edited"
+            });
+         })
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.deleteShop = async (req, res, next) => {
+    try {
+        const {shopId} = req.body;
+        shopModel.findOneAndDelete({"_id":shopId})
+        .then(function(data){
+            res.status(200).json({
+                success:"List deleted Successfully"
+            })     
+         })
+         .catch(function(error){
+            res.status(500).json({
+                success:"Not deleted"
+            });
+         })
     } catch (err) {
         return res.status(500).json({
             failure:{
