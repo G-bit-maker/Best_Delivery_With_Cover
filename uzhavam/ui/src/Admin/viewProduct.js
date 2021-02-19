@@ -40,7 +40,7 @@ function ViewProduct(props) {
     return (
         <>
       <Header {...props} />
-      <SubHeader />
+      <SubHeader  {...props} />
          
 
       <Container fluid>

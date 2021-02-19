@@ -39,7 +39,7 @@ function Header(props) {
     return <ul className="sul">
         {array.map((data,i)=>{
           return (<li className="sli" key={i}>
-                    <a href={data.url}>
+                    <a onClick={()=>props.history.push(data.url)}>
                     {data.name}
                     </a>
                     {data.subHeader ? subHeaderIteration(data.subHeader): ""}
@@ -54,7 +54,7 @@ function Header(props) {
                <ul  className="ul">
                  {JsonData[session.getCookie("UserType")].map((data,i)=>{
                    return (<li className="li" key={i}>
-                            <a href={data.url} className={"a"}>
+                            <a onClick={()=>props.history.push(data.url)} className={"a"}>
                               {data.name}
                             </a>
                             

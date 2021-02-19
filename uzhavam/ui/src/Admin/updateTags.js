@@ -33,7 +33,8 @@ function UpdateTags(props) {
     props.getCategory()
   }, []);
 
-  const addRemoveCategory=(flag)=>{
+  const addRemoveCategory=(flag,id)=>{
+    if(flag==="Add"){
       if(state.Category){
             setState({
                 ...state,
@@ -41,6 +42,15 @@ function UpdateTags(props) {
             })
             props.AddCategory(state.Category,flag)
       }
+    }else{
+      props.AddCategory("",flag,id)
+    }
+      
+  }
+  const keyPress =e=>{
+    if(e.key === "Enter"){
+      addRemoveCategory("Add")
+    }
   }
 
 
@@ -49,7 +59,7 @@ function UpdateTags(props) {
     return (
         <>
       <Header {...props} />
-      <SubHeader />
+      <SubHeader  {...props} />
          
 
       <Container fluid>
@@ -64,7 +74,7 @@ function UpdateTags(props) {
                         <Col xs={12} sm={6} md={3} lg={10} className={" "}>
                             <div className="form-group">
                                 <label>Category</label>
-                                <input type="text" id="Category" value={state.Category} onChange={onChange} className="form-control" placeholder="Add Category" />
+                                <input type="text" id="Category" onKeyPress={keyPress} value={state.Category} onChange={onChange} className="form-control" placeholder="Add Category" />
                             </div>
                         </Col>
                         <Col xs={12} sm={6} md={3} lg={2} className={" "}>

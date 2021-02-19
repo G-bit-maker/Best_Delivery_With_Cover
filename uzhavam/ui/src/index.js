@@ -30,7 +30,7 @@ ReactDOM.render(
        <Route exact path="/Dashboard" component={Dashboard} /> 
        <Route exact path="/ViewProduct" component={ViewProducts} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 
-       <Route exact path="/UpdateTags" component={UpdateTags} /> 
+       <Route exact path="/Attributes" component={UpdateTags} /> 
        <Route exact path="/ViewUser" component={Users} /> 
        </Switch>
     </Router>
