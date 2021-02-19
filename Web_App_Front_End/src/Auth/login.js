@@ -1,6 +1,5 @@
 import React from "react";
-import {Formik} from "formik";
-import {Form,Alert,Row, Jumbotron, Col} from 'react-bootstrap';
+import {Form,Alert, Jumbotron, Col} from 'react-bootstrap';
 import Button from "../Commponets/Common/Buttons/ButtonOut";
 import {bindActionCreators } from "redux";
 import {connect} from "react-redux";
@@ -78,7 +77,7 @@ class Login extends React.Component {
                             />
                         </Jumbotron>
                     </Col>
-                    <a>Copyright © 2021 Best Delivery</a>
+                    <a href={""}>Copyright © 2021 Best Delivery</a>
                 </Col>
             </div>
         )

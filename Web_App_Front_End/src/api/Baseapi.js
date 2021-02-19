@@ -10,6 +10,10 @@ class BaseApi {
     static loginActionApi(inputData){
         return axios.post(apihint + setting.userAuth.login, inputData)
     }
+    
+    static SaveCategorieActionApi(userType, methode, processName, inputData){
+        return axios[methode](apihint + setting[userType][processName], inputData)
+    }
 }
 
 export default BaseApi

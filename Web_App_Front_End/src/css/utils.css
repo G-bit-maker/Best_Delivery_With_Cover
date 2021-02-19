@@ -2924,7 +2924,7 @@
   padding-right: 19px;
 }
 .p-r-20 {
-  padding-right: 20px;
+  padding-right: 20px !important;
 }
 .p-r-21 {
   padding-right: 21px;
@@ -7467,4 +7467,7 @@
 }
 .outline-n {
   outline: none !important;
+}
+.border-r-2-black {
+  border-right: 2px solid #bab7b6 !important;
 }

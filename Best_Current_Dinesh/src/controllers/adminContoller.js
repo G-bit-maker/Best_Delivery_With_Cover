@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 const LoginModel = require("../models/adminloginModel");
 const shopModel = require("../models/ShopModel");
+const saveCategories = require("../models/categorieModel");
 const bcrypt = require("bcryptjs");
 
 
 exports.login = async (req, res, next) => {
-    console.log(req.body)
     try {
         const { userName, password } = req.body;
         let details = await LoginModel.findOne({ userName });
@@ -38,6 +38,7 @@ exports.login = async (req, res, next) => {
     }
 
 };
+
 exports.createlogin = async (req, res, next) => {
     try{     
         var hash = await bcrypt.hash("admin123",10);
@@ -94,11 +95,81 @@ exports.getShopDetails = async (req, res, next) => {
         let details = await shopModel.find();
         if(details && details.length !== 0){
             res.status(200).json({
-                list:details
+                success:{
+                    list: details,
+                    message:"seccess"
+                }
             });
         }else{
             res.status(200).json({
-                message:"No lists are available"
+                failure:{
+                    message:"No lists are available"
+                }
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
+        });
+    }
+};
+
+exports.saveCategories = async (req, res, next) => {
+    try {
+        const { categorieName, categorieDecr, swithStatus, fileImage } = req.body;
+        if(categorieName !== "" || categorieDecr !== "" || fileImage !== ""){
+            let Exist = await saveCategories.findOne({categorieName})
+            if(Exist){
+                return res.status(200).json({
+                    failure:{
+                        message:"This Categorie is Already Exist"
+                    }
+                });
+            }else{
+                let dataToSave = new saveCategories({
+                    categorieName,
+                    categorieDecr,
+                    swithStatus,
+                    fileImage
+                })
+                await dataToSave.save()
+                .then((response)=>{
+                    return res.status(200).json({
+                        success:{
+                            message:"Categorie Saved"
+                        }
+                    });
+                })
+            }
+        }else{
+            return res.status(200).json({
+                failure:{
+                    message:"Please fill all details"
+                }
+            });
+        }
+    } catch (err) {
+        return res.status(400).json({
+            message:"No lists are available"
+        });
+    }
+};
+
+exports.getAllCategories = async (req, res, next) => {
+    try {
+        let details = await saveCategories.find();
+        if(details && details.length !== 0){
+            res.status(200).json({
+                success:{
+                    list: details,
+                    message:"seccess"
+                }
+            });
+        }else{
+            res.status(200).json({
+                failure:{
+                    message:"No lists are available"
+                }
             });
         }
     } catch (err) {

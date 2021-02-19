@@ -63,7 +63,7 @@ export const loginAction = (inputData) => {
                     type: "LOGIN_SUCCESS",
                 })
                 if(res.userType === "Admin"){
-                    window.open("/dashboard", "_self")
+                    window.open("/dashboard/0", "_self")
                 }else if(res.userType === "Admin"){
 
                 }
@@ -74,4 +74,64 @@ export const loginAction = (inputData) => {
         })
     }
      
+}
+
+export const GetAllCategories = (userType, methode, processName, inputData) => {
+    return dispatch =>{
+        dispatch({
+            type: "LOGIN_REQUEST",
+            payload: true,
+        })
+        apiCall.SaveCategorieActionApi(userType, methode, processName, inputData)
+        .then(responce=>{
+            dispatch({
+                type: "GET_CATEGORIE_SUCCESS",
+                payload: responce.data,
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: "GET_CATEGORIE_FAILURE",
+                payload: true,
+            })
+            alert("Somthing Went Wrong With loginAction")
+        })
+    }
+     
+}
+
+export const SaveCategorieAction = (userType, methode, processName, inputData) => {
+    return dispatch =>{
+        dispatch({
+            type: "SAVE_CATEGORIE_REQUEST",
+            payload: true,
+        })
+        apiCall.SaveCategorieActionApi(userType, methode, processName, inputData)
+        .then(responce=>{
+            dispatch({
+                type: "SAVE_CATEGORIE_SUCCESS",
+                payload: responce.data,
+            })
+            if(responce.data.success){
+                dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+            }
+        })
+        .catch(err => {
+            dispatch({
+                type: "SAVE_CATEGORIE_FAILURE",
+                payload: true,
+            })
+            alert("Somthing Went Wrong With loginAction")
+        })
+    }
+     
+}
+
+export const clearMessage = (status) => {
+    return dispatch =>{
+        dispatch({
+            type: "CLEAT_REQUEST",
+            payload: status,
+        })
+    }
 }

@@ -4,8 +4,6 @@ import Button from "../Commponets/Common/Buttons/ButtonOut";
 import {Col,Form,Alert, Row } from 'react-bootstrap';
 import * as yup from "yup";
 import "../css/common.css";
-import Navbars from "../Commponets/Common/navBar";
-import Constants from "../constants";   
 import "../css/utils.css";
 import {bindActionCreators } from "redux";
 import {connect} from "react-redux";

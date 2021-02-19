@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -51,10 +51,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScrollableTabsButtonAuto(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(props.tabId);
+
+  useEffect(()=>{
+    setValue(props.tabId)
+  })
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    props.handleChange(newValue)
   };
 
   return (
