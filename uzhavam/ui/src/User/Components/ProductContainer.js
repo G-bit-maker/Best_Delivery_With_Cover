@@ -19,19 +19,22 @@ import userimage from "../../Image/product.png"
 import "../style/products.scss"
 
 
-export default function MediaCard() {
+export default function MediaCard(props) {
 
   const [state,setState] = useState({
     count:0
   })
 
-  const cartUpdate=(data)=>{
+  const cartUpdate=(count)=>{
     setState({
       ...state,
-      count:data
+      count:count
     })
+    props.cartUpdate(data._id,count)
   }
 
+  const data=props.data
+  console.log(data)
   return (
       <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
           <CardMedia
@@ -40,14 +43,17 @@ export default function MediaCard() {
             title="Contemplative Reptile"
           />
           <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow"}>
-              <div className={"proName mt20"}>
-                  Product Name lengthy product
+              <div title={data.productName || ""} className={"proName mt20"}>
+                  {data.productName || ""}
               </div>
               <div>
-                  <span className={"proPrice1"}>$6990</span> <span className={"offer"}>&nbsp;&nbsp;&nbsp;90% off</span>
+                {data.discount_amount ?
+                  <span className={"proPrice1"}>&#x20B9;{data.discount_amount || ""}</span>  :""}
+                  {data.discount ? 
+                  <span className={"offer"}>&nbsp;&nbsp;&nbsp;{data.discount}% off</span> :""}
               </div>
               <div className={"proPrice"}>
-                  $699
+                  &#x20B9;{data.mrp || ""}
               </div>
           
                 <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 

@@ -1,8 +1,11 @@
 
 import {Navbar, Nav, Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from "redux";
 import React, { useState,useEffect } from 'react';
 import session from "../session"
+import * as UserAction from '../Action/UserAction'
+import { ShoppingCartOutlined } from '@material-ui/icons';
 
 function Header(props) {
     
@@ -27,7 +30,7 @@ function Header(props) {
   
     return (
         <>
-         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+         <Navbar /* fixed="top" */ collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">Uzhalavam</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -44,8 +47,12 @@ function Header(props) {
                 </Nav>
                 <Nav>
                   {state.userType === "Admin" ? <Nav.Link href="#deets">Last seen: 21-02-2021</Nav.Link> : ""}
-                
-                <Nav.Link eventKey={2} onClick={logoutAction}>
+                  {state.userType != "Admin" ? 
+                      <Nav.Link eventKey={1} onClick={()=>alert(props.cartList ?props.cartList.length : 0 )}>
+                          <ShoppingCartOutlined />
+                      </Nav.Link>
+                      : ""}
+                  <Nav.Link eventKey={2} onClick={logoutAction}>
                     Logout
                 </Nav.Link>
                 </Nav>
@@ -55,17 +62,16 @@ function Header(props) {
     );
   }
   
-  export default Header
-/* const mapStateToProps = (state) => {
-    console.log(state)
+  //export default Header
+ const mapStateToProps = (state) => {
   return {
-    counter: state.counter
+    cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
   }
 }
 
 const mapDispatchToProps =(dispatch)=> { 
     return bindActionCreators(
-        Object.assign({}, DashboardAction),
+        Object.assign({}, UserAction),
         dispatch
     )
  }
@@ -73,5 +79,5 @@ const mapDispatchToProps =(dispatch)=> {
 export default connect(
   mapStateToProps ,
   mapDispatchToProps 
-)(Profile) */
+)(Header) 
 

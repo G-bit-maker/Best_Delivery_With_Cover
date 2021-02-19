@@ -17,10 +17,11 @@ import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
 
-function UpdateTags(props) {
+const UpdateTags=(props)=> {
     
   const [state,setState] = useState({
-    Category:""
+    Category:"",
+    loading:false
   })
 
   const onChange=(e)=>{
@@ -38,9 +39,15 @@ function UpdateTags(props) {
       if(state.Category){
             setState({
                 ...state,
-                Category:""
+                loading:true
             })
-            props.AddCategory(state.Category,flag)
+            props.AddCategory(state.Category,flag).then(()=>{
+              setState({
+                  ...state,
+                Category:"",
+                  loading:false
+              })
+            }) 
       }
     }else{
       props.AddCategory("",flag,id)
@@ -78,7 +85,7 @@ function UpdateTags(props) {
                             </div>
                         </Col>
                         <Col xs={12} sm={6} md={3} lg={2} className={" "}>
-                            <Button text="Add" onClick={()=>addRemoveCategory("Add")} className={"mt33"} />
+                            <Button loading={state.loading} text="Add" onClick={()=>addRemoveCategory("Add")} className={"mt33"} />
                         </Col>
                         <Col xs={12} sm={6} md={3} lg={12} className={" "}>
                             {props.categoryList ? props.categoryList.map((data,i)=>{

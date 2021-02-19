@@ -6,7 +6,8 @@ const urls={
     addProductList:"/admin/createProductDetails",
     getProductList:"/admin/getProductList",
     getProductForUser:"/admin/getProductList",
-    getUserList:"/admin/getUserList"
+    getUserList:"/admin/getUserList",
+    updateCart:"/admin/getCategories"
 }
 
 export default urls

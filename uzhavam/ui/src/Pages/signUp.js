@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as loginAction from '../Action/loginAction'
 import "./style/login.scss"
+import Button from "../Common/button"
 
 import { Container, Col, Row } from 'react-bootstrap';
 
@@ -34,6 +35,20 @@ function SignUP(props) {
           })
     }
 }
+
+    const signup=()=>{
+      setState({
+        ...state,
+        loading:true
+      })
+      props.signUp(state)
+      .then(()=>{
+        setState({
+          ...state,
+          loading:false
+        })
+      })
+    }
     return (
       <div className="Loginfullpage">
       <Container>
@@ -76,11 +91,15 @@ function SignUP(props) {
                       <label>Address 2</label>
                       <input type="text" id="address2" onChange={onChange} className="form-control" placeholder="Address line 2" />
                   </div>
-
-                  <button type="submit" className="btn btn-dark btn-lg btn-block"
-                        onClick={()=>props.signUp(state)} >
+                  <Button primary loading={state.loading}
+                     onClick={signup}
+                     className={"btn btn-dark btn-lg btn-block "} 
+                     text={"SignUp"} 
+                  />
+                  {/* <button type="submit" className="btn btn-dark btn-lg btn-block"
+                        onClick={signup} >
                           SignUp
-                    </button>
+                    </button> */}
                     <br/>
                   <p className="forgot-password mb15px">
                       Already have an <a href="/login">Account?</a>

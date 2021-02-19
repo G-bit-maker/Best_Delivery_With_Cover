@@ -18,7 +18,8 @@ function Profile(props) {
   const [state,setState] = useState({
     uname:"",
     pass:"",
-    tab:0
+    tab:0,
+    productCategory:"All"
   })
 
   const onChange=(e)=>{
@@ -27,15 +28,21 @@ function Profile(props) {
         [e.target.id]:e.target.value
       })
   }
+  const selectCategory=(e)=>{
+    props.getProductList(e.target.value)
+  }
+
+
   useEffect(() => {
     props.getCategory()
-    props.getProductList("all")
+    props.getProductList("All")
   }, []);
   const tagActive =(data)=>{
     console.log(data)
   }
-
-  console.log(props)
+  const cartUpdate =(id,count)=>{
+    props.cartUpdate(id,count)
+  }
     return (
         <>
       <Header {...props} />
@@ -50,32 +57,45 @@ function Profile(props) {
                 <h3>
                   Category
                 </h3>
-                <br/>
+                {/* <br/> */}
               </Col>
               <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+                  <select id="productCategory" onChange={selectCategory} className="form-control" >
+                        <option value={"All"}>All</option>
+                        {props.categoryList && props.categoryList.length != 0 ? props.categoryList.map(data=>{
+                            return <option value={data._id}>{data.category}</option>
+                        }) :""}
+                    </select>
+              </Col>
+              {/* <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
               <Tags active onActive={()=>tagActive("all")} text={"All"} />
                 {props.categoryList.length != 0 ? props.categoryList.map((data,i)=>(
                     <Tags active={data.active} onActive={()=>tagActive(data,i)} text={data.category} />
                 )):""}
-              </Col>
+              </Col> */}
             </Col>
             <Col xs={12} sm={8} md={9} lg={9} className={" "}>
               <Row className={""}>
+                {props.proudctList && props.proudctList.length != 0 ? 
+                props.proudctList.map((data1,i)=>(
                   <Col xs={12} sm={6} md={4} lg={3} className={" "}>
-                      <ProductContainer />
+                      <ProductContainer cartUpdate={cartUpdate} data={data1} />
                   </Col>
+                ))
+                  : ""
+                }
+                  
                   <Col xs={12} sm={6} md={4} lg={3} className={" "}>
-                      <ProductContainer />
+                      <ProductContainer cartUpdate={cartUpdate} data={
+                        {
+                          productName:"Test Product name",
+                          discount_amount:6990,
+                          discount:90,
+                          mrp:699
+                        }
+                      }/>
                   </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
-                      <ProductContainer />
-                  </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
-                      <ProductContainer />
-                  </Col>
-                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
-                      <ProductContainer />
-                  </Col>
+                  
               </Row>
             </Col>
         </Row>
@@ -89,7 +109,8 @@ function Profile(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
     console.log(state)
   return {
-    categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : []
+    categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : [],
+    proudctList: state.userReducer.proudctList ? state.userReducer.proudctList : []
   }
 }
 

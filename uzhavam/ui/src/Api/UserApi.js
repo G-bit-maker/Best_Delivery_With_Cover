@@ -6,8 +6,14 @@ class UserApi{
     static getCategoryApi(data){
         return axios.get(urls.getCategoryForUser)
     }   
-    static getProductListApi(data){
-        return axios.get(urls.getProductForUser)
+    static getProductListApi(id){
+        return axios.get(urls.getProductForUser,{params:{id:id}})
+    }   
+    static cartUpdateApi(id,i){
+        console.log(id,i)
+        return axios.get(urls.updateCart/* ,qs.stringify({
+            id,count:i
+        }) */)
     }   
 }
 

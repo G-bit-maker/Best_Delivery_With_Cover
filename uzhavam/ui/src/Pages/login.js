@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as loginAction from '../Action/loginAction'
 import "./style/login.scss"
+import Button from "../Common/button"
 
 import { Container, Col, Row } from 'react-bootstrap';
 
@@ -11,7 +12,8 @@ function App(props) {
 
   const [state,setState] = useState({
     uname:"",
-    pass:""
+    pass:"",
+    loading:false
   })
 
   const onChange=(e)=>{
@@ -19,6 +21,20 @@ function App(props) {
         ...state,
         [e.target.id]:e.target.value
       })
+  }
+
+  const login=()=>{
+    setState({
+      ...state,
+      loading:true
+    })
+    props.login({userName:state.uname,password:state.pass})
+    .then(()=>{
+      setState({
+        ...state,
+        loading:false
+      })
+    })
   }
 
     return (
@@ -46,11 +62,15 @@ function App(props) {
                       <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                   </div>
               </div>
-
-              <button type="submit" className="btn btn-dark btn-lg btn-block"
+              <Button primary loading={state.loading}
+                     onClick={login}
+                     className={"btn btn-dark btn-lg btn-block "} 
+                     text={"Login"} 
+                  />
+              {/* <button type="submit" className="btn btn-dark btn-lg btn-block"
                     onClick={()=>props.login({userName:state.uname,password:state.pass})} >
                       Login
-                </button>
+                </button> */}
                 <br/>
               <p className="forgot-password text-right">
                   <a href="/signUp">Sign up</a>

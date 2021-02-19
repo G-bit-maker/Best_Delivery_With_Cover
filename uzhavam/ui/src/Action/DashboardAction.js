@@ -1,8 +1,8 @@
 import DashboardApi from "../Api/DashboardApi"
 
-export function AddCategory(data,flag,id){
+export  function AddCategory(data,flag,id){
     return function(dispatch){
-        DashboardApi.SaveCategoryApi(data,flag,id)
+        return DashboardApi.SaveCategoryApi(data,flag,id)
         .then((res)=>{
             dispatch(getCategory())
             dispatch({type:"ADD_REMOVE_CATEGORY",payload:res,flag})
@@ -22,7 +22,7 @@ export function getCategory(){
 }
 export function addProductDetails(data){
     return function(dispatch){
-        DashboardApi.addProductApi(data)
+        return DashboardApi.addProductApi(data)
         .then((res)=>{
             if(res.success){
                alert("Product added successfully")

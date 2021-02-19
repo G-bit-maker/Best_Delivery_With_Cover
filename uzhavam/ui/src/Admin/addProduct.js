@@ -55,7 +55,9 @@ function AddProduct(props) {
         metakey:"",
         proVisible:false,
         country:"INDIA",
-        ean:""
+        ean:"",
+
+        loading:false
     })
 
     const onChange=(e)=>{
@@ -71,7 +73,17 @@ function AddProduct(props) {
   
     const onSubmit=()=>{
         if(state.productName !=="" && state.brand !== "" && state.mrp !== ""){
+            setState({
+                ...state,
+                loading:true
+            })
             props.addProductDetails(state)
+            .then(()=>{
+                setState({
+                    ...state,
+                    loading:false
+                })
+            })
         }else{
             alert("Please enter Product name and mrp")
         }
@@ -343,7 +355,7 @@ function AddProduct(props) {
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={12} className={"mt20 mb30px"}>
-                    <Button primary onClick={onSubmit} className={"AddProBtn"} text={"Submit"} />
+                    <Button loading={state.loading}  primary onClick={onSubmit} className={"AddProBtn"} text={"Submit"} />
                 </Col>
             </Row>
          
