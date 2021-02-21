@@ -49,10 +49,22 @@ exports.login = async (req, res, next) => {
         }
         client.sms.message(messageCallback, phoneNumber, message, messageType); */
         const { userName, password } = req.body;
-        let details = await userModel.findOne({ userName });
-    
-        if (details.userName === userName) {
-            console.log(details)
+        let failure = "";
+        let details = await userModel.findOne({ userName });    
+        if(!userName){
+            failure = {...failure,"emailFailure":"Please enter user name"}
+        }else if(details === "" || details === null){
+            failure = {...failure,"emailFailure":"Please enter valid user name"}
+        }
+        if(!password){
+            failure = {...failure,"passFailure":"Please enter password"}
+        }
+
+        if(failure){
+            res.status(200).json({
+                failure: failure,
+            });
+        }else{
             let token = jwt.sign({ id: details._id }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
             });
@@ -60,10 +72,6 @@ exports.login = async (req, res, next) => {
                 success: "Login Successfully",
                 auth: true,
                 token: token
-            });
-        } else {
-            res.status(500).json({
-                failure: "Invalid Details"
             });
         }
     } catch (err) {

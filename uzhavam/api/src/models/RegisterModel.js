@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 let registerSchema = mongoose.Schema({
     userName: {
-        type: String
+        type: String,
+        required:[true,"Please enter user name"]
     },
     mobile: {
-        type: Number
+        type: Number,
+        required:[true,"Please enter mobile number"]
     },
     email: {
         type: String
