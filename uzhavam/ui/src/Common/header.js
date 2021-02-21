@@ -6,6 +6,10 @@ import React, { useState,useEffect } from 'react';
 import session from "../session"
 import * as UserAction from '../Action/UserAction'
 import { ShoppingCartOutlined } from '@material-ui/icons';
+import Badge from '@material-ui/core/Badge';
+import Popover from '@material-ui/core/Popover';
+
+import CartList from "./cartListContainer"
 
 function Header(props) {
     
@@ -27,10 +31,24 @@ function Header(props) {
     session.delteCookies()
     props.history.push("/Login")
   }
+
+/* For popover */
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    console.log("sss")
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
   
     return (
         <>
-         <Navbar /* fixed="top" */ collapseOnSelect expand="lg" bg="dark" variant="dark">
+         <Navbar  fixed="top"  collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">Uzhalavam</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -48,9 +66,33 @@ function Header(props) {
                 <Nav>
                   {state.userType === "Admin" ? <Nav.Link href="#deets">Last seen: 21-02-2021</Nav.Link> : ""}
                   {state.userType != "Admin" ? 
-                      <Nav.Link eventKey={1} onClick={()=>alert(props.cartList ?props.cartList.length : 0 )}>
-                          <ShoppingCartOutlined />
-                      </Nav.Link>
+                        <>
+                          <Nav.Link eventKey={1} onClick={handleClick} variant="contained" aria-describedby={id}>
+                              
+                              <Badge className={"badge "} badgeContent={props.cartList.length} >
+                                  <ShoppingCartOutlined />
+                              </Badge>
+                                {/* <span>{props.cartList.length || ""}</span> */}
+                          </Nav.Link>
+                                  
+                            <Popover
+                              id={id}
+                              open={open}
+                              anchorEl={anchorEl}
+                              onClose={handleClose}
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                              }}
+                            >
+                              <CartList />
+                            </Popover>
+
+                        </>
                       : ""}
                   <Nav.Link eventKey={2} onClick={logoutAction}>
                     Logout
@@ -58,6 +100,9 @@ function Header(props) {
                 </Nav>
             </Navbar.Collapse>
             </Navbar>
+            <div style={{height:"55px"}}>
+
+            </div>
          </>
     );
   }
@@ -66,6 +111,7 @@ function Header(props) {
  const mapStateToProps = (state) => {
   return {
     cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
+    at: state.userReducer.at ? state.userReducer.at : "",
   }
 }
 

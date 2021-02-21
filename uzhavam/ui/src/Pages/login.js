@@ -13,7 +13,8 @@ function App(props) {
   const [state,setState] = useState({
     uname:"",
     pass:"",
-    loading:false
+    loading:false,
+    failure:""
   })
 
   const onChange=(e)=>{
@@ -26,13 +27,15 @@ function App(props) {
   const login=()=>{
     setState({
       ...state,
-      loading:true
+      loading:true,
+      failure:""
     })
     props.login({userName:state.uname,password:state.pass})
-    .then(()=>{
+    .then((res)=>{
       setState({
         ...state,
-        loading:false
+        loading:false,
+        failure:res.failure || ""
       })
     })
   }
@@ -48,12 +51,26 @@ function App(props) {
 
               <div className="form-group">
                   <label>Email</label>
-                  <input type="email" id="uname" onChange={onChange} className="form-control" placeholder="Enter email" />
+                  <input type="email" id="uname" onChange={onChange} 
+                    className={"form-control"+(state.failure.emailFailure ?" error ":"")} 
+                    placeholder="Enter email" />
+                    {state.failure.emailFailure ? 
+                      <label className={"labelError"}>
+                        {state.failure.emailFailure}
+                      </label> : 
+                    ""}
               </div>
 
               <div className="form-group">
                   <label>Password</label>
-                  <input type="password" id="pass" onChange={onChange} className="form-control" placeholder="Enter password" />
+                  <input type="password" id="pass" onChange={onChange} 
+                    className={"form-control"+(state.failure.passFailure ?" error ":"")} 
+                    placeholder="Enter password" />
+                    {state.failure.passFailure ? 
+                      <label className={"labelError"}>
+                        {state.failure.passFailure}
+                      </label> : 
+                    ""}
               </div>
 
               <div className="form-group">

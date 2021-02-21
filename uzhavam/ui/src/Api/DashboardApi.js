@@ -56,6 +56,9 @@ class ProfileApi{
         }
         return axios.post(urls.addProductList,qs.stringify(data2))
     }
+    static getProductDetailsApi(id){
+        return axios.get(urls.getProductDetails,{params:{productId:id}})
+    }
     static getProductlistApi(){
         return axios.get(urls.getProductList)
     }

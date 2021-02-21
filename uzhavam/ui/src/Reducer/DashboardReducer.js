@@ -19,8 +19,12 @@ export default function profileReducer(state,action){
                 }
             }
             
+        case "GET_PRODUCT_DETAILS":
+            return {
+                ...state,
+                productDetails:action.payload.list[0] || ""
+            }
         case "GET_PRODUCT_LIST":
-            console.log(action.payload)
             return {
                 ...state,
                 productList:action.payload.list || []

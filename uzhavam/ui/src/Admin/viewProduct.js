@@ -11,6 +11,7 @@ import Product from "./products"
 import UserList from "./userList"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
+import {Edit} from '@material-ui/icons';
 
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
@@ -53,7 +54,6 @@ function ViewProduct(props) {
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
-                    <th>Category id</th>
                     <th>Product Category</th>
                     <th>Product Name</th>
                     <th>Brand</th>
@@ -62,20 +62,25 @@ function ViewProduct(props) {
                     <th>Mrp</th>
                     <th>Sgst %</th>
                     <th>Cgst %</th>
+                    <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
                   {props.productList && props.productList.length != 0 ? props.productList.map((data,i)=>{
                     return <tr key={i}>
-                              <td>{i}</td>
                               <td>{data.category || ""}</td>
                               <td>{data.productName || ""}</td>
                               <td>{data.brand || ""}</td>
                               <td>{data.avail_quantity || ""}</td>
                               <td>{data.max_sale_quantity || ""}</td>
-                              <td>{data.mrp || ""}</td>
+                              <td>&#x20B9;{data.mrp || ""}</td>
                               <td>{data.sgst || ""}</td>
                               <td>{data.cgst || ""}</td>
+                              <td>
+                                <Edit fontSize="small"
+                                      onClick={()=>props.history.push("/EditProduct/"+data._id)} 
+                                   />
+                              </td>
                             </tr>
                   }) : <tr><td colspan="100%"> <div className="textAlignCenter">No data available. click <a href="/AddProduct">here</a> to add </div></td></tr> }
                 </tbody>

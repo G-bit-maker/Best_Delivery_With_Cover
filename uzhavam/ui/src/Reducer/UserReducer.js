@@ -14,7 +14,9 @@ export default function userReducer(state,action){
         case "UPDATE_USER_CART":
             let cartList = state.cartList || []
             let i=cartList.findIndex(data=>data.id===action.id)
-            if(i === -1){
+            if(action.c === 0){
+                cartList.splice(i,1)
+            }else if(i === -1){
                 cartList.push({
                     id:action.id,
                     count:action.c
@@ -27,7 +29,8 @@ export default function userReducer(state,action){
             }
             return {
                 ...state,
-                cartList:cartList
+                cartList:cartList,
+                at:Math.random()
             }
 
         default:

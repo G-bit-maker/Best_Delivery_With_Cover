@@ -31,11 +31,23 @@ export function addProductDetails(data){
         })
     } 
 }
+export function getProductDetails(id){
+    return function(dispatch){
+        if(id){
+            DashboardApi.getProductDetailsApi(id)
+            .then((res)=>{
+                dispatch({type:"GET_PRODUCT_DETAILS",payload:res.list ? res : {list:[]}})
+            })
+        }else{
+            dispatch({type:"GET_PRODUCT_DETAILS",payload:{list:[]}})
+        }
+        
+    } 
+}
 export function getProductList(){
     return function(dispatch){
         DashboardApi.getProductlistApi()
         .then((res)=>{
-            console.log(res)
             dispatch({type:"GET_PRODUCT_LIST",payload:res})
         })
     } 
@@ -44,7 +56,6 @@ export function getUserList(){
     return function(dispatch){
         DashboardApi.getUserListApi()
         .then((res)=>{
-            console.log(res)
             dispatch({type:"GET_USER_LIST",payload:res})
         })
     } 

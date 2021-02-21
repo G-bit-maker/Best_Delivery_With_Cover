@@ -78,14 +78,14 @@ function Profile(props) {
               <Row className={""}>
                 {props.proudctList && props.proudctList.length != 0 ? 
                 props.proudctList.map((data1,i)=>(
-                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={" adjustRow"}>
                       <ProductContainer cartUpdate={cartUpdate} data={data1} />
                   </Col>
                 ))
                   : ""
                 }
                   
-                  <Col xs={12} sm={6} md={4} lg={3} className={" "}>
+                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer cartUpdate={cartUpdate} data={
                         {
                           productName:"Test Product name",

@@ -12,6 +12,7 @@ export function login(data){
                 window.location = data.userName === "Admin" ? "/Dashboard" : "/User/Dashboard"
             }
             dispatch({type:"LOGIN",payload:res})
+            return res
         })
     } 
 }

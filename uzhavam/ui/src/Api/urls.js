@@ -5,6 +5,7 @@ const urls={
     getCategoryForUser:"/admin/getCategories",
     addProductList:"/admin/createProductDetails",
     getProductList:"/admin/getProductList",
+    getProductDetails:"/admin/getProduct",
     getProductForUser:"/admin/getProductList",
     getUserList:"/admin/getUserList",
     updateCart:"/admin/getCategories"

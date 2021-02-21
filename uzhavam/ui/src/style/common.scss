@@ -7,6 +7,7 @@ body, html {
   }
 
   #root{
+      overflow-y: scroll;
       height: 100%;
   }
 
@@ -14,6 +15,16 @@ body, html {
      outline: none;
  } 
 
+
+ .labelError{
+     margin-bottom: 0;
+     color: red;
+     font-size: 14px;
+ }
+ input.error{
+     background-color: #f9e9e9;
+     border-color: red;
+ }
 
 
   .nav-tabs .nav-link.active{
@@ -44,6 +55,9 @@ body, html {
 }
 .textAlignCenter{
     text-align: center;
+}
+.textAlignRight{
+    text-align: right;
 }
 
 //margin
