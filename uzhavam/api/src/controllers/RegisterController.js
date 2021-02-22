@@ -5,7 +5,13 @@ const customerId = "7F9493DC-04BA-4BF5-AD9B-09035659941E";
 const apiKey = "TRgvfxYroxquPpJF6+N0oz4RCWDg39eecWqywklSOLrlvZ1sFrvD5x+ajsTSiP8AUFsE2F8o03DdNNkSXi44sQ==";
 const rest_endpoint = "https://rest-api.telesign.com";
 const timeout = 10*1000; // 10 secs
-
+const handleErrors = (err) =>{
+    let error_msg = {}
+    Object.values(err.errors).forEach(({properties})=>{
+        error_msg[properties.path] = properties.message
+    })
+    return error_msg;
+}
 exports.Registration = async (req, res, next) => {
     try {
         /* const client = new TeleSignSDK( customerId,
@@ -49,8 +55,8 @@ exports.Registration = async (req, res, next) => {
                 });
             })
             .catch(function (error) {
-                res.status(500).json({
-                    failure: "Not Added"
+                res.status(200).json({
+                    failure: handleErrors(error)
                 });
             });
     } catch (err) {

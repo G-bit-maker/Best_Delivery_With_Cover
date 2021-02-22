@@ -18,6 +18,7 @@
     "nodemon": "^2.0.6",
     "plivo": "^4.13.0",
     "telesignsdk": "^2.2.1",
-    "twilio": "^3.55.0"
+    "twilio": "^3.55.0",
+    "validator": "^13.5.2"
   }
 }

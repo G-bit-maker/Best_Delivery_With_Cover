@@ -232,8 +232,7 @@ exports.getUserList = async (req, res, next) => {
 exports.getproduct = async (req, res, next) => {
     try {
         const { id } = req.user;
-        const {productId} = req.body;
-        console.log(productId)
+        const {productId} = req.query;
         if(id){
             let details = await productModel.product.findOne({"_id":productId});
             if(details){
