@@ -8,17 +8,21 @@ let categorySchema = mongoose.Schema({
 
 let productDetailsSchema = mongoose.Schema({
     brand: {
-        type: String
+        type: String,
+        required:[true,"Please enter brand name"]
     },
     category_id:{type: Array},
     category: {
-        type: String
+        type: String,
+        required:[true,"Please select category"]
     },
     SKU: {
-        type: String
+        type: String,
+        required:[true,"Please enter SKU"]
     },
     productName: {
-        type: String
+        type: String,
+        required:[true,"Please enter product name"]
     },
     shortdescription: {
         type: String
@@ -33,31 +37,40 @@ let productDetailsSchema = mongoose.Schema({
         type: String
     },
     unit_for_weight: {
-        type: String
+        type: String,
+        required:[true,"Please enter unit for weight"]
     },
     weight: {
-        type: String
+        type: String,
+        required:[true,"Please enter weight"]
     },
     avail_quantity: {
-        type: String
+        type: String,
+        required:[true,"Please enter available quantity"]
     },
     min_sale_quantity: {
-        type: String
+        type: String,
+        required:[true,"Please enter minimum sale quantity"]
     },
     max_sale_quantity: {
-        type: String
+        type: String,
+        required:[true,"Please enter maximum sale quantity"]
     },
     stock: {
-        type: String
+        type: String,
+        required:[true,"Please enter stock"]
     },
     mrp: {
-        type: String
+        type: String,
+        required:[true,"Please enter mrp"]
     },
     selling_price: {
-        type: String
+        type: String,
+        required:[true,"Please enter selling price"]
     },
     special_price: {
-        type: String
+        type: String,
+        required:[true,"Please special price"]
     },
     discount: {
         type: String
@@ -66,10 +79,12 @@ let productDetailsSchema = mongoose.Schema({
         type: String
     },
     status: {
-        type: String
+        type: String,
+        required:[true,"Please enter status"]
     },
     main_img: {
-        type: String
+        type: String,
+        required:[true,"Please select main image"]
     },
     img1: {
         type: String
@@ -90,7 +105,8 @@ let productDetailsSchema = mongoose.Schema({
         type: String
     },
     tax_class_id: {
-        type: String
+        type: String,
+        required:[true,"Please enter tax id"]
     },
     cgst: {
         type: String
@@ -120,13 +136,22 @@ let productDetailsSchema = mongoose.Schema({
         type: String
     },
     product_visible: {
-        type: String
+        type: String,
+        required:[true,"Please enter product visible status"]
     },
     country_of_manufacture: {
         type: String
     },
     ean: {
         type: String
+    },
+    retail_quantity: {
+        type: String,
+        required:[true,"Please enter retail quantity allowed"]
+    },
+    wholesale_quantity: {
+        type: String,
+        required:[true,"Please enter wholesale quantity allowed"]
     },
     createdAt: 
     { type: Date, default: new Date() },

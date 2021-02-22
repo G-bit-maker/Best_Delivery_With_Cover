@@ -4,6 +4,13 @@ const LoginModel = require("../models/adminloginModel");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
 const message = require("../Common/constants");
+const handleErrors = (err) =>{
+    let error_msg = {}
+    Object.values(err.errors).forEach(({properties})=>{
+        error_msg[properties.path] = properties.message
+    })
+    return error_msg;
+}
 exports.login = async (req, res, next) => {
     try {
         const { userName, password } = req.body;
@@ -150,8 +157,8 @@ exports.createProductDetails = async (req, res, next) => {
                         });
                     })
                     .catch(function (error) {
-                        res.status(500).json({
-                            failure: "Not Added"
+                        res.status(200).json({
+                            failure: handleErrors(error)
                         });
                     });   
             }else{
