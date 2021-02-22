@@ -21,7 +21,7 @@ export function signUp(data){
     return function(dispatch){
         return LoginApi.signUp(data)
         .then((res)=>{
-            console.log(res)
+            session.setCookie("TOKEN",res.token,30)
             dispatch({type:"SIGN_UP_SUCCESS",payload:res})
             if(res.success){
                 window.location = "/User/Dashboard"

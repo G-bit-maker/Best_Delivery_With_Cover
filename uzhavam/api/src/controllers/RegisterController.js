@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 const registerModel = require("../models/RegisterModel");
 const TeleSignSDK = require('telesignsdk');
 
@@ -49,9 +51,14 @@ exports.Registration = async (req, res, next) => {
         let userDetails = new registerModel(List);
         userDetails.save()
             .then(function (data) {
+                let token = jwt.sign({ id: data._id }, config.secret, {
+                    expiresIn: 86400 // expires in 24 hours
+                });
                 res.status(200).json({
                     list:data,
-                    success: "Created Successfully"
+                    success: "Created Successfully",
+                    auth: true,
+                    token: token
                 });
             })
             .catch(function (error) {
