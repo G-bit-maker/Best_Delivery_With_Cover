@@ -7,6 +7,8 @@ import userimage from "../Image/userimage.png"
 import Product from "./products"
 import UserList from "./userList"
 import Button from "../Common/button"
+import Inputbox from "../Common/inputbox"
+import TextArea from "../Common/textArea"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
 import ImageEdit from "./Components/ProImageEdit"
@@ -23,6 +25,7 @@ const history = createHistory({
 function AddProduct(props) {
     
   const [state,setState] = useState({
+        product_id:"",
         productName:"",
         brand:"",
         productCategory:"",
@@ -59,11 +62,14 @@ function AddProduct(props) {
         sgstamt:"",
         groupid:"",
         metakey:"",
-        proVisible:false,
+        proVisible:"No",
         country:"INDIA",
         ean:"",
+        retailQtyAllowed:"",
+        wholsaleQtyAllowed:"",
 
         loading:false,
+        failure:"",
         pageType:"Add"
     })
 
@@ -85,12 +91,7 @@ function AddProduct(props) {
         const {
             match: { params }
         } = props;
-        if(params.id){
-            setState({
-                ...state,
-                pageType:"Edit"
-            })
-        }
+        
         props.getProductDetails(params.id)
         props.getCategory()
     }, []);
@@ -100,6 +101,8 @@ function AddProduct(props) {
         let details = props.productDetails
         setState({
             ...state,
+            product_id:details._id,
+            pageType:details._id ? "Edit":"Add",
             productName:details.productName,
             brand:details.brand,
             productCategory:details.category,
@@ -113,7 +116,7 @@ function AddProduct(props) {
             availableSaleQty:details.avail_quantity,
             minSaleQty:details.min_sale_quantity,
             maxSaleQty:details.max_sale_quantity,
-            IsStock:details.stock,
+            IsStock:details.stock || "No",
             mrp:details.mrp,
             sellingPrice:details.selling_price,
             specialPrice:details.special_price,
@@ -136,29 +139,28 @@ function AddProduct(props) {
             sgstamt:details.sgst_amount,
             groupid:details.group_id,
             metakey:details.meta_keyword,
-            proVisible:details.product_visible,
-            ean:details.ean
+            proVisible:details.product_visible || "No",
+            ean:details.ean,
+            retailQtyAllowed:details.retail_quantity,
+            wholsaleQtyAllowed:details.wholesale_quantity,
         })
     }, [props.productDetails])
 
   
     const onSubmit=()=>{
-        if(state.productName !=="" && state.brand !== "" && state.mrp !== ""){
+        console.log(state)
             setState({
                 ...state,
                 loading:true
             })
             props.addProductDetails(state)
-            .then(()=>{
+            .then((res)=>{
                 setState({
                     ...state,
-                    loading:false
+                    loading:false,
+                    failure:res.failure || ""
                 })
             })
-        }else{
-            alert("Please enter Product name and mrp")
-        }
-        
     }
 
     return (
@@ -173,7 +175,7 @@ function AddProduct(props) {
                     </h4>
                 </Col>
                 <Col xs={12} sm={6} md={6} lg={6} className={"adjustRow textAlignRight"}>
-                    <a href="/ViewProduct">
+                    <a onClick={()=>props.history.push("/ViewProduct")} href="#" >
                         View Products
                     </a>
                 </Col>
@@ -183,88 +185,128 @@ function AddProduct(props) {
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Product Name</label>
-                        <input type="text" id="productName" value={state.productName} onChange={onChange} className="form-control" placeholder="Name" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="productName" 
+                            value={state.productName} onChange={onChange} 
+                            className="form-control" placeholder="Name" 
+                            error={state.failure.productName || ""}
+                        />
+                        {/* <input type="text" id="productName" value={state.productName} onChange={onChange} className="form-control" placeholder="Name" /> */}
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Brand</label>
-                        <input type="text" id="brand" value={state.brand} onChange={onChange} className="form-control" placeholder="Brand" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="brand" value={state.brand} 
+                            onChange={onChange} className="form-control" placeholder="Brand" 
+                            error={state.failure.brand || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Product Category</label>
-                        <select id="productCategory" value={state.productCategory} onChange={onChange} className="form-control" >
+                        <span className={"mty"}>&nbsp;*</span>
+                        <select id="productCategory" value={state.productCategory} onChange={onChange} 
+                            className={"form-control "+(state.failure.category ? "error" : "")} >
+                            <option value={""}>Select category</option>
                             {props.categoryList && props.categoryList.length != 0 ? props.categoryList.map(data=>{
                                 return <option value={data.category}>{data.category}</option>
                             }) :""}
                         </select>
+                        {state.failure.category  ? <label className={"labelError"}>{state.failure.category }</label>:""}
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>SKU</label>
-                        <input type="text" id="sku" value={state.sku} onChange={onChange} className="form-control" placeholder="SKU" />
-                    </div>
-                </Col>
-                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
-                    <div className="form-group">
-                        <label>Short Description</label>
-                        <textarea type="text" id="shortDec" value={state.shortDec} onChange={onChange} className="form-control" placeholder="Enter few words... " />
-                    </div>
-                </Col>
-                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
-                    <div className="form-group">
-                        <label>Description</label>
-                        <textarea type="text" id="description" value={state.description} onChange={onChange} className="form-control" placeholder="Enter brief description..." />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="sku" value={state.sku} 
+                            onChange={onChange} className="form-control" placeholder="SKU" 
+                            error={state.failure.SKU || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Product Features</label>
-                        <input type="text" id="productFeatures" value={state.productFeatures} onChange={onChange} className="form-control" placeholder="Features" />
+                        <Inputbox type="text" id="productFeatures" value={state.productFeatures} 
+                            onChange={onChange} className="form-control"
+                            placeholder="Features" 
+                            error={state.failure.productFeatures || ""}
+                         />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Product Specification</label>
-                        <input type="text" id="ProductSpec" value={state.ProductSpec} onChange={onChange} className="form-control" placeholder="Specification" />
+                        <Inputbox type="text" id="ProductSpec" value={state.ProductSpec} 
+                            onChange={onChange} className="form-control" 
+                            placeholder="Specification" 
+                            error={state.failure.ProductSpec || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Unit for weight</label>
-                        <input type="text" id="unitWeight" value={state.unitWeight} onChange={onChange} className="form-control" placeholder="Unit for weight" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="unitWeight" value={state.unitWeight} 
+                            onChange={onChange} className="form-control" 
+                            placeholder="Unit for weight" 
+                            error={state.failure.unit_for_weight || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Weight</label>
-                        <input type="text" id="weight" value={state.weight} onChange={onChange} className="form-control" placeholder="weight" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="weight" value={state.weight} 
+                            onChange={onChange} className="form-control" 
+                            placeholder="weight" 
+                            error={state.failure.weight || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Available sale Qty</label>
-                        <input type="text" id="availableSaleQty" value={state.availableSaleQty} onChange={onChange} className="form-control" placeholder="Available sale qty" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="availableSaleQty" 
+                            value={state.availableSaleQty} onChange={onChange} 
+                            className="form-control" placeholder="Available sale qty" 
+                            error={state.failure.avail_quantity || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Min Sale Qty</label>
-                        <input type="text" id="minSaleQty" value={state.minSaleQty} onChange={onChange} className="form-control" placeholder="Min sale qty" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="minSaleQty" value={state.minSaleQty} 
+                            onChange={onChange} className="form-control" 
+                            placeholder="Min sale qty" 
+                            error={state.failure.min_sale_quantity || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Max Sale Qty</label>
-                        <input type="text" id="maxSaleQty" value={state.maxSaleQty} onChange={onChange} className="form-control" placeholder="Max sale qty" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="maxSaleQty" value={state.maxSaleQty} 
+                            onChange={onChange} className="form-control" 
+                            placeholder="Max sale qty" 
+                            error={state.failure.max_sale_quantity || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Is in Stock</label>
+                        <span className={"mty"}>&nbsp;*</span>
                         <select id="IsStock" value={state.IsStock} onChange={onChange} className="form-control" placeholder="Available?" >
                             <option value={"Yes"}>Yes</option>
                             <option value={"No"}>No</option>
@@ -275,99 +317,150 @@ function AddProduct(props) {
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>MRP</label>
-                        <input type="text" id="mrp" value={state.mrp} onChange={onChange} className="form-control" placeholder="mrp" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="mrp" value={state.mrp} 
+                            onChange={onChange} className="form-control" placeholder="mrp" 
+                            error={state.failure.mrp || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
-                        <label>Selling Price</label>
-                        <input type="text" id="sellingPrice" value={state.sellingPrice} onChange={onChange} className="form-control" placeholder="Selling price" />
+                        <label>Retail Price</label>
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="sellingPrice" value={state.sellingPrice} 
+                            onChange={onChange} className="form-control" placeholder="Selling price" 
+                            error={state.failure.selling_price || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
-                        <label>Special Price</label>
-                        <input type="text" id="specialPrice" value={state.specialPrice} onChange={onChange} className="form-control" placeholder="Special price" />
+                        <label>Wholesale Price</label>
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="specialPrice" value={state.specialPrice} 
+                            onChange={onChange} className="form-control" placeholder="Special price" 
+                            error={state.failure.special_price || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Discount %</label>
-                        <input type="text" id="discount" value={state.discount} onChange={onChange} className="form-control" placeholder="%" />
+                        <Inputbox type="text" id="discount" value={state.discount} 
+                            onChange={onChange} className="form-control" placeholder="%" 
+                            error={state.failure.discount || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Discount Amount</label>
-                        <input type="text" id="discountAmt" value={state.discountAmt} onChange={onChange} className="form-control" placeholder="Discount Amount" />
+                        <Inputbox type="text" id="discountAmt" value={state.discountAmt} 
+                            onChange={onChange} className="form-control" placeholder="Discount Amount" 
+                            error={state.failure.discountAmt || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Status</label>
-                        <input type="text" id="status" value={state.status} onChange={onChange} className="form-control" placeholder="Status" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="status" value={state.status} onChange={onChange} 
+                            className="form-control" placeholder="Status" 
+                            error={state.failure.status || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Tax Class Id</label>
-                        <input type="text" id="taxClassId" value={state.taxClassId} onChange={onChange} className="form-control" placeholder="Tax class id" />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="taxClassId" value={state.taxClassId} 
+                            onChange={onChange} className="form-control" placeholder="Tax class id" 
+                            error={state.failure.taxClassId || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Cgst %</label>
-                        <input type="text" id="cgstp" value={state.cgstp} onChange={onChange} className="form-control" placeholder="%" />
+                        <Inputbox type="text" id="cgstp" value={state.cgstp} onChange={onChange} 
+                            className="form-control" placeholder="%" 
+                            error={state.failure.cgstp || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Igst %</label>
-                        <input type="text" id="igstp" value={state.igstp} onChange={onChange} className="form-control" placeholder="%" />
+                        <Inputbox type="text" id="igstp" value={state.igstp} onChange={onChange} 
+                            className="form-control" placeholder="%" 
+                            error={state.failure.igstp || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Sgst %</label>
-                        <input type="text" id="sgstp" value={state.sgstp} onChange={onChange} className="form-control" placeholder="%" />
+                        <Inputbox type="text" id="sgstp" value={state.sgstp} onChange={onChange} 
+                            className="form-control" placeholder="%" 
+                            error={state.failure.sgstp || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Cgst Amount</label>
-                        <input type="text" id="cgstamt" value={state.cgstamt} onChange={onChange} className="form-control" placeholder="cgst amount" />
+                        <Inputbox type="text" id="cgstamt" value={state.cgstamt} onChange={onChange} 
+                            className="form-control" placeholder="cgst amount" 
+                            error={state.failure.cgstamt || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Igst Amount</label>
-                        <input type="text" id="igstamt" value={state.igstamt} onChange={onChange} className="form-control" placeholder="igst amount" />
+                        <Inputbox type="text" id="igstamt" value={state.igstamt} onChange={onChange} 
+                            className="form-control" placeholder="igst amount" 
+                            error={state.failure.igstamt || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Sgst Amount</label>
-                        <input type="text" id="sgstamt" value={state.sgstamt} onChange={onChange} className="form-control" placeholder="sgst amount" />
+                        <Inputbox type="text" id="sgstamt" value={state.sgstamt} onChange={onChange} 
+                            className="form-control" placeholder="sgst amount" 
+                            error={state.failure.sgstamt || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Group Id</label>
-                        <input type="text" id="groupid" value={state.groupid} onChange={onChange} className="form-control" placeholder="group id" />
+                        <Inputbox type="text" id="groupid" value={state.groupid} onChange={onChange} 
+                            className="form-control" placeholder="group id" 
+                            error={state.failure.groupid || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Meta Keyword</label>
-                        <input type="text" id="metakey" value={state.metakey} onChange={onChange} className="form-control" placeholder="Meta keyword" />
+                        <Inputbox type="text" id="metakey" value={state.metakey} onChange={onChange} 
+                            className="form-control" placeholder="Meta keyword" 
+                            error={state.failure.metakey || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Product Visible in Frontend</label>
+                        <span className={"mty"}>&nbsp;*</span>
                         <select id="proVisible" value={state.proVisible} onChange={onChange} className="form-control" placeholder="Visible?" >
-                            <option value={true}>Yes</option>
-                            <option value={false}>No</option>
+                            <option value={"Yes"}>Yes</option>
+                            <option value={"No"}>No</option>
                         </select>
                         {/* <input type="text" id="proVisible" onChange={onChange} className="form-control" placeholder="Visible?" /> */}
                     </div>
@@ -375,19 +468,68 @@ function AddProduct(props) {
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Country of Manufacture</label>
-                        <input type="text" id="country" value={state.country} value={"INDIA"} disabled onChange={onChange} className="form-control" placeholder="Country" />
+                        <Inputbox type="text" id="country" value={state.country} value={"INDIA"} 
+                            disabled onChange={onChange} className="form-control" placeholder="Country" 
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Ean</label>
-                        <input type="text" id="ean" value={state.ean} onChange={onChange} className="form-control" placeholder="EAN" />
+                        <Inputbox type="text" id="ean" value={state.ean} onChange={onChange} 
+                            className="form-control" placeholder="EAN" 
+                            error={state.failure.ean || ""}
+                        />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
+                        <label>Retail quantities allowed</label>
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="retailQtyAllowed" value={state.retailQtyAllowed} onChange={onChange} 
+                            className="form-control" placeholder="Retail quantities allowed" 
+                            error={state.failure.retail_quantity || ""}
+                        />
+                    </div>
+                </Col>
+                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
+                    <div className="form-group">
+                        <label>Wholesale quantities allowed</label>
+                        <span className={"mty"}>&nbsp;*</span>
+                        <Inputbox type="text" id="wholsaleQtyAllowed" value={state.wholsaleQtyAllowed} onChange={onChange} 
+                            className="form-control" placeholder="Wholesale quantities allowed" 
+                            error={state.failure.wholesale_quantity || ""}
+                        />
+                    </div>
+                </Col>
+                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
+                    <div className="form-group">
+                        <label>Short Description</label>
+                        <TextArea type="text" id="shortDec" value={state.shortDec} 
+                            onChange={onChange} className="form-control"   rows={8}
+                            placeholder="Enter few words... " 
+                            error={state.failure.shortDec || ""}
+                        />
+                    </div>
+                </Col>
+                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
+                    <div className="form-group">
+                        <label>Description</label>
+                        <TextArea type="text" id="description" value={state.description} 
+                            onChange={onChange} className="form-control"  rows={8}
+                            placeholder="Enter brief description..." 
+                            error={state.failure.description || ""}
+                        />
+                    </div>
+                </Col>
+                <br/>
+                <Col xs={12} sm={6} md={3} lg={3} className={" "}>
+                    <div className="form-group">
                         <label>Main Image</label>
-                        <ImageEdit key={1} id={"mainImg"} value={state.mainImg} onChange={imgonChange} />
+                        <span className={"mty"}>&nbsp;*</span>
+                        <ImageEdit key={1} id={"mainImg"} value={state.mainImg} onChange={imgonChange} 
+                            error={state.failure.main_img || ""}
+                        />
                         {/* <input type="file" id="mainImg" value={state.mainImg} onChange={onChange} className="form-control" placeholder="Enter email" /> */}
                     </div>
                 </Col>

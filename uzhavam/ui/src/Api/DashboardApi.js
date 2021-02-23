@@ -10,6 +10,12 @@ class ProfileApi{
         console.log(data,flag,id)
         return axios.post("/admin/createCategory",qs.stringify({category:data,status:flag,category_id:id}))
     }
+    static productRemoveApi(id){
+        return axios.post(urls.addProductList,qs.stringify({
+            addStatus:"Remove",
+            product_id:id
+        }))
+    }
     static addProductApi(data){
         let data2 ={
             brand:data.brand,
@@ -52,7 +58,10 @@ class ProfileApi{
             product_visible:data.proVisible,
             country_of_manufacture:data.country,
             ean:data.ean,
-            addStatus:"Add"
+            retail_quantity:data.retailQtyAllowed,
+            wholesale_quantity:data.wholsaleQtyAllowed,
+            addStatus:data.pageType,
+            product_id:data.product_id
         }
         return axios.post(urls.addProductList,qs.stringify(data2))
     }

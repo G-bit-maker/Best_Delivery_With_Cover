@@ -22,12 +22,14 @@ export default function profileReducer(state,action){
         case "GET_PRODUCT_DETAILS":
             return {
                 ...state,
-                productDetails:action.payload.list[0] || ""
+                productDetails:action.payload || ""
             }
         case "GET_PRODUCT_LIST":
             return {
                 ...state,
-                productList:action.payload.list || []
+                productList:action.payload.list || [],
+                at:Math.random()
+
             }
         case "GET_CATEGORY":
             return {

@@ -15,15 +15,17 @@ body, html {
      outline: none;
  } 
 
-
+.mty{
+    //color: rgb(250, 112, 112);
+}
  .labelError{
      margin-bottom: 0;
      color: red;
      font-size: 14px;
  }
- input.error{
+ .error{
      background-color: #f9e9e9;
-     border-color: red;
+     border: 1px solid red;
  }
 
 

@@ -31,15 +31,27 @@ export function addProductDetails(data){
         })
     } 
 }
+export function productRemove(id){
+    return function(dispatch){
+        return DashboardApi.productRemoveApi(id)
+        .then((res)=>{
+            if(res.success){
+                dispatch(getProductList())
+               alert("Product removed successfully")
+            }
+            return res
+        })
+    } 
+}
 export function getProductDetails(id){
     return function(dispatch){
         if(id){
             DashboardApi.getProductDetailsApi(id)
             .then((res)=>{
-                dispatch({type:"GET_PRODUCT_DETAILS",payload:res.list ? res : {list:[]}})
+                dispatch({type:"GET_PRODUCT_DETAILS",payload:res.product })
             })
         }else{
-            dispatch({type:"GET_PRODUCT_DETAILS",payload:{list:[]}})
+            dispatch({type:"GET_PRODUCT_DETAILS",payload:""})
         }
         
     } 

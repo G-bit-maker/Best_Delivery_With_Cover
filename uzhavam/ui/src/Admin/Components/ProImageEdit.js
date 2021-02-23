@@ -41,8 +41,8 @@ export default function MediaCard(props) {
         } 
         
     }
-  return (
-      <Col xs={12} sm={12} md={12} lg={12} key={props.id} className={"adjustRow imgEdit"}>
+  return (<>
+      <Col xs={12} sm={12} md={12} lg={12} key={props.id} className={(props.error?"error ": "" )+"adjustRow imgEdit"}>
           <img src={state.img} height={"100%"}/>
           <div className={"label"}>
           <input accept="image/*" hidden  id={"icon-button-file"+props.id} type="file" onChange={onChange} />
@@ -53,5 +53,7 @@ export default function MediaCard(props) {
              </label>   
           </div>
       </Col>
+      {props.error ? <label className={"labelError"}>{props.error}</label>:""}
+      </>
   );
 }

@@ -11,7 +11,7 @@ import Product from "./products"
 import UserList from "./userList"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
-import {Edit} from '@material-ui/icons';
+import {Edit,DeleteForever} from '@material-ui/icons';
 
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
@@ -62,7 +62,7 @@ function ViewProduct(props) {
                     <th>Mrp</th>
                     <th>Sgst %</th>
                     <th>Cgst %</th>
-                    <th>#</th>
+                    <th style={{width:"6%"}}>#</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,12 +77,20 @@ function ViewProduct(props) {
                               <td>{data.sgst || ""}</td>
                               <td>{data.cgst || ""}</td>
                               <td>
+                                  &nbsp;
                                 <Edit fontSize="small"
-                                      onClick={()=>props.history.push("/EditProduct/"+data._id)} 
-                                   />
+                                  onClick={()=>props.history.push("/EditProduct/"+data._id)} 
+                                  />
+                                <div className={"floatRight"}>
+                                  <DeleteForever fontSize="small"
+                                    onClick={()=>props.productRemove(data._id)} 
+                                />
+                                &nbsp;
+                                </div>
+                                
                               </td>
                             </tr>
-                  }) : <tr><td colspan="100%"> <div className="textAlignCenter">No data available. click <a href="/AddProduct">here</a> to add </div></td></tr> }
+                  }) : <tr><td colspan="100%"> <div className="textAlignCenter">No data available. click <a onClick={()=>props.history.push("/AddProduct")} href="#">here</a> to add </div></td></tr> }
                 </tbody>
             </Table>
             </Col>
@@ -95,7 +103,8 @@ function ViewProduct(props) {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    productList: state.dashboardReducer.productList ? state.dashboardReducer.productList : []
+    productList: state.dashboardReducer.productList ? state.dashboardReducer.productList : [],
+    at: state.dashboardReducer.at ? state.dashboardReducer.at : "",
   }
 }
 

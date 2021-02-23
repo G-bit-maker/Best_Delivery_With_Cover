@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import "./common.scss"
 
-function InputBox(props) {
+function Textarea(props) {
     return <>
-            <input 
-                disabled={props.disabled}
+            <textarea 
+                rows={props.rows||""}
                 type={props.type || ""}
                 id={props.id || ""}
                 onChange={e=>props.onChange(e)} 
@@ -16,4 +16,4 @@ function InputBox(props) {
             </>
 }
 
-export default InputBox
+export default Textarea
