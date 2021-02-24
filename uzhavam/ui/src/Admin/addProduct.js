@@ -45,7 +45,7 @@ function AddProduct(props) {
         specialPrice:"",
         discount:"",
         discountAmt:"",
-        status:"",
+        status:"Active",
         mainImg:"",
         img2:"",
         img3:"",
@@ -72,13 +72,43 @@ function AddProduct(props) {
         failure:"",
         pageType:"Add"
     })
-
-    const onChange=(e)=>{
-        console.log(state)
+    const costumLogic=(e)=>{
+        let state2 = {...state,[e.target.id]:e.target.value}
         setState({
             ...state,
-            [e.target.id]:e.target.value
+            [e.target.id]:e.target.value,
+            discountAmt:(state2.mrp - state2.specialPrice),
+            cgstp:(state2.taxClassId / 2),
+            sgstp:(state2.taxClassId / 2),
+            cgstamt:(state2.sellingPrice * state2.cgstp),
+            sgstamt:(state2.sellingPrice * state2.sgstp)
         })
+    }
+    const onChange=(e)=>{
+        console.log(e.target.validity.valid)
+        if(e.target.validity.valid){
+            let id = e.target.id
+
+            if(
+                id === "mrp" ||
+                id === "specialPrice" ||
+                id === "taxClassId" ||
+                id === "sellingPrice" /* ||
+                id === "cgstp" ||
+                id === "sgstp"  */
+            ){
+                costumLogic(e)
+            }else{
+                setState({
+                    ...state,
+                    [e.target.id]:e.target.value
+                })
+            }
+
+
+            
+            
+        }
     }
     const imgonChange=(id,val)=>{
         console.log(id,val)
@@ -99,51 +129,54 @@ function AddProduct(props) {
     useEffect( () => {
         console.log(props.productDetails);
         let details = props.productDetails
-        setState({
-            ...state,
-            product_id:details._id,
-            pageType:details._id ? "Edit":"Add",
-            productName:details.productName,
-            brand:details.brand,
-            productCategory:details.category,
-            sku:details.SKU,
-            shortDec:details.shortdescription,
-            description:details.description,
-            productFeatures:details.features,
-            ProductSpec:details.specs,
-            unitWeight:details.unit_for_weight,
-            weight:details.weight,
-            availableSaleQty:details.avail_quantity,
-            minSaleQty:details.min_sale_quantity,
-            maxSaleQty:details.max_sale_quantity,
-            IsStock:details.stock || "No",
-            mrp:details.mrp,
-            sellingPrice:details.selling_price,
-            specialPrice:details.special_price,
-            discount:details.discount,
-            discountAmt:details.discount_amount,
-            status:details.status,
-            mainImg:details.main_img,
-            img2:details.img2,
-            img3:details.img3,
-            img4:details.img4,
-            img5:details.img1,
-            smallimg:details.small_img,
-            thumimg:details.thumbnail_image,
-            taxClassId:details.tax_class_id,
-            cgstp:details.cgst,
-            igstp:details.igst,
-            sgstp:details.sgst,
-            cgstamt:details.cgst_amount,
-            igstamt:details.igst_amount,
-            sgstamt:details.sgst_amount,
-            groupid:details.group_id,
-            metakey:details.meta_keyword,
-            proVisible:details.product_visible || "No",
-            ean:details.ean,
-            retailQtyAllowed:details.retail_quantity,
-            wholsaleQtyAllowed:details.wholesale_quantity,
-        })
+        if(props.productDetails){
+            setState({
+                ...state,
+                product_id:details._id,
+                pageType:details._id ? "Edit":"Add",
+                productName:details.productName,
+                brand:details.brand,
+                productCategory:details.category,
+                sku:details.SKU,
+                shortDec:details.shortdescription,
+                description:details.description,
+                productFeatures:details.features,
+                ProductSpec:details.specs,
+                unitWeight:details.unit_for_weight,
+                weight:details.weight,
+                availableSaleQty:details.avail_quantity,
+                minSaleQty:details.min_sale_quantity,
+                maxSaleQty:details.max_sale_quantity,
+                IsStock:details.stock || "No",
+                mrp:details.mrp,
+                sellingPrice:details.selling_price,
+                specialPrice:details.special_price,
+                discount:details.discount,
+                discountAmt:details.discount_amount,
+                status:details.status || "Active",
+                mainImg:details.main_img,
+                img2:details.img2,
+                img3:details.img3,
+                img4:details.img4,
+                img5:details.img1,
+                smallimg:details.small_img,
+                thumimg:details.thumbnail_image,
+                taxClassId:details.tax_class_id,
+                cgstp:details.cgst,
+                igstp:details.igst,
+                sgstp:details.sgst,
+                cgstamt:details.cgst_amount,
+                igstamt:details.igst_amount,
+                sgstamt:details.sgst_amount,
+                groupid:details.group_id,
+                metakey:details.meta_keyword,
+                proVisible:details.product_visible || "No",
+                ean:details.ean,
+                retailQtyAllowed:details.retail_quantity,
+                wholsaleQtyAllowed:details.wholesale_quantity,
+            })
+        }
+        
     }, [props.productDetails])
 
   
@@ -267,6 +300,7 @@ function AddProduct(props) {
                             onChange={onChange} className="form-control" 
                             placeholder="weight" 
                             error={state.failure.weight || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -278,6 +312,7 @@ function AddProduct(props) {
                             value={state.availableSaleQty} onChange={onChange} 
                             className="form-control" placeholder="Available sale qty" 
                             error={state.failure.avail_quantity || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -289,6 +324,7 @@ function AddProduct(props) {
                             onChange={onChange} className="form-control" 
                             placeholder="Min sale qty" 
                             error={state.failure.min_sale_quantity || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -300,6 +336,7 @@ function AddProduct(props) {
                             onChange={onChange} className="form-control" 
                             placeholder="Max sale qty" 
                             error={state.failure.max_sale_quantity || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -321,6 +358,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="mrp" value={state.mrp} 
                             onChange={onChange} className="form-control" placeholder="mrp" 
                             error={state.failure.mrp || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -331,6 +369,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="sellingPrice" value={state.sellingPrice} 
                             onChange={onChange} className="form-control" placeholder="Selling price" 
                             error={state.failure.selling_price || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -341,6 +380,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="specialPrice" value={state.specialPrice} 
                             onChange={onChange} className="form-control" placeholder="Special price" 
                             error={state.failure.special_price || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -350,6 +390,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="discount" value={state.discount} 
                             onChange={onChange} className="form-control" placeholder="%" 
                             error={state.failure.discount || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -359,6 +400,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="discountAmt" value={state.discountAmt} 
                             onChange={onChange} className="form-control" placeholder="Discount Amount" 
                             error={state.failure.discountAmt || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -366,10 +408,14 @@ function AddProduct(props) {
                     <div className="form-group">
                         <label>Status</label>
                         <span className={"mty"}>&nbsp;*</span>
-                        <Inputbox type="text" id="status" value={state.status} onChange={onChange} 
+                        <select id="status" value={state.status} onChange={onChange} className="form-control" >
+                            <option value={"Active"}>Active</option>
+                            <option value={"Inactive"}>Inactive</option>
+                        </select>
+                        {/* <Inputbox type="text" id="status" value={state.status} onChange={onChange} 
                             className="form-control" placeholder="Status" 
                             error={state.failure.status || ""}
-                        />
+                        /> */}
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
@@ -379,6 +425,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="taxClassId" value={state.taxClassId} 
                             onChange={onChange} className="form-control" placeholder="Tax class id" 
                             error={state.failure.taxClassId || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>
@@ -388,15 +435,17 @@ function AddProduct(props) {
                         <Inputbox type="text" id="cgstp" value={state.cgstp} onChange={onChange} 
                             className="form-control" placeholder="%" 
                             error={state.failure.cgstp || ""}
+                            disabled
                         />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Igst %</label>
-                        <Inputbox type="text" id="igstp" value={state.igstp} onChange={onChange} 
+                        <Inputbox type="text" id="igstp" value={state.igstp || 0} onChange={onChange} 
                             className="form-control" placeholder="%" 
                             error={state.failure.igstp || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -406,6 +455,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="sgstp" value={state.sgstp} onChange={onChange} 
                             className="form-control" placeholder="%" 
                             error={state.failure.sgstp || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -415,15 +465,17 @@ function AddProduct(props) {
                         <Inputbox type="text" id="cgstamt" value={state.cgstamt} onChange={onChange} 
                             className="form-control" placeholder="cgst amount" 
                             error={state.failure.cgstamt || ""}
+                            disabled
                         />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
                         <label>Igst Amount</label>
-                        <Inputbox type="text" id="igstamt" value={state.igstamt} onChange={onChange} 
+                        <Inputbox type="text" id="igstamt" value={state.igstamt || 0} onChange={onChange} 
                             className="form-control" placeholder="igst amount" 
                             error={state.failure.igstamt || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -433,6 +485,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="sgstamt" value={state.sgstamt} onChange={onChange} 
                             className="form-control" placeholder="sgst amount" 
                             error={state.failure.sgstamt || ""}
+                            disabled
                         />
                     </div>
                 </Col>
@@ -442,6 +495,7 @@ function AddProduct(props) {
                         <Inputbox type="text" id="groupid" value={state.groupid} onChange={onChange} 
                             className="form-control" placeholder="group id" 
                             error={state.failure.groupid || ""}
+                            onlyNumber
                         />
                     </div>
                 </Col>

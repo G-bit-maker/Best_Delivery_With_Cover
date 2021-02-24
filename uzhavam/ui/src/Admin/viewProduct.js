@@ -22,7 +22,8 @@ function ViewProduct(props) {
   const [state,setState] = useState({
     uname:"",
     pass:"",
-    tab:0
+    tab:0,
+    removeAlert:""
   })
 
   const onChange=(e)=>{
@@ -35,9 +36,26 @@ function ViewProduct(props) {
     props.getProductList()
   }, []);
 
-  
-
-
+  const productRemove=(id)=>{
+      setState({
+        ...state,
+        removeAlert:"Product remove request initiated..."
+      })
+      props.productRemove(id)
+      .then((res)=>{
+            setState({
+              ...state,
+              removeAlert:"Product removed successfully."
+            })
+            setTimeout(()=>(
+              setState({
+                ...state,
+                removeAlert:""
+              })
+            ), 5000)
+          })
+      
+  }
     return (
         <>
       <Header {...props} />
@@ -51,6 +69,7 @@ function ViewProduct(props) {
                 </h4>
             </Col>
             <Col xs={12} sm={12} md={12} lg={12} className={"listContainer adjustRow"}>
+
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
@@ -83,7 +102,7 @@ function ViewProduct(props) {
                                   />
                                 <div className={"floatRight"}>
                                   <DeleteForever fontSize="small"
-                                    onClick={()=>props.productRemove(data._id)} 
+                                    onClick={()=>productRemove(data._id)} 
                                 />
                                 &nbsp;
                                 </div>
@@ -94,7 +113,13 @@ function ViewProduct(props) {
                 </tbody>
             </Table>
             </Col>
-         
+            {state.removeAlert ? 
+              <div className={"CustomAlert"}>
+                  {state.removeAlert} 
+                  <span onClick={()=>setState({...state,removeAlert:""})}>&times;</span>
+              </div>
+            :""  
+            }
       </Container>
       </>
     );

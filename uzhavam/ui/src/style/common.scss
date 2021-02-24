@@ -181,3 +181,21 @@ body, html {
 
         ul:after { clear: both; }
 }
+
+.CustomAlert{
+    min-width: 25%;
+    background: #666;
+    color: #fff;
+    padding: 15px 20px;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 3%;
+    margin-left: 0%;
+    span{
+        float: right;
+        font-size: 20px;
+        cursor: pointer;
+        font-weight: 700;
+        line-height: 1;
+    }
+}
