@@ -84,16 +84,35 @@ exports.getProducts = async (req, res, next) => {
     try {
         const { id } = req.user;
         if(id){
-            let details = await productModel.find();
-            if(details && details.length !== 0){
+            let userCart = await productModel.userCart.find({userId:id});
+            let details = await productModel.product.find();
+            res.status(200).json({
+                list:details,
+                userCart
+            });
+            //console.log(userCart,details)
+            /* if(details && details.length !== 0){
+                if(userCart && userCart.length !==0){
+                    userCart.map((data)=>{
+                        let i = details.findIndex(x=>x._id.toString() === data.productId)
+                        if(i !== -1 ){
+                            console.log(data.productId,i)
+                            let obj = {}
+                            obj.count = data.count
+                            console.log(obj)
+                            details[i] = obj
+                        }
+                    })
+                }
                 res.status(200).json({
-                    list:details
+                    list:details,
+                    userCart
                 });
             }else{
                 res.status(200).json({
                     message:"No lists are available"
                 });
-            }
+            } */
         }else{
             return res.status(500).json({
                 message:message.Token_Invalid
@@ -104,4 +123,45 @@ exports.getProducts = async (req, res, next) => {
             message:"No lists are available"
         });
     }
+};
+exports.updateCart = async (req, res, next) => {
+    let obj = req.body;
+        const { id } = req.user;
+         if(id){
+            obj.userId = id
+            //let cartDetails = new productModel.userCart()
+            if(obj.count == "0"){
+                productModel.userCart.findOneAndDelete({userId:id,productId:obj.productId})
+                .then((data)=>{
+                    res.status(200).json({
+                        data
+                    });
+                })
+            }else{
+                productModel.userCart.findOneAndUpdate({userId:id,productId:obj.productId},
+                    {$set:{count:obj.count,userId:id,productId:obj.productId}}, 
+                    {new: true},(err, doc)=>{
+                        if (err) {
+                            res.status(200).json({
+                                err
+                            });
+                        }else{
+                            if(doc === null){
+                                productModel.userCart(obj).save()
+                                .then((data)=>{
+                                    res.status(200).json({
+                                        data
+                                    });
+                                })
+                            }else{
+                                res.status(200).json({
+                                    doc
+                                });
+                            }
+                            
+                        }
+                    
+                    })
+            }
+            }
 };

@@ -6,6 +6,21 @@ let categorySchema = mongoose.Schema({
     }
 });
 
+let cartSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        required:[true]
+    },
+    count: {
+        type: String,
+        required:[true]
+    },
+    productId: {
+        type: String,
+        required:[true]
+    }
+});
+
 let productDetailsSchema = mongoose.Schema({
     brand: {
         type: String,
@@ -83,8 +98,8 @@ let productDetailsSchema = mongoose.Schema({
         required:[true,"Please enter status"]
     },
     main_img: {
-        type: String,
-        required:[true,"Please select main image"]
+        type: String//,
+        //required:[true,"Please select main image"]
     },
     img1: {
         type: String
@@ -159,7 +174,9 @@ let productDetailsSchema = mongoose.Schema({
 
 const product = mongoose.model("productDetails", productDetailsSchema, "productDetails");
 const category = mongoose.model("category", categorySchema, "category");
+const userCart = mongoose.model("userCart", cartSchema, "userCart");
 module.exports = {
     product,
-    category
+    category,
+    userCart
 }

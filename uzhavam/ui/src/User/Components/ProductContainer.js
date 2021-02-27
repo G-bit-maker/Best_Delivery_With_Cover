@@ -21,8 +21,9 @@ import "../style/products.scss"
 
 export default function MediaCard(props) {
 
+  const data=props.data
   const [state,setState] = useState({
-    count:0
+    count:Number(data.count) || 0
   })
 
   const cartUpdate=(count)=>{
@@ -33,8 +34,6 @@ export default function MediaCard(props) {
     props.cartUpdate(data._id,count)
   }
 
-  const data=props.data
-  console.log(data)
   return (
       <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
           <CardMedia

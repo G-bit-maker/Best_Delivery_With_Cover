@@ -14,7 +14,25 @@ export function getProductList(id){
     return function(dispatch){
         UserApi.getProductListApi(id)
         .then((res)=>{
-            dispatch({type:"GET_USER_PRODUCT_LIST",payload:res})
+            let userCart = res.userCart
+            let details = res.list
+            if(details && details.length !== 0){
+                if(userCart && userCart.length !==0){
+                    userCart.map((data)=>{
+                        let i = details.findIndex(x=>x._id === data.productId)
+                        if(i !== -1 ){
+                            details[i].count = data.count
+                        }
+                    })
+                }
+                dispatch({type:"GET_USER_PRODUCT_LIST",payload:details,cartList:userCart})
+            }else{
+                dispatch({type:"GET_USER_PRODUCT_LIST",payload:details})
+            }
+
+
+
+            
             return res
         })
     } 

@@ -9,21 +9,22 @@ export default function userReducer(state,action){
         case "GET_USER_PRODUCT_LIST":
             return {
                 ...state,
-                proudctList:action.payload.list ? action.payload.list : []
+                proudctList:action.payload ? action.payload : [],
+                cartList:action.cartList ? action.cartList : []
             }
         case "UPDATE_USER_CART":
             let cartList = state.cartList || []
-            let i=cartList.findIndex(data=>data.id===action.id)
+            let i=cartList.findIndex(data=>data.productId===action.id)
             if(action.c === 0){
                 cartList.splice(i,1)
             }else if(i === -1){
                 cartList.push({
-                    id:action.id,
+                    productId:action.id,
                     count:action.c
                 })
             }else{
                 cartList[i]={
-                    id:action.id,
+                    productId:action.id,
                     count:action.c
                 }
             }
