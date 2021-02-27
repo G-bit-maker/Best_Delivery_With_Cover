@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {Registration} = require('../controllers/RegisterController');
-const {getProducts,login,updateCart} = require('../controllers/UserController');
+const {getProducts,login,updateCart,getCartProducts} = require('../controllers/UserController');
 const auth = require("../Common/auth");
 
 //SignUp
@@ -15,5 +15,8 @@ router.route('/updateCart').post(auth,updateCart);
 
 //products
 router.route('/getProducts').get(auth,getProducts);
+
+//products
+router.route('/getCartDetails').get(auth,getCartProducts);
 
 module.exports = router;

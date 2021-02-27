@@ -3,6 +3,9 @@ import qs from "qs";
 import urls from "./urls"
 
 class UserApi{
+    static getCartDetailsApi(){
+        return axios.get(urls.getCartDetails)
+    }   
     static getCategoryApi(data){
         return axios.get(urls.getCategoryForUser)
     }   

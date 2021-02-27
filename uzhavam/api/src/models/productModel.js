@@ -22,6 +22,9 @@ let cartSchema = mongoose.Schema({
 });
 
 let productDetailsSchema = mongoose.Schema({
+    count: { //add cart purpose
+        type: String
+    },
     brand: {
         type: String,
         required:[true,"Please enter brand name"]

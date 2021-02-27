@@ -10,6 +10,16 @@ export function getCategory(){
     } 
 }
 
+export function getCartDetails(){
+    return function(dispatch){
+        UserApi.getCartDetailsApi()
+        .then((res)=>{
+            dispatch({type:"GET_CART_DETAILS",payload:res})
+            return res
+        })
+    } 
+}
+
 export function getProductList(id){
     return function(dispatch){
         UserApi.getProductListApi(id)
@@ -43,6 +53,9 @@ export function cartUpdate(id,c){
         UserApi.cartUpdateApi(id,c)
         .then((res)=>{
             dispatch({type:"UPDATE_USER_CART",payload:res,id,c})
+            if(c==0){
+                dispatch(getCartDetails())
+            }
             return res
         })
     } 

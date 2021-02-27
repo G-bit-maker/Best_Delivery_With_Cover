@@ -28,7 +28,7 @@ function Header(props) {
 
   const list =[1,2,3,4,5]
   useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    props.getCartDetails()
   }, []);
 
   
@@ -37,19 +37,19 @@ function Header(props) {
         <>
             <div className={"cartListCon"}>
                 <div className={"CartList"}>
-                    {list && list.length != 0 ? 
-                        list.map((data,i)=>(
+                    {props.cartProductList && props.cartProductList.length != 0 ? 
+                        props.cartProductList.map((data,i)=>(
                             <Col xs={12} sm={12} md={12} lg={12} className={"CartList2"}>
                             <Row>
                                 <Col xs={3} sm={3} md={3} lg={3}>
                                     <img height="50px" src={userimage}/>
                                 </Col>
                                 <Col xs={6} sm={6} md={6} lg={7} className={"adjustRow"}>
-                                    <div className={"proName"}>Product Name</div>
-                                    <div className={"price"}>&#x20B9;600 x 2</div>
+                                    <div className={"proName"}>{data.productName}</div>
+                                    <div className={"price"}>&#x20B9;{data.mrp} x {data.count}</div>
                                 </Col>
                                 <Col xs={3} sm={3} md={3} lg={2} className={"close adjustRow"}>
-                                    <CloseIcon />
+                                    <CloseIcon onClick={()=>props.cartUpdate(data._id,"0")} />
                                 </Col>
                             </Row>
                         </Col>
@@ -59,7 +59,7 @@ function Header(props) {
                 </div>
                 <div className={"cartfooter"}>
                     Check out
-                    <span className={"total"}>&#x20B9;1200&nbsp;&nbsp;&nbsp;</span>
+                    <span className={"total"}>{props.cartProductList.length} items&nbsp;&nbsp;&nbsp;</span>
                 </div>
             </div>
          </>
@@ -69,7 +69,7 @@ function Header(props) {
   //export default Header
  const mapStateToProps = (state) => {
   return {
-    cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
+    cartProductList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
   }
 }
 

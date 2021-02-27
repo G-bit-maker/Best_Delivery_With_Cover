@@ -124,6 +124,49 @@ exports.getProducts = async (req, res, next) => {
         });
     }
 };
+exports.getCartProducts = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        if(id){
+
+            let userCart = await productModel.userCart.find({userId:id});
+            let details = await productModel.product.find()
+            let newarr=[];
+            userCart.map(x=>{
+                let i = details.findIndex(y=>y._id == x.productId)
+                if(i != -1){
+                    let obj = details[i]
+                    obj.count = x.count
+                    newarr.push(obj)
+                }
+            })
+            res.status(200).json({
+                list:newarr
+            });
+            
+
+
+
+           /*  let userCart = await productModel.userCart.find({});
+            let iddd=userCart.map(x=>x.productId)
+            console.log(iddd)
+            let details = await productModel.product.find({_id:iddd})
+            res.status(200).json({
+                list:details,
+                userCart
+            });
+             */
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }        
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
+        });
+    }
+};
 exports.updateCart = async (req, res, next) => {
     let obj = req.body;
         const { id } = req.user;

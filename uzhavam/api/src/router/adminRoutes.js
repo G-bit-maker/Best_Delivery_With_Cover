@@ -7,7 +7,7 @@ const {login,createlogin,createProductDetails,getproduct,getproductDetails,getUs
 router.route('/login').post(login);
  
 //create admin
-router.route('/signUp').post(createlogin);
+router.route('/signUp').get(createlogin);
 
 //category details-
 router.route('/createCategory').post(auth,createCategory);
