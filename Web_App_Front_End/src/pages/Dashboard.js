@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
         this.state={ 
           winWidth: window.innerWidth,
           userType: localStorage.getItem("userType"),
-          tabId: 0
+          tabId: 4
         }
     }
 
@@ -29,6 +29,8 @@ class Dashboard extends React.Component {
         let tabVal = this.state.tabId;
         if(tabVal === 3){
           this.props.GetAllCategories(this.state.userType, "get", "getAllCategories")
+        }else if(tabVal === 4){
+          this.props.GetAllUser(this.state.userType, "get", "getAllUser")
         }
       })
     }
@@ -38,7 +40,7 @@ class Dashboard extends React.Component {
 
     render(){
       return(
-        <div>
+        <div className={"commonfont"}>
             <SubNav
               title={"Admin"}
               tabId={this.state.tabId}
@@ -50,7 +52,9 @@ class Dashboard extends React.Component {
                   <UpdateTags 
                     userType={this.state.userType}
                   />,
-                  <Userscomponent/>,
+                  <Userscomponent
+                    userType={this.state.userType}
+                  />,
                   <Clientscomponent/>,
                   <Raiderscomponent/>
               ]}

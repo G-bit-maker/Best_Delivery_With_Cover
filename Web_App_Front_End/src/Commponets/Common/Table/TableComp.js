@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Col, Table, Spinner} from "react-bootstrap"
+import {Table, Spinner} from "react-bootstrap"
 import {bindActionCreators } from "redux";
 import {connect} from "react-redux";
 import * as BaseAction from "../../../Actions/BaseAction";
@@ -59,7 +59,7 @@ class TableComponent extends React.Component {
                       <td>{i+1}</td>
                       <td>{data.categorieName}</td>
                       <td>{data.categorieDecr}</td>
-                      <td>{data.swithStatus ? "Enabled" : "Disablesd  "}</td>
+                      <td>{data.swithStatus ? "Enabled" : "Disabled  "}</td>
                       <td>
                         <a 
                           href={"#"}

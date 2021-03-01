@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 let registerSchema = mongoose.Schema({
-    Name: {
+    name: {
         type: String,
        // required:[true,"Please enter name"]
     },

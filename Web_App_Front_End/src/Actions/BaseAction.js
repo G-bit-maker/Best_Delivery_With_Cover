@@ -18,7 +18,7 @@ export const registerAction = (inputData) => {
             type: "LOGIN_REQUEST",
             payload: true,
         })
-        axios.post("http://localhost:5000/api/register", inputData)
+        apiCall.registerActionApi(inputData)
         .then(responce=>{
             let res = responce.data;
             if(res.err !== undefined){
@@ -49,7 +49,6 @@ export const loginAction = (inputData) => {
         })
         apiCall.loginActionApi(inputData)
         .then(responce=>{
-            console.log(responce)
             let res = responce.data;
             if(res.failure){
                 dispatch({
@@ -63,7 +62,7 @@ export const loginAction = (inputData) => {
                     type: "LOGIN_SUCCESS",
                 })
                 if(res.userType === "Admin"){
-                    window.open("/dashboard/0", "_self")
+                    window.open("/dashboard", "_self")
                 }else if(res.userType === "Admin"){
 
                 }
@@ -136,7 +135,7 @@ export const clearMessage = (status) => {
     }
 }
 
-export const ActionDelete = (userType, methode, processName, inputData) => {
+export const ActionDelete = (userType, methode, processName, inputData, ) => {
 
     return dispatch =>{
         dispatch({
@@ -149,7 +148,11 @@ export const ActionDelete = (userType, methode, processName, inputData) => {
                     type: "SAVE_CATEGORIE_SUCCESS",
                     payload: responce.data,
                 })
-                dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+                if(processName === "deleteUser"){
+                    dispatch(GetAllUser(userType, "get", "getAllUser"))
+                }else{
+                    dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+                }
             }else {
 
             }
@@ -158,4 +161,28 @@ export const ActionDelete = (userType, methode, processName, inputData) => {
 
         })
     }
+}
+
+export const GetAllUser = (userType, methode, processName, inputData) => {
+    return dispatch =>{
+        dispatch({
+            type: "LOGIN_REQUEST",
+            payload: true,
+        })
+        apiCall.SaveCategorieActionApi(userType, methode, processName, inputData)
+        .then(responce=>{
+            dispatch({
+                type: "GET_USER_SUCCESS",
+                payload: responce.data,
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: "SAVE_CATEGORIE_FAILURE",
+                payload: true,
+            })
+            alert("Somthing Went Wrong With loginAction")
+        })
+    }
+     
 }

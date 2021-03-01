@@ -16,14 +16,16 @@ const BaseReducer = (state, actions) =>{
                 ...state,
                 redirectToLogin : true,
                 data: actions.data,
-                success: actions.payload
+                success: actions.payload,
+                pageLoading: false
             }
         }
 
         case "LOGIN_FAILUR":{
             return {
                 ...state,
-                err: actions.failure
+                err: actions.failure,
+                pageLoading: false
             }
         }
 
@@ -115,6 +117,32 @@ const BaseReducer = (state, actions) =>{
             }
         }
 
+        case "GET_USER_SUCCESS": {
+            if(actions.payload.message !== "seccess"){
+                return{
+                    ...state,
+                    buttonLoading: false,
+                    failureObj: actions.payload.failure,
+                    failure: actions.payload.failure.message,
+                    toster: true,
+                    error: true,
+                    pageLoading: false,
+                    listData: ""
+                }
+            }else{
+                return{
+                    ...state,
+                    buttonLoading: false,
+                    listData: actions.payload.users,
+                    failureObj:"",
+                    successObj: actions.payload,
+                    clearStatus: true,
+                    toster: true,
+                    error: false,
+                    pageLoading: false,
+                }
+            }
+        }
         default:
             return state;
     }

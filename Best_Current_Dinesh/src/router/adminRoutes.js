@@ -10,7 +10,8 @@ const {login,
     updateCategories,
     getUserList,
     updateShop,
-    deleteShop} = require('../controllers/adminContoller');
+    deleteShop,
+    deleteUser} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -38,6 +39,9 @@ router.route("/updateCategories").put(updateCategories);
 
 //user List
 router.route("/getAllUsers").get(getUserList);
+
+//user List
+router.route("/deleteUser/:id").delete(deleteUser);
 
 //Update Shop
 router.route("/updateShop").put(updateShop);

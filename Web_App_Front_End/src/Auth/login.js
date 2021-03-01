@@ -68,6 +68,7 @@ class Login extends React.Component {
                                 />
                             </Form.Group>
 
+                        <div className={"dis-flex"}>
                             <Button
                                 variant="primary" 
                                 type="submit"
@@ -75,6 +76,10 @@ class Login extends React.Component {
                                 onClick={this.onClick}
                                 btnLoading={this.props.pageLoading}
                             />
+                            <Col xs={12} xl={12} sm={12} md={12} lg={12} className={""}>
+                                <a className={""} href={"/register"}>not register yet</a>
+                            </Col>
+                        </div>
                         </Jumbotron>
                     </Col>
                     <a href={""}>Copyright © 2021 Best Delivery</a>

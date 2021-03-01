@@ -248,7 +248,7 @@ exports.getUserList = async (req, res, next) => {
         }else{
             res.status(200).json({
                 failure:{
-                    message:"No user are available"
+                    message:"No users are available"
                 }
             });
         }
@@ -310,6 +310,34 @@ exports.deleteShop = async (req, res, next) => {
                 success:"Not deleted"
             });
          })
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.deleteUser = async (req, res, next) => {
+    try {
+        let _id= req.params.id
+        let result = await users.deleteOne({_id : new mongodb.ObjectId(_id)}, function(err, obj) {
+            if (err){
+                res.json({
+                    failure:{
+                        message: err
+                    }
+                })
+            }
+            else{
+                res.status(200).json({
+                    success: {
+                        message : "deleted successfully"
+                    }
+                })
+            }
+            });
     } catch (err) {
         return res.status(500).json({
             failure:{

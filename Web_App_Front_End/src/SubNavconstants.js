@@ -37,7 +37,7 @@ const SubNavBarConstant = {
             Url: "/users"
         },{
             id: 6,
-            Name: "Clients",
+            Name: "Shop Details",
             Url: "/clients"
         },{
             id: 7,

@@ -75,7 +75,7 @@ class Ordercomponent extends React.Component {
 
     render(){
       return(
-        <div className={"dis-flex"}>
+        <div className={"dis-flex commonfont"}>
           <Col xl={3} lg={4} md={12} sm={12} xs={12} className={"text-left border-r-2-black p-r-25 "}>
             {this.state.status === "Edit" ? <h4>Edit Categories</h4> : <h4>Add Categories</h4>}
             <Form.Group controlId="formBasicEmail" className={"m-t-30"}>
@@ -132,6 +132,29 @@ class Ordercomponent extends React.Component {
           </Col>
 
           <Col xl={9} lg={8} md={12} sm={12} xs={12}>
+            <h4 className={"float-l"}>Categories List</h4>
+            <Col xl={6} lg={6} md={6} sm={6} xs={6} className={"float-r p-r-0"}>
+              <Form className={"float-r"}>
+                <Form.Row >
+                  <Col xs="auto">
+                    <Form.Control
+                      className="mb-2"
+                      id="inlineFormInput"
+                      placeholder="Enter Categories to search"
+                    />
+                  </Col>
+                  <Col xs="auto">
+                    <Button 
+                      btnVariant="dark"
+                      type="search"
+                      btnText={"search"}
+                      onClick={this.onSubmit}
+                      btnLoading={this.props.buttonLoading}/>
+                  </Col>
+                </Form.Row>
+              </Form>
+            </Col>
+
             <TableComp
               onClickAction={this.onClickAction}
               headList={headList}/>

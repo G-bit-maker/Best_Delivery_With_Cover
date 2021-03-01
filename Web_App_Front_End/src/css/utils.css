@@ -2864,7 +2864,7 @@
   padding-left: 250px;
 }
 .p-r-0 {
-  padding-right: 0px;
+  padding-right: 0px !important;
 }
 .p-r-1 {
   padding-right: 1px;
@@ -7470,4 +7470,7 @@
 }
 .border-r-2-black {
   border-right: 2px solid #bab7b6 !important;
+}
+.commonfont {
+  font-family: 'Varela Round', sans-serif !important;
 }

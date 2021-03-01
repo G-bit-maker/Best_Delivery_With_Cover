@@ -7,6 +7,7 @@ exports.Registration = async (req, res, next) => {
     try {
         //const { Name, mobile,email,password} = req.body;
         let userDetails = new registerModel(req.body);
+        console.log(req.body)
         userDetails.save()
             .then(function (data) {
                 res.status(200).json({
