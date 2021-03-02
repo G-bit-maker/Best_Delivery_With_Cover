@@ -3,6 +3,7 @@ import {Table, Spinner} from "react-bootstrap"
 import {bindActionCreators } from "redux";
 import {connect} from "react-redux";
 import * as BaseAction from "../../../Actions/BaseAction";
+import { ThreeSixtySharp } from '@material-ui/icons';
 
 class TableComponent extends React.Component { 
     constructor(){
@@ -48,7 +49,7 @@ class TableComponent extends React.Component {
               </thead>
               <tbody> 
                 {this.props.pageLoading ? 
-                <td colSpan="5">
+                <td colSpan={this.props.headList ? this.props.headList.length : ""}>
                   <Spinner animation="border" variant="dark" />
                 </td>
                 :
@@ -75,7 +76,7 @@ class TableComponent extends React.Component {
                     </tr>
                 )) :
                 <tr>
-                  <td colSpan="5">{this.props.failure}</td>
+                  <td colSpan={this.props.headList ? this.props.headList.length : ""}>{this.props.failure}</td>
                 </tr> 
                 }
                 

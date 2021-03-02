@@ -112,7 +112,11 @@ export const SaveCategorieAction = (userType, methode, processName, inputData) =
                 payload: responce.data,
             })
             if(responce.data.success){
-                dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+                if(processName === "addShop"){
+
+                }else{
+                    dispatch(GetAllCategories(userType, "get", "getAllCategories"))
+                }
             }
         })
         .catch(err => {

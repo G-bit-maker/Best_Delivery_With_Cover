@@ -10,7 +10,9 @@ const setting = {
         deleteCategore: "/admin/deleteCategories",
         updateCategorie: "/admin/updateCategories",
         getAllUser: "/admin/getAllUsers",
-        deleteUser: "/admin/deleteUser"
+        deleteUser: "/admin/deleteUser",
+        addShop: "/admin/createShopDetails",
+        updateShop: "/admin/updateShop"
     }
 }
 

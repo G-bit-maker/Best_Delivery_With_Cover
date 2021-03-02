@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
         this.state={ 
           winWidth: window.innerWidth,
           userType: localStorage.getItem("userType"),
-          tabId: 4
+          tabId: 5
         }
     }
 
@@ -46,17 +46,27 @@ class Dashboard extends React.Component {
               tabId={this.state.tabId}
               handleChange={this.handleChange}
               container={[
-                  <DashboardComponent/>,
-                  <ProductComponent/>,
-                  <Ordercomponent/>,
+                  <DashboardComponent
+                    userType={this.state.userType}
+                  />,
+                  <ProductComponent
+                    userType={this.state.userType}
+                  />,
+                  <Ordercomponent
+                    userType={this.state.userType}
+                  />,
                   <UpdateTags 
                     userType={this.state.userType}
                   />,
                   <Userscomponent
                     userType={this.state.userType}
                   />,
-                  <Clientscomponent/>,
-                  <Raiderscomponent/>
+                  <Clientscomponent
+                    userType={this.state.userType}
+                  />,
+                  <Raiderscomponent
+                    userType={this.state.userType}
+                  />
               ]}
             />
         </div>

@@ -2111,7 +2111,7 @@
   padding-bottom: 250px;
 }
 .p-l-0 {
-  padding-left: 0px;
+  padding-left: 0px !important;
 }
 .p-l-1 {
   padding-left: 1px;
@@ -5171,7 +5171,7 @@
   margin-left: 14px;
 }
 .m-l-15 {
-  margin-left: 15px;
+  margin-left: 15px !important;
 }
 .m-l-16 {
   margin-left: 16px;
@@ -5924,7 +5924,7 @@
   margin-right: 14px;
 }
 .m-r-15 {
-  margin-right: 15px;
+  margin-right: 15px !important;
 }
 .m-r-16 {
   margin-right: 16px;
@@ -7470,6 +7470,9 @@
 }
 .border-r-2-black {
   border-right: 2px solid #bab7b6 !important;
+}
+.border-b-2-black {
+  border-bottom: 2px solid #bab7b6 !important;
 }
 .commonfont {
   font-family: 'Varela Round', sans-serif !important;
