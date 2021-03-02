@@ -58,9 +58,21 @@ class TableComponent extends React.Component {
                 this.props.listData.map((data, i)=>(
                     <tr>
                       <td>{i+1}</td>
-                      <td>{data.categorieName}</td>
-                      <td>{data.categorieDecr}</td>
-                      <td>{data.swithStatus ? "Enabled" : "Disabled  "}</td>
+                      {this.props.parentName === "updateTags" ? 
+                        <>
+                        <td>{data.categorieName || "NA"}</td>
+                        <td>{data.categorieDecr || "NA"}</td>
+                        <td>{data.swithStatus ? "Enabled" : "Disabled  "}</td>
+                        </>
+                        : 
+                        <>
+                        <td>{data.shopName || "NA"}</td>
+                        <td>{data.email || "NA"}</td>
+                        <td>{data.Address_2 || "NA"}</td>
+                        <td>{data.swithStatus ? "Enabled" : "Disabled  "}</td>
+                        </>
+                      }
+                      
                       <td>
                         <a 
                           href={"#"}

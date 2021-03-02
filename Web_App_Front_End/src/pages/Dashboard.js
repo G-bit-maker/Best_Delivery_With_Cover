@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
         this.state={ 
           winWidth: window.innerWidth,
           userType: localStorage.getItem("userType"),
-          tabId: 5
+          tabId: 0
         }
     }
 
@@ -31,6 +31,8 @@ class Dashboard extends React.Component {
           this.props.GetAllCategories(this.state.userType, "get", "getAllCategories")
         }else if(tabVal === 4){
           this.props.GetAllUser(this.state.userType, "get", "getAllUser")
+        }else if(tabVal === 5){
+          this.props.GetAllShop(this.state.userType, "get", "getAllShop")
         }
       })
     }

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {login, 
+const {
+    login, 
     createlogin,
     createShopDetails, 
     getShopDetails, 
@@ -11,7 +12,9 @@ const {login,
     getUserList,
     updateShop,
     deleteShop,
-    deleteUser} = require('../controllers/adminContoller');
+    deleteUser,
+    getAllShop
+} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -47,8 +50,10 @@ router.route("/deleteUser/:id").delete(deleteUser);
 router.route("/updateShop").put(updateShop);
 
 //Delete Shop
-router.route("/deleteShop").delete(deleteShop);
+router.route("/deleteShop/:id").delete(deleteShop);
 
+//user List
+router.route("/getAllShop").get(getAllShop);
 
 
 module.exports = router;

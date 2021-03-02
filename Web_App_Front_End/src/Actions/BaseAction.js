@@ -112,8 +112,8 @@ export const SaveCategorieAction = (userType, methode, processName, inputData) =
                 payload: responce.data,
             })
             if(responce.data.success){
-                if(processName === "addShop"){
-
+                if(processName === "addShop" || processName === "updateShop" ){
+                    dispatch(GetAllShop(userType, "get", "getAllShop"))
                 }else{
                     dispatch(GetAllCategories(userType, "get", "getAllCategories"))
                 }
@@ -154,6 +154,8 @@ export const ActionDelete = (userType, methode, processName, inputData, ) => {
                 })
                 if(processName === "deleteUser"){
                     dispatch(GetAllUser(userType, "get", "getAllUser"))
+                }else if(processName === "deleteShop"){
+                    dispatch(GetAllShop(userType, "get", "getAllShop"))
                 }else{
                     dispatch(GetAllCategories(userType, "get", "getAllCategories"))
                 }
@@ -187,6 +189,28 @@ export const GetAllUser = (userType, methode, processName, inputData) => {
             })
             alert("Somthing Went Wrong With loginAction")
         })
-    }
-     
+    }  
+}
+
+export const GetAllShop = (userType, methode, processName, inputData) => {
+    return dispatch =>{
+        dispatch({
+            type: "LOGIN_REQUEST",
+            payload: true,
+        })
+        apiCall.SaveCategorieActionApi(userType, methode, processName, inputData)
+        .then(responce=>{
+            dispatch({
+                type: "GET_USER_SUCCESS",
+                payload: responce.data,
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: "SAVE_CATEGORIE_FAILURE",
+                payload: true,
+            })
+            alert("Somthing Went Wrong With loginAction")
+        })
+    }  
 }

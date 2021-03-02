@@ -7,10 +7,10 @@ import Login from './Auth/login';
 import Home from "./Auth/home";
 import {Switch,Route} from "react-router-dom";
 import ProductRouter from "./Auth/prodect";
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbars from "./Commponets/Common/navBar";
-import Logout from "./Commponets/Common/Logout"
+import Logout from "./Commponets/Common/Logout";
 
 
 function App() {

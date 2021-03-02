@@ -157,7 +157,8 @@ class Ordercomponent extends React.Component {
 
             <TableComp
               onClickAction={this.onClickAction}
-              headList={headList}/>
+              headList={headList}
+              parentName={"updateTags"}/>
           </Col>
         </div>
       )

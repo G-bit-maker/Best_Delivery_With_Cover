@@ -72,7 +72,7 @@
   background-color: white;
 }
 .btn:hover {
-  color: rgb(199, 199, 199) !important;
+  color: #28a745 !important;
 }
 .actives {
   border-bottom: solid #28a745 2px !important;

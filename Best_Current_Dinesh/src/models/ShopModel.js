@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 let shopDetailsSchema = mongoose.Schema({
-    ownerName: {
+    ShopOwnerName: {
         type: String
     },
     shopName: {
         type: String
     },
-    address1: {
+    Address_1: {
         type: String
     },
-    address2: {
+    Address_2: {
         type: String
     },
-    phone: {
+    Phone: {
         type: String
     },
     email: {
@@ -24,11 +24,14 @@ let shopDetailsSchema = mongoose.Schema({
     shopType: {
         type: String
     },
-    brochure: {
+    brocher: {
         type: String
     }, 
     gst: {
         type: String
+    },
+    swithStatus: {
+        type: Boolean
     },
     createdAt: 
     { type: Date, default: new Date() },

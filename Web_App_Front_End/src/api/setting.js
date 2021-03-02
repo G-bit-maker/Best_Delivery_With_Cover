@@ -12,7 +12,9 @@ const setting = {
         getAllUser: "/admin/getAllUsers",
         deleteUser: "/admin/deleteUser",
         addShop: "/admin/createShopDetails",
-        updateShop: "/admin/updateShop"
+        updateShop: "/admin/updateShop",
+        deleteShop: "/admin/deleteShop",
+        getAllShop: "/admin/getAllShop",
     }
 }
 

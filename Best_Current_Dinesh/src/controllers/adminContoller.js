@@ -60,19 +60,30 @@ exports.createlogin = async (req, res, next) => {
 
 exports.createShopDetails = async (req, res, next) => {
     try {
-        let shopDetails = new shopModel(req.body);
-        shopDetails.save()
-            .then(function (data) {
-                res.status(200).json({
-                    list:data,
-                    success: "Created Successfully"
+        let {shopName, categorie} = req.body
+        if(shopName && categorie){
+            let shopDetails = new shopModel(req.body);
+            shopDetails.save()
+                .then(function (data) {
+                    res.status(200).json({
+                        list:data,
+                        success: "Created Successfully"
+                    });
+                })
+                .catch(function (error) {
+                    res.status(500).json({
+                        failure:{
+                            message:  "Not Added"
+                        }
+                    });
                 });
-            })
-            .catch(function (error) {
-                res.status(500).json({
-                    failure: "Not Added"
-                });
+        }else{
+            res.status(200).json({
+                failure: {
+                    message: "Shop Name, Categories are mandatories"
+                }
             });
+        }
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"
@@ -140,7 +151,9 @@ exports.saveCategories = async (req, res, next) => {
         }
     } catch (err) {
         return res.status(400).json({
-            message:"No lists are available"
+            failure : {
+                message:"No lists are available"
+            }
         });
     }
 };
@@ -227,7 +240,6 @@ exports.updateCategories = async (req, res, next) => {
                 }
             }
         );
-        console.log(result)
     } catch (err) {
         return res.status(500).json({
             failure:{
@@ -263,30 +275,26 @@ exports.getUserList = async (req, res, next) => {
 
 exports.updateShop = async (req, res, next) => {
     try {
-        let {shopId,ownerName,shopName,address1,address2,phone,email,category,shopType,brochure,gst} = req.body;
-        let List = {
-            shopName,
-            ownerName,
-            address1,
-            address2,
-            phone,
-            email,
-            category,
-            shopType,
-            brochure,
-            gst
-        }
-        shopModel.findOneAndUpdate({_id : shopId},List)
-        .then(function(data){
-            res.status(200).json({
-                success:"Shop edited Successfully"
-            })     
-         })
-         .catch(function(error){
-            res.status(500).json({
-                success:"Not edited"
-            });
-         })
+        let {_id} = req.body;
+        let result = await shopModel.updateOne(
+            {_id : new mongodb.ObjectId(_id)},
+            { $set: req.body }, function(err, obj){
+                if (err) {
+                    res.json({
+                        failure:{
+                            message: err
+                        }
+                    })
+                }
+                else{
+                    res.status(200).json({
+                        success: {
+                            message : "Updated successfully"
+                        }
+                    })
+                }
+            }
+        );
     } catch (err) {
         return res.status(500).json({
             failure:{
@@ -298,18 +306,23 @@ exports.updateShop = async (req, res, next) => {
 
 exports.deleteShop = async (req, res, next) => {
     try {
-        const {shopId} = req.body;
-        shopModel.findOneAndDelete({"_id":shopId})
-        .then(function(data){
-            res.status(200).json({
-                success:"List deleted Successfully"
-            })     
-         })
-         .catch(function(error){
-            res.status(500).json({
-                success:"Not deleted"
+        let _id= req.params.id
+        let result = await shopModel.deleteOne({_id : new mongodb.ObjectId(_id)}, function(err, obj) {
+            if (err){
+                res.json({
+                    failure:{
+                        message: err
+                    }
+                })
+            }
+            else{
+                res.status(200).json({
+                    success: {
+                        message : "deleted successfully"
+                    }
+                })
+            }
             });
-         })
     } catch (err) {
         return res.status(500).json({
             failure:{
@@ -338,6 +351,30 @@ exports.deleteUser = async (req, res, next) => {
                 })
             }
             });
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.getAllShop = async (req, res, next) => {
+    try {
+        let details = await shopModel.find();
+        if(details && details.length !== 0){
+            res.status(200).json({
+                    users: details,
+                    message:"seccess"
+            });
+        }else{
+            res.status(200).json({
+                failure:{
+                    message:"No users are available"
+                }
+            });
+        }
     } catch (err) {
         return res.status(500).json({
             failure:{

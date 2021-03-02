@@ -48,11 +48,52 @@ class ClientComponent extends React.Component {
       this.props.SaveCategorieAction(this.props.userType, methodePicker, urlPicker, this.state)
     }
 
+    onClickAction = (action, id, listData, i) => {
+      if(action === "Delete"){
+        this.props.ActionDelete(this.props.userType, "delete", "deleteShop", id)
+      }else if(action === "Edit"){
+        let data = listData[i]
+        this.setState({
+          swithStatus: data.swithStatus,
+          shopName: data.shopName,
+          ShopOwnerName: data.ShopOwnerName,
+          Address_1: data.Address_1,
+          Address_2: data.Address_2,
+          Phone: data.Phone,
+          email: data.email,
+          categorie: data.categorie,
+          shopType: data.shopType,
+          gst: data.gst,
+          _id: id,
+          status: "Edit"
+        })
+      }
+    }
+
+    componentWillReceiveProps = (nextProps) => { 
+      if(nextProps.clearStatus){
+        this.setState({
+          swithStatus: true,
+          shopName: "",
+          ShopOwnerName: "",
+          Address_1: "",
+          Address_2: "",
+          Phone: "",
+          email: "",
+          categorie: "",
+          shopType: "",
+          gst: "",
+          brocher: ""
+        })
+      }
+  }
+
     render(){
       return(
         <div className={" commonfont"}>
           <Col xl={12} lg={12} md={12} sm={12} xs={12} className={"text-left p-r-25 "}>
-            {this.state.status === "Edit" ? <h4>Edit Shop Details</h4> : <h4 className={"border-b-2-black p-b-10"}>Add Shop Details</h4>}
+            {this.state.status === "Edit" ? <h4 className={"border-b-2-black p-b-10"}>Edit Shop Details</h4> : <h4 className={"border-b-2-black p-b-10"}>Add Shop Details</h4>}
+            
             <Row className={"m-t-30"}>
               <Col xl={3} lg={3} md={12} sm={12} xs={12} className={""}>
                 <Form.Group controlId="formBasicEmail" className={""}>
@@ -234,6 +275,7 @@ class ClientComponent extends React.Component {
                 <TableComp
                   onClickAction={this.onClickAction}
                   headList={headList}
+                  parentName={"shopDetails"}
                 />
               </Col>
 
