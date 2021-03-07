@@ -19,6 +19,11 @@ export default function profileReducer(state,action){
                 }
             }
             
+        case "GET_USER_DETAILS":
+            return {
+                ...state,
+                userDetails:action.payload || ""
+            }
         case "GET_PRODUCT_DETAILS":
             return {
                 ...state,

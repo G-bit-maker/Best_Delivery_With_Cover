@@ -5,8 +5,6 @@ import InputBox from "../Common/inputbox"
 import Label from "../Common/label"
 import ButtonCus from "../Common/button"
 import "./style/dashboard.scss"
-import userimage from "../Image/userimage.png"
-//import userimage from "../Image/user.jpg"
 
 import { Container, Col, Row, Tabs, Tab, Button } from 'react-bootstrap';
 

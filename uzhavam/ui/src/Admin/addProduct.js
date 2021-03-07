@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as DashboardAction from '../Action/DashboardAction'
 import "./style/products.scss"
-import userimage from "../Image/userimage.png"
-//import userimage from "../Image/user.jpg"
 import Product from "./products"
 import UserList from "./userList"
 import Button from "../Common/button"

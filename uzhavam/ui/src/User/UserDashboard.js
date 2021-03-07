@@ -47,34 +47,32 @@ function Profile(props) {
         <>
       <Header {...props} />
       <br/>
-      <br/>
-      <br/>
 
-      <Container fluid>
+      <Container /* fluid */>
         <Row className={""}>
-            <Col xs={12} sm={3} md={3} lg={3} className={" "}>
-              <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+            <Col xs={12} sm={12} md={12} lg={12} className={" "}>
+              <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow "}>
                 <h3>
                   Category
                 </h3>
                 {/* <br/> */}
               </Col>
-              <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+              {/* <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
                   <select id="productCategory" onChange={selectCategory} className="form-control" >
                         <option value={"All"}>All</option>
                         {props.categoryList && props.categoryList.length != 0 ? props.categoryList.map(data=>{
                             return <option value={data._id}>{data.category}</option>
                         }) :""}
                     </select>
-              </Col>
-              {/* <Col xs={12} sm={3} md={3} lg={12} className={"adjustRow "}>
+              </Col> */}
+               <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow "}>
               <Tags active onActive={()=>tagActive("all")} text={"All"} />
                 {props.categoryList.length != 0 ? props.categoryList.map((data,i)=>(
                     <Tags active={data.active} onActive={()=>tagActive(data,i)} text={data.category} />
                 )):""}
-              </Col> */}
+              </Col> 
             </Col>
-            <Col xs={12} sm={8} md={9} lg={9} className={" "}>
+            <Col xs={12} sm={8} md={9} lg={12} className={" "}>
               <Row className={""}>
                 {props.proudctList && props.proudctList.length != 0 ? 
                 props.proudctList.map((data1,i)=>(

@@ -15,7 +15,7 @@ import {Add,Remove} from '@material-ui/icons';
 
 import { useState,useEffect } from 'react';
 
-import userimage from "../../Image/product.png"
+import userimage from "../../Image/product1.jpg"
 import "../style/products.scss"
 
 

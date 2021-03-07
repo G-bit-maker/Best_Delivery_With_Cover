@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 
 function SignUP(props) {
       const [state,setState] = useState({
+        failure:"",
         userName:"",
         gender:"",
         address1:"",
@@ -39,13 +40,15 @@ function SignUP(props) {
     const signup=()=>{
       setState({
         ...state,
-        loading:true
+        loading:true,
+        failure:""
       })
       props.signUp(state)
-      .then(()=>{
+      .then((res)=>{
         setState({
           ...state,
-          loading:false
+          loading:false,
+          failure:res.failure || ""
         })
       })
     }
@@ -60,17 +63,41 @@ function SignUP(props) {
 
                   <div className="form-group">
                       <label>Email</label>
-                      <input type="email" id="email" onChange={onChange} className="form-control" placeholder="Enter email" />
+                      <input type="email" id="email" onChange={onChange} 
+                          className={"form-control"+(state.failure.email ?" error ":"")} 
+                          placeholder="Enter email" 
+                      />
+                      {state.failure.email ? 
+                        <label className={"labelError"}>
+                          {state.failure.email}
+                        </label> : 
+                      ""}
                   </div>
 
                   <div className="form-group">
                       <label>User Name</label>
-                      <input type="text" id="userName" onChange={onChange} className="form-control" placeholder="Enter user name" />
+                      <input type="text" id="userName" onChange={onChange} 
+                          className={"form-control"+(state.failure.userName ?" error ":"")} 
+                          placeholder="Enter user name" 
+                      />
+                      {state.failure.userName ? 
+                        <label className={"labelError"}>
+                          {state.failure.userName}
+                        </label> : 
+                      ""}
                   </div>
 
                   <div className="form-group">
                       <label>Mobile</label>
-                      <input type="text" id="mobile" value={state.mobile} onChange={onChange} className="form-control" placeholder="Enter mobile number" />
+                      <input type="text" id="mobile" onChange={onChange} 
+                          className={"form-control"+(state.failure.mobile ?" error ":"")} 
+                          placeholder="Enter mobile number" 
+                      />
+                      {state.failure.mobile ? 
+                        <label className={"labelError"}>
+                          {state.failure.mobile}
+                        </label> : 
+                      ""}
                   </div>
 
                   <div className="form-group">

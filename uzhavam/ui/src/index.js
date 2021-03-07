@@ -16,6 +16,7 @@ import ViewProducts from './Admin/viewProduct'
 import AddProduct from './Admin/addProduct'
 import UpdateTags from './Admin/updateTags'
 import Users from './Admin/userList'
+import AddUser from './Admin/addUser'
 import reportWebVitals from './reportWebVitals';
 
 import session from "./session"
@@ -54,6 +55,8 @@ ReactDOM.render(
        <Route exact path="/ViewProduct" component={ViewProducts} /> 
        <Route exact path="/EditProduct/:id" component={AddProduct} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 
+       <Route exact path="/AddUser" component={AddUser} /> 
+       <Route exact path="/EditUser/:id" component={AddUser} /> 
        <Route exact path="/Attributes" component={UpdateTags} /> 
        <Route exact path="/ViewUser" component={Users} /> 
        </Switch>

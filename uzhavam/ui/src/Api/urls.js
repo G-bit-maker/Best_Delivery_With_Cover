@@ -1,15 +1,20 @@
 const urls={
-    adminLogin:"/admin/login",
     userLogin:"/user/signin",
+    getProductForUser:"/user/getProducts",
+    getCartDetails:"/user/getCartDetails",
+    updateCart:"/user/updateCart",
+
+    //admin
+    addEditUser:"/admin/updateUserDetails",
+    adminLogin:"/admin/login",
     getCategory:"/admin/getCategories",
     getCategoryForUser:"/admin/getCategories",
     addProductList:"/admin/createProductDetails",
     getProductList:"/admin/getProductList",
     getProductDetails:"/admin/getProduct",
-    getProductForUser:"/user/getProducts",
     getUserList:"/admin/getUserList",
-    getCartDetails:"/user/getCartDetails",
-    updateCart:"/user/updateCart"
+    getUserDetails:"/admin/getUserList",
+    userRemove:"/admin/deleteUser",
 }
 
 export default urls

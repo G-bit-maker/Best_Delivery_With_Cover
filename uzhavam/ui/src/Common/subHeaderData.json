@@ -33,6 +33,11 @@
           "url":"/ViewUser",
           "subHeader":[
             {
+              "id":"addUser",
+              "name":"Add User",
+              "url":"/AddUser"
+            },
+            {
               "id":"viewUser",
               "name":"View User",
               "url":"/ViewUser"

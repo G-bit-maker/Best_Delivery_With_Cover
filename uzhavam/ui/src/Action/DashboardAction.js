@@ -1,5 +1,33 @@
 import DashboardApi from "../Api/DashboardApi"
 
+export  function addUser(data){
+    return function(dispatch){
+        return DashboardApi.addUserApi(data)
+        .then((res)=>{
+            alert("Success")
+            //dispatch({type:"ADD_REMOVE_CATEGORY",payload:res})
+            return res
+        })
+    } 
+}
+export  function getUserDetails(id){
+    return function(dispatch){
+        return DashboardApi.getUserDetailsApi(id)
+        .then((res)=>{
+            dispatch({type:"GET_USER_DETAILS",payload:res.list ? res.list[0] : {}})
+            return res
+        })
+    } 
+}
+export  function userRemoveAct(id){
+    return function(dispatch){
+        return DashboardApi.userRemoveApi(id)
+        .then((res)=>{
+            dispatch(getUserList())
+            return res
+        })
+    } 
+}
 export  function AddCategory(data,flag,id){
     return function(dispatch){
         return DashboardApi.SaveCategoryApi(data,flag,id)

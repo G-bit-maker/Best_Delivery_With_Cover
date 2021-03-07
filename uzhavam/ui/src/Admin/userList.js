@@ -5,7 +5,6 @@ import InputBox from "../Common/inputbox"
 import Label from "../Common/label"
 import ButtonCus from "../Common/button"
 import "./style/dashboard.scss"
-import userimage from "../Image/userimage.png"
 import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
 import UserTable from "./Components/userListTable"
@@ -59,7 +58,7 @@ function Profile(props) {
                 <Row>
               <Col xs={12} sm={3} md={3} lg={12} className={"p20 userList"}>
                 <Row>
-                  {props.userList && props.userList.length != 0 ? <UserTable list={props.userList} /> : 
+                  {props.userList && props.userList.length != 0 ? <UserTable {...props} list={props.userList} /> : 
                   <h3 className="m10">No user found..</h3>}
                   
                 {/* {props.userList && props.userList.length != 0 ? props.userList.map(data=>{

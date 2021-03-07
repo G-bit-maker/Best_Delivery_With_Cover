@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import * as DashboardAction from '../../Action/DashboardAction'
 import Pagination from '@material-ui/lab/Pagination';
+import {Edit,DeleteForever} from '@material-ui/icons';
 import "../style/products.scss"
 
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
@@ -23,7 +24,7 @@ function ViewProduct(props) {
       })
   }
   useEffect(() => {
-    props.getProductList()
+    //props.getProductList()
   }, []);
 
   const handleChange = (event, value) => {
@@ -31,6 +32,26 @@ function ViewProduct(props) {
   };
 
 
+  const userRemove=(id)=>{
+    setState({
+      ...state,
+      removeAlert:"User remove request initiated..."
+    })
+    props.userRemoveAct(id)
+    .then((res)=>{
+          setState({
+            ...state,
+            removeAlert:"User removed successfully."
+          })
+          setTimeout(()=>(
+            setState({
+              ...state,
+              removeAlert:""
+            })
+          ), 5000)
+        })
+    
+}
     return (
         <>
         <Col xs={12} sm={12} md={12} lg={12} className={" adjustRow"}>
@@ -47,16 +68,32 @@ function ViewProduct(props) {
                     <th>Mobile</th>
                     <th>Gender</th>
                     <th>Address</th>
+                    <th>Status</th>
+                    <th style={{width:"6%"}}>#</th>
                     </tr>
                 </thead>
                 <tbody>
                 {props.list.map((data,i)=>{
                     return <tr key={i}>
-                            <td>{data.userName || ""}</td>
-                            <td>{data.email || ""}</td>
-                            <td>{data.mobile || ""}</td>
-                            <td>{data.gender || ""}</td>
-                            <td>{data.address1 + (data.address2 && data.address1 ? ", " : "")+ data.address2}</td>
+                              <td>{data.userName || ""}</td>
+                              <td>{data.email || ""}</td>
+                              <td>{data.mobile || ""}</td>
+                              <td>{data.gender || ""}</td>
+                              <td>{data.address1 + (data.address2 && data.address1 ? ", " : "")+ data.address2}</td>
+                              <td>Pending</td>
+                              <td>
+                                  &nbsp;
+                                <Edit fontSize="small"
+                                  onClick={()=>props.history.push("/EditUser/"+data._id)} 
+                                  />
+                                <div className={"floatRight"}>
+                                  <DeleteForever fontSize="small"
+                                    onClick={()=>userRemove(data._id)} 
+                                />
+                                &nbsp;
+                                </div>
+                                
+                              </td>
                             </tr>
                 }) }
                 </tbody>
@@ -65,6 +102,14 @@ function ViewProduct(props) {
                     <Pagination className={"floatRight"} count={10} onChange={handleChange} />
                 </Col>
             </Col>
+
+            {state.removeAlert ? 
+              <div className={"CustomAlert"}>
+                  {state.removeAlert} 
+                  <span onClick={()=>setState({...state,removeAlert:""})}>&times;</span>
+              </div>
+            :""  
+            }
       </>
     );
   }

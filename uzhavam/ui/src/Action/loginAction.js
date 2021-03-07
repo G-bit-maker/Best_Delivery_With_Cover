@@ -26,6 +26,7 @@ export function signUp(data){
             if(res.success){
                 window.location = "/User/Dashboard"
             }
+            return res
         })
     } 
 }

@@ -6,6 +6,15 @@ class ProfileApi{
     static getCategoryApi(data){
         return axios.get(urls.getCategory)
     }
+    static getUserDetailsApi(id){
+        return axios.get(urls.getUserDetails,{params:{userId:id}})
+    }
+    static userRemoveApi(id){
+        return axios.delete(urls.userRemove,{params:{userId:id}})
+    }
+    static addUserApi(data){
+        return axios.put(urls.addEditUser,qs.stringify(data))
+    }
     static SaveCategoryApi(data,flag,id){
         console.log(data,flag,id)
         return axios.post("/admin/createCategory",qs.stringify({category:data,status:flag,category_id:id}))
