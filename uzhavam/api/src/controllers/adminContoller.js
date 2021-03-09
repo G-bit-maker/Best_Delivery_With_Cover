@@ -265,20 +265,27 @@ exports.getproduct = async (req, res, next) => {
 
 exports.updateUserDetails = async (req, res, next) => {
     try {
-        let {userId,userName, mobile,email,dob,gender,address1,address2} = req.body;
+        let {id} = req.user;
+        if(id){
+            let {userId,userName, mobile,email,dob,gender,address1,address2} = req.body;
 
-        let List = {userName, mobile,email,dob,gender,address1,address2};
-        userModel.findOneAndUpdate({_id : userId},List)
-        .then(function(data){
-            res.status(200).json({
-                success:"User edited Successfully"
-            })     
-         })
-         .catch(function (error) {
-            res.status(200).json({
-                failure: handleErrors(error)
+            let List = {userName, mobile,email,dob,gender,address1,address2};
+            userModel.findOneAndUpdate({_id : userId},List)
+            .then(function(data){
+                res.status(200).json({
+                    success:"User edited Successfully"
+                })     
+             })
+             .catch(function (error) {
+                res.status(200).json({
+                    failure: handleErrors(error)
+                });
             });
-        });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
     } catch (err) {
         return res.status(500).json({
             failure:{
@@ -289,23 +296,57 @@ exports.updateUserDetails = async (req, res, next) => {
 };
 exports.deleteUser = async (req, res, next) => {
     try {
-        const {userId} = req.body;
-        userModel.findOneAndDelete({"_id":userId})
-        .then(function(data){
-            res.status(200).json({
-                success:"User deleted Successfully"
-            })     
-         })
-         .catch(function(error){
-            res.status(500).json({
-                success:"Not deleted"
-            });
-         })
+        const { id } = req.user;
+        if(id){
+            const {userId} = req.body;
+            userModel.findOneAndDelete({"_id":userId})
+            .then(function(data){
+                res.status(200).json({
+                    success:"User deleted Successfully"
+                })     
+             })
+             .catch(function(error){
+                res.status(500).json({
+                    success:"Not deleted"
+                });
+             })
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+        
     } catch (err) {
         return res.status(500).json({
             failure:{
                 message:"something went wrong"
             }
+        });
+    }
+};
+
+exports.getUsersOrders = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        if(id){
+            let details = await productModel.userCart.find();
+            if(details && details.length !== 0){
+                res.status(200).json({
+                    list:details
+                });
+            }else{
+                res.status(200).json({
+                    message:"No lists are available"
+                });
+            }
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
         });
     }
 };

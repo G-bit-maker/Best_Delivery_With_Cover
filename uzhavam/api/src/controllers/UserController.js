@@ -145,8 +145,6 @@ exports.getCartProducts = async (req, res, next) => {
             });
             
 
-
-
            /*  let userCart = await productModel.userCart.find({});
             let iddd=userCart.map(x=>x.productId)
             console.log(iddd)
@@ -207,4 +205,35 @@ exports.updateCart = async (req, res, next) => {
                     })
             }
             }
+};
+
+exports.updateProfileDetails = async (req, res, next) => {
+    try {
+        let {userName, mobile,email,dob,gender,address1,address2} = req.body;
+        const { id } = req.user;
+        if(id){
+            let List = {userName, mobile,email,dob,gender,address1,address2};
+            userModel.findOneAndUpdate({_id : id},List)
+            .then(function(data){
+                res.status(200).json({
+                    success:"User edited Successfully"
+                })     
+             })
+             .catch(function (error) {
+                res.status(200).json({
+                    failure: handleErrors(error)
+                });
+            });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
 };

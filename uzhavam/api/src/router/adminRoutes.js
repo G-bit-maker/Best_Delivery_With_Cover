@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../Common/auth");
 const {login,createlogin,createProductDetails,getproduct,getproductDetails,getUserList,createCategory,getCategories,
-    updateUserDetails,deleteUser} = require('../controllers/adminContoller');
+    updateUserDetails,deleteUser,getUsersOrders} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -29,9 +29,13 @@ router.route("/getProduct").get(auth,getproduct);
 router.route("/getUserList").get(auth,getUserList);
 
 //update user
-router.route("/updateUserDetails").put(updateUserDetails);
+router.route("/updateUserDetails").put(auth,updateUserDetails);
 
 //remove user
-router.route("/deleteUser").delete(deleteUser)
+router.route("/deleteUser").delete(auth,deleteUser);
+
+//get orders
+
+router.route("/getUsersOrder").get(auth,getUsersOrders)
 
 module.exports = router;
