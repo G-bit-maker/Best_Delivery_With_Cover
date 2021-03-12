@@ -169,41 +169,83 @@ exports.updateCart = async (req, res, next) => {
     let obj = req.body;
         const { id } = req.user;
          if(id){
-            obj.userId = id
-            //let cartDetails = new productModel.userCart()
-            if(obj.count == "0"){
-                productModel.userCart.findOneAndDelete({userId:id,productId:obj.productId})
+            obj.userId = id;
+            obj.products = {productId: obj.productId,count:obj.count};
+            let cartDetails = await productModel.userCart.find();
+            let userCartDetails = new productModel.userCart(obj)
+            let oldProduct = cartDetails && cartDetails.length !== 0 ?
+             cartDetails.map(item=>item.products):[];
+             console.log(cartDetails)
+            let result = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
+                subItem.productId === obj.productId)).flat():[];
+            let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId):[];
+            if((userResult && userResult.length !== 0)){
+                if(result && result.length !== 0){
+                    oldProduct = [...oldProduct,obj.products].filter(item=>item.productId !== obj.productId).flat()
+                    productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
+                    {$set:{userId:id,products:oldProduct}})
+                    .then(function(data){
+                        res.status(200).json({
+                            data
+                        })
+                     })
+                     .catch(function(error){
+                        res.status(500).json({
+                            success:"Not edited"
+                        });
+                     })
+                }else{
+                    oldProduct = [...oldProduct,obj.products].flat()
+                    productModel.userCart.findOneAndUpdate({userId:id},
+                    {$set:{userId:id,products:oldProduct}})
+                    .then(function(data){
+                        res.status(200).json({
+                            data
+                        })
+                     })
+                     .catch(function(error){
+                        res.status(500).json({
+                            success:"Not edited"
+                        });
+                     })
+                }
+                 
+            }else{
+                userCartDetails.save()
                 .then((data)=>{
                     res.status(200).json({
                         data
                     });
                 })
-            }else{
-                productModel.userCart.findOneAndUpdate({userId:id,productId:obj.productId},
-                    {$set:{count:obj.count,userId:id,productId:obj.productId}}, 
+             }
+            /* if(obj.count == "0"){
+                productModel.userCart.findOneAndDelete({userId:id,products:obj.productId})
+                .then((data)=>{
+                    res.status(200).json({
+                        data
+                    });
+                })
+            } */
+            /* //let cartDetails = new productModel.userCart()
+            else{
+                productModel.userCart.findOneAndUpdate({userId:id},
+                    {$set:{userId:id,products:obj}}, 
                     {new: true},(err, doc)=>{
-                        if (err) {
+                        if(err) {
                             res.status(200).json({
                                 err
                             });
                         }else{
-                            if(doc === null){
-                                productModel.userCart(obj).save()
-                                .then((data)=>{
-                                    res.status(200).json({
-                                        data
-                                    });
-                                })
-                            }else{
+                            if(doc === null){ */
+                                
+                           /*  }else{
                                 res.status(200).json({
                                     doc
                                 });
                             }
-                            
-                        }
-                    
-                    })
-            }
+                        } */
+                   // })
+           // }
             }
 };
 

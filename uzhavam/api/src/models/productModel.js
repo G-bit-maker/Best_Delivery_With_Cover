@@ -11,14 +11,7 @@ let cartSchema = mongoose.Schema({
         type: String,
         required:[true]
     },
-    count: {
-        type: String,
-        required:[true]
-    },
-    productId: {
-        type: String,
-        required:[true]
-    }
+    products:[{}]
 });
 
 let productDetailsSchema = mongoose.Schema({
