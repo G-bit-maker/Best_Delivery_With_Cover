@@ -171,17 +171,20 @@ exports.updateCart = async (req, res, next) => {
          if(id){
             obj.userId = id;
             obj.products = {productId: obj.productId,count:obj.count};
-            let cartDetails = await productModel.userCart.find();
+            let cartDetails = await productModel.userCart.find({userId:id});
             let userCartDetails = new productModel.userCart(obj)
             let oldProduct = cartDetails && cartDetails.length !== 0 ?
-             cartDetails.map(item=>item.products):[];
-             console.log(cartDetails)
+             cartDetails.map(item=>item.products).flat():[];
             let result = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
                 subItem.productId === obj.productId)).flat():[];
-            let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId):[];
+            let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
-                    oldProduct = [...oldProduct,obj.products].filter(item=>item.productId !== obj.productId).flat()
+                    let i = oldProduct.findIndex(item=>item.productId !== obj.productId)
+                    oldProduct.splice(i,1)
+                    oldProduct.push(obj.products)//.filter(item=>item.productId !== obj.productId).flat()
+                    console.log(obj.products)
+                    console.log(oldProduct)
                     productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
                     {$set:{userId:id,products:oldProduct}})
                     .then(function(data){
@@ -195,7 +198,7 @@ exports.updateCart = async (req, res, next) => {
                         });
                      })
                 }else{
-                    oldProduct = [...oldProduct,obj.products].flat()
+                    oldProduct.push(obj.products)
                     productModel.userCart.findOneAndUpdate({userId:id},
                     {$set:{userId:id,products:oldProduct}})
                     .then(function(data){
