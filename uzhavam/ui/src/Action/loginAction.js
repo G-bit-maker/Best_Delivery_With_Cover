@@ -24,6 +24,8 @@ export function signUp(data){
             console.log(res)
             dispatch({type:"SIGN_UP_SUCCESS",payload:res})
             if(res.success){
+                session.setCookie("UserType",data.userName === "Admin" ? "Admin" : "User",30)
+                session.setCookie("TOKEN",res.token,30)
                 window.location = "/User/Dashboard"
             }
             return res

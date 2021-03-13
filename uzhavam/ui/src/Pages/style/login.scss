@@ -4,6 +4,11 @@
     text-align: left;
     background-color: #fff;
 }
+@media only screen and (max-width: 480px) {
+    .login{
+        padding:30px
+    }
+  }
 .loginBtn{
     width: 100%;
     background-image: linear-gradient(to bottom right, rgb(2, 82, 255), rgb(2, 255, 255));

@@ -90,7 +90,7 @@ function App(props) {
                 </button> */}
                 <br/>
               <p className="forgot-password text-right">
-                  <a href="/signUp">Sign up</a>
+                  <a onClick={()=>props.history.push("/signUp")} href="#">Sign up</a>
               </p>
                   
               </div>

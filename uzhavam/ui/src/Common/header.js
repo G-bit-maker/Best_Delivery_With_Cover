@@ -49,7 +49,33 @@ function Header(props) {
     return (
         <>
          <Navbar  fixed="top"  collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">Uzhalavam</Navbar.Brand>
+            <Navbar.Brand onClick={()=>props.history.push("/User/Dashboard")} href="#">Uzhalavam</Navbar.Brand>
+                
+                {state.userType != "Admin" ? <div className={"mshow"}>
+                      <Nav.Link className={"MobileCart"} eventKey={1} onClick={handleClick} variant="contained" aria-describedby={id}>
+                                    
+                                <Badge className={"badge "} badgeContent={props.cartList.length} >
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            </Nav.Link>
+                        <Popover
+                              id={id}
+                              open={open}
+                              anchorEl={anchorEl}
+                              onClose={handleClose}
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                              }}
+                            >
+                              <CartList {...props} />
+                            </Popover>
+                </div> :""}
+                
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
@@ -66,7 +92,7 @@ function Header(props) {
                 <Nav>
                   {state.userType === "Admin" ? <Nav.Link href="#deets">Last seen: 21-02-2021</Nav.Link> : ""}
                   {state.userType != "Admin" ? 
-                        <>
+                        <div className={"mhide"} >
                           <Nav.Link eventKey={1} onClick={handleClick} variant="contained" aria-describedby={id}>
                               
                               <Badge className={"badge "} badgeContent={props.cartList.length} >
@@ -89,10 +115,10 @@ function Header(props) {
                                 horizontal: 'center',
                               }}
                             >
-                              <CartList />
+                              <CartList {...props} />
                             </Popover>
 
-                        </>
+                        </div>
                       : ""}
                   <Nav.Link eventKey={2} onClick={logoutAction}>
                     Logout

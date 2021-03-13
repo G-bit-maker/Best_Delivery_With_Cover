@@ -95,6 +95,9 @@ body, html {
 .p10{
     padding: 10px;
 }
+.p15{
+    padding: 15px;
+}
 .p20{
     padding: 20px;
 }
@@ -199,3 +202,20 @@ body, html {
         line-height: 1;
     }
 }
+
+
+/* .mhide{
+    display: block !important;
+} */
+.mshow{
+    display: none !important;
+}
+
+@media only screen and (max-width: 480px) {
+    .mhide{
+        display: none !important;
+    }
+    .mshow{
+        display: block !important;
+    }
+  }

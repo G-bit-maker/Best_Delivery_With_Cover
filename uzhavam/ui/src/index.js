@@ -12,6 +12,7 @@ import SignUp from './Pages/signUp'
 //import Profile from './Component/profile'
 import Dashboard from './Admin/dashboard'
 import UserDashboard from './User/UserDashboard'
+import CartPage from './User/CartPage'
 import Checkout from './User/Checkoutpage'
 import ViewProducts from './Admin/viewProduct'
 import AddProduct from './Admin/addProduct'
@@ -60,6 +61,7 @@ ReactDOM.render(
        <Route exact path="/EditUser/:id" component={AddUser} /> 
        <Route exact path="/Attributes" component={UpdateTags} /> 
        <Route exact path="/ViewUser" component={Users} /> 
+       <Route exact path="/Cart" component={CartPage} /> 
        <Route exact path="/Checkout" component={Checkout} /> 
        </Switch>
     </Router>

@@ -129,7 +129,7 @@ function SignUP(props) {
                     </button> */}
                     <br/>
                   <p className="forgot-password mb15px">
-                      Already have an <a href="/login">Account?</a>
+                      Already have an <a  onClick={()=>props.history.push("/login")} href="#">Account?</a>
                   </p>
                       
                   </div>

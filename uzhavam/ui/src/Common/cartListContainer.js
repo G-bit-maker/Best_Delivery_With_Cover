@@ -57,8 +57,8 @@ function Header(props) {
                     }
                         
                 </div>
-                <div className={"cartfooter"}>
-                    Check out
+                <div className={"cartfooter"} onClick={()=>props.history.push("/Cart")}>
+                &nbsp;Go to cart
                     <span className={"total"}>{props.cartProductList.length} items&nbsp;&nbsp;&nbsp;</span>
                 </div>
             </div>

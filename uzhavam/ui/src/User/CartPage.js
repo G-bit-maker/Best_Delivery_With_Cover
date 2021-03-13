@@ -16,8 +16,8 @@ import ProductContainer from "./Components/ProductContainer"
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
-import AddressList from './Components/AddressList';
 import GrandTotal from './Components/GrandTotal';
+import CartProductList from './Components/CartProductList';
 
 function Profile(props) {
     
@@ -40,12 +40,12 @@ function Profile(props) {
 
 
   useEffect(() => {
+      console.log(window.innerWidth)
     props.getCartDetails()
   }, []);
   const tagActive =(data)=>{
     console.log(data)
   }
-  let temmpdata =[1,2,3,4,4]
     return (
         <>
       <Header {...props} />
@@ -56,51 +56,48 @@ function Profile(props) {
             <Col xs={12} sm={12} md={12} lg={12} className={" "}>
               <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow "}>
                 <h2>
-                  Check out
+                  Your cart ({props.cartProductList.length || 0})
                 </h2>
               </Col>
             </Col>
             <br/>
             <br/>
             <br/>
-            <Col xs={12} sm={8} md={8} lg={4} className={" "}>
+            <Col xs={12} sm={8} md={9} lg={8} className={" "}>
                     <Col xs={12} sm={12} md={12} lg={12} className={" "}>
-                        <h4>Where would you like us to deliver?</h4>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} className={" "}>
-                        <AddressList />
-                    </Col>
-            </Col>
-            <Col xs={12} sm={8} md={9} lg={4} className={" mhide"}>
-                <h5 className={""}>YOUR CART ({props.cartProductList.length})</h5> 
-                    {props.cartProductList ? props.cartProductList.map((data,i)=>(
-                            <Row className={"listCon conPad"}>
-                                    <Col xs={12} sm={12} md={12} lg={4} className={" "}>
-                                        <img width="100%" src={userimage} />
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={5} className={" "}>
-                                        <h5>{data.productName}</h5> 
-                                        <h6>Qty:{data.count}</h6>sku:{data.SKU}
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={2} className={" textAlignRight"}>
-                                        <h6>&#x20B9;{data.count * data.mrp}</h6>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={1} className={" textAlignRight"}>
-                                        {/* <DeleteForever fontSize="small" /> */} X
-                                    </Col>
-                            </Row>
-                    )):
+                        <Row className={"listCon mhide"}>
+                                <Col xs={12} sm={12} md={12} lg={6} className={" "}>
+                                    <h5>Product</h5> 
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={2} className={" textAlignCenter"}>
+                                    <h6>Price</h6>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={1} className={" textAlignCenter"}>
+                                    <h6>Qty</h6>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={2} className={" textAlignCenter"}>
+                                    <h6>Subtotal</h6>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={1} className={" textAlignRight"}>
+                                    
+                                </Col>
+                        </Row>
+                        {props.cartProductList ? props.cartProductList.map((data,i)=>(
+                               <> <CartProductList data={data} />
+                                <CartProductList data={data} /> </>
+                        )):
                         <Col xs={12} sm={12} md={12} lg={2} className={" textAlignRight"}>
                             <br/>
                             <br/>
                             <h6>Your cart is empty</h6>
-                        </Col>
-                    }
+                        </Col>}
+                        
+                    </Col>
             </Col>
-            <Col xs={12} sm={8} md={4} lg={4} className={" "}>
-                <GrandTotal 
+            <Col xs={12} sm={8} md={9} lg={4} className={" "}>
+                <GrandTotal
                     {...props}
-                    submitText={"PLACE ORDER"}
+                    submitText={"PROCEED TO BUY"}
                 />
             </Col>
         </Row>
