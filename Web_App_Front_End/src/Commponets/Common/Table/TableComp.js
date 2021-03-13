@@ -50,7 +50,7 @@ class TableComponent extends React.Component {
               <tbody> 
                 {this.props.pageLoading ? 
                 <td colSpan={this.props.headList ? this.props.headList.length : ""}>
-                  <Spinner animation="border" variant="dark" />
+                  <Spinner animation="grow" variant="danger" />
                 </td>
                 :
                 this.props.listData 
@@ -83,6 +83,11 @@ class TableComponent extends React.Component {
                           href={"#"}                       
                           onClick={()=>this.onClickAction("Delete", data._id, i)}>
                           Delete
+                        </a>/ 
+                        <a
+                          href={"#"}                       
+                          onClick={()=>this.onClickAction("Add_Product", data._id, i)}>
+                          Add Product
                         </a>
                       </td>
                     </tr>

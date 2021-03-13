@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
         this.state={ 
           winWidth: window.innerWidth,
           userType: localStorage.getItem("userType"),
-          tabId: 0
+          tabId: 5
         }
     }
 

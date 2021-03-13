@@ -67,6 +67,8 @@ class ClientComponent extends React.Component {
           _id: id,
           status: "Edit"
         })
+      }else if(action === "Add_Product"){
+
       }
     }
 
@@ -88,12 +90,14 @@ class ClientComponent extends React.Component {
       }
   }
 
+  onFocusCategorie = () => {
+    alert("okkk")
+  }
     render(){
       return(
         <div className={" commonfont"}>
           <Col xl={12} lg={12} md={12} sm={12} xs={12} className={"text-left p-r-25 "}>
             {this.state.status === "Edit" ? <h4 className={"border-b-2-black p-b-10"}>Edit Shop Details</h4> : <h4 className={"border-b-2-black p-b-10"}>Add Shop Details</h4>}
-            
             <Row className={"m-t-30"}>
               <Col xl={3} lg={3} md={12} sm={12} xs={12} className={""}>
                 <Form.Group controlId="formBasicEmail" className={""}>
@@ -168,7 +172,7 @@ class ClientComponent extends React.Component {
                 </Form.Group>
               </Col>
               <Col xl={3} lg={3} md={12} sm={12} xs={12}>
-                <Form.Group controlId="formBasicPassword">
+                {/* <Form.Group controlId="formBasicPassword">
                   <Form.Label>Categories</Form.Label>
                   <Form.Control 
                     id={"categorie"}
@@ -176,6 +180,18 @@ class ClientComponent extends React.Component {
                     value={this.state.categorie}
                     placeholder="Catergories" 
                     onChange={this.onChangeHandle}/>
+                </Form.Group> */}
+                <Form.Group controlId="exampleForm.ControlSelect1">
+                  <Form.Label>Categorie</Form.Label>
+                  <Form.Control 
+                  as="select"
+                  onFocus={this.onFocusCategorie}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </Form.Control>
                 </Form.Group>
               </Col>
               <Col xl={3} lg={3} md={12} sm={12} xs={12}>
