@@ -17,6 +17,11 @@ class UserApi{
             productId:id,count:i
         }) )
     }   
+    static addressSaveApi(data){
+        return axios.post(urls.addressSave ,qs.stringify(
+            data.dataOnChange
+        ) )
+    }   
 }
 
 export default UserApi;

@@ -3,8 +3,14 @@
     cursor: pointer;
 }
 .proCon{
+    flex-wrap: wrap;
+    display: flex;
     padding:15px;
     margin: 10px 0;
+    .proName{
+        font-size: 18px;
+        margin-top: 20px;
+    }
     .offer{
         font-size: 15px;
         color:#02b3ff
@@ -17,6 +23,7 @@
         background-image: linear-gradient(to bottom right, #0252ff, #02ffff);
     }
     button{
+        width: 100%;
         outline: none;
     }
     .proPrice1{
@@ -56,3 +63,14 @@
         } */
     }
 }
+
+
+@media only screen and (max-width: 480px) {
+    .proCon .proName{
+        margin-top: 0;
+    }
+    .mobileImgD{
+        padding-right: 10px !important;
+        padding-bottom: 10px;
+    }
+  }

@@ -3,6 +3,7 @@ const urls={
     getProductForUser:"/user/getProducts",
     getCartDetails:"/user/getCartDetails",
     updateCart:"/user/updateCart",
+    addressSave:"/user/addressSave",
 
     //admin
     addEditUser:"/admin/updateUserDetails",

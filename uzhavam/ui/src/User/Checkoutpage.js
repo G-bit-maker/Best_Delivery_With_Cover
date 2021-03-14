@@ -63,7 +63,7 @@ function Profile(props) {
             <br/>
             <br/>
             <br/>
-            <Col xs={12} sm={8} md={8} lg={4} className={" "}>
+            <Col xs={12} sm={8} md={8} lg={8} className={" "}>
                     <Col xs={12} sm={12} md={12} lg={12} className={" "}>
                         <h4>Where would you like us to deliver?</h4>
                     </Col>
@@ -71,7 +71,7 @@ function Profile(props) {
                         <AddressList />
                     </Col>
             </Col>
-            <Col xs={12} sm={8} md={9} lg={4} className={" mhide"}>
+            {/* <Col xs={12} sm={8} md={9} lg={4} className={" mhide"}>
                 <h5 className={""}>YOUR CART ({props.cartProductList.length})</h5> 
                     {props.cartProductList ? props.cartProductList.map((data,i)=>(
                             <Row className={"listCon conPad"}>
@@ -86,7 +86,7 @@ function Profile(props) {
                                         <h6>&#x20B9;{data.count * data.mrp}</h6>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={1} className={" textAlignRight"}>
-                                        {/* <DeleteForever fontSize="small" /> */} X
+                                         X
                                     </Col>
                             </Row>
                     )):
@@ -96,7 +96,7 @@ function Profile(props) {
                             <h6>Your cart is empty</h6>
                         </Col>
                     }
-            </Col>
+            </Col> */}
             <Col xs={12} sm={8} md={4} lg={4} className={" "}>
                 <GrandTotal 
                     {...props}

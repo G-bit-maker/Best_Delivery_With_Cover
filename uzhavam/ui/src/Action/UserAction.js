@@ -60,3 +60,12 @@ export function cartUpdate(id,c){
         })
     } 
 }
+
+export function addressSave(data){
+    return function(dispatch){
+        UserApi.addressSaveApi(data)
+        .then((res)=>{
+            return res
+        })
+    } 
+}

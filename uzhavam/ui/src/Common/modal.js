@@ -26,7 +26,7 @@ export default function ModalComp(props) {
             <Button variant="secondary" onClick={props.close}>
                 {props.closeText}
             </Button>
-            <Button variant="primary">{props.submitText}</Button>
+            <Button onClick={props.submit} variant="primary">{props.submitText}</Button>
             </Modal.Footer>
         </Modal>
         </>

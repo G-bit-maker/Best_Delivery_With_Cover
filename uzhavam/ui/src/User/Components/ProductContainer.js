@@ -34,16 +34,20 @@ export default function MediaCard(props) {
     props.cartUpdate(data._id,count)
   }
 
+  let wwidth = window.innerWidth
+
   return (
       <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
-          <CardMedia
-            className={"img"}
-            image={userimage}
-            title="Contemplative Reptile"
-          />
-          <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow"}>
-              <div title={data.productName || ""} className={"proName mt20"}>
-                  {data.productName || ""}
+          <Col xs={6} sm={12} md={12} lg={12} className={"adjustRow mobileImgD"}>
+              <CardMedia
+                className={"img"}
+                image={userimage}
+                title="Contemplative Reptile"
+              />
+          </Col>
+          <Col xs={6} sm={12} md={12} lg={12} className={"adjustRow"}>
+              <div title={data.productName || ""} className={"proName "}>
+                  {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
               <div>
                 {data.discount_amount ?
@@ -57,32 +61,32 @@ export default function MediaCard(props) {
           
                 <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
                 <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label>
-           
+                
+                <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn "}>
+                  {/* <div>Add</div> */}
+                  {state.count ? 
+                  <Row>
+                    <Col xs={5} sm={5} md={5} lg={5} className={" "}>
+                      <Button className={"remove"} onClick={()=>cartUpdate(state.count-1)} >
+                        <Remove fontSize="small"/> 
+                      </Button>
+                    </Col>
+                    <Col xs={2} sm={2} md={2} lg={2} className={"adjustRow count"}>
+                      <span className={""} >{state.count}</span>
+                    </Col>
+                    <Col xs={5} sm={5} md={5} lg={5} className={" "}>
+                      <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
+                        <Add fontSize="small"  />
+                      </Button>
+                    </Col>
+                  </Row> 
+                :
+                    <Button onClick={()=>cartUpdate(1)}>
+                        Add
+                    </Button>
+                  }
+              </Col>
             </Col>
-          <Col xs={12} sm={12} md={8} lg={6} className={" addCartbtn "}>
-            {/* <div>Add</div> */}
-            {state.count ? 
-            <Row>
-              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow "}>
-                <Button className={"remove"}>
-                  <Remove fontSize="small" onClick={()=>cartUpdate(state.count-1)} /> 
-                </Button>
-              </Col>
-              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow count"}>
-                <span className={""} >{state.count}</span>
-              </Col>
-              <Col xs={4} sm={4} md={4} lg={4} className={"adjustRow "}>
-                <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
-                  <Add fontSize="small"  />
-                </Button>
-              </Col>
-            </Row> 
-           :
-              <Button onClick={()=>cartUpdate(1)}>
-                  Add
-              </Button>
-            }
-        </Col>
       </Col>
   );
 }
