@@ -180,10 +180,8 @@ exports.updateCart = async (req, res, next) => {
             let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
-                    let i = oldProduct.findIndex(item=>item.productId !== obj.productId)
-                    oldProduct.splice(i,1)
                     oldProduct.push(obj.products)//.filter(item=>item.productId !== obj.productId).flat()
-                    console.log(obj.products)
+                    oldProduct =  [...new Map(oldProduct.map(item => [item["productId"], item])).values()]
                     console.log(oldProduct)
                     productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
                     {$set:{userId:id,products:oldProduct}})
