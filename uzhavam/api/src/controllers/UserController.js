@@ -86,9 +86,21 @@ exports.getProducts = async (req, res, next) => {
         if(id){
             let userCart = await productModel.userCart.find({userId:id});
             let details = await productModel.product.find();
+            let newarr=[];
+            userCart && userCart.length !== 0 ? userCart.map(x=>
+                x && x.products.length !== 0 ? x.products.map(item=>{
+                    let i = details.findIndex(y=>y._id == item.productId)
+                    if(i != -1){
+                        let obj = details[i]
+                        obj.count = item.count
+                        newarr.push(obj)
+                    }
+                }):""
+            ):""
+            console.log(newarr)
             res.status(200).json({
                 list:details,
-                userCart
+                userCart:newarr
             });
             //console.log(userCart,details)
             /* if(details && details.length !== 0){
@@ -132,14 +144,17 @@ exports.getCartProducts = async (req, res, next) => {
             let userCart = await productModel.userCart.find({userId:id});
             let details = await productModel.product.find()
             let newarr=[];
-            userCart.map(x=>{
-                let i = details.findIndex(y=>y._id == x.productId)
-                if(i != -1){
-                    let obj = details[i]
-                    obj.count = x.count
-                    newarr.push(obj)
-                }
-            })
+            userCart && userCart.length !== 0 ? userCart.map(x=>
+                x && x.products.length !== 0 ? x.products.map(item=>{
+                    let i = details.findIndex(y=>y._id == item.productId)
+                    if(i != -1){
+                        console.log(item.productId)
+                        let obj = details[i]
+                        obj.count = item.count
+                        newarr.push(obj)
+                    }
+                }):""
+            ):""
             res.status(200).json({
                 list:newarr
             });
@@ -180,21 +195,20 @@ exports.updateCart = async (req, res, next) => {
             let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
-                    oldProduct.push(obj.products)//.filter(item=>item.productId !== obj.productId).flat()
-                    oldProduct =  [...new Map(oldProduct.map(item => [item["productId"], item])).values()]
-                    console.log(oldProduct)
-                    productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
-                    {$set:{userId:id,products:oldProduct}})
-                    .then(function(data){
-                        res.status(200).json({
-                            data
-                        })
-                     })
-                     .catch(function(error){
-                        res.status(500).json({
-                            success:"Not edited"
-                        });
-                     })
+                        oldProduct.push(obj.products)//.filter(item=>item.productId !== obj.productId).flat()
+                        oldProduct =  [...new Map(oldProduct.map(item => [item["productId"], item])).values()]
+                        productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
+                        {$set:{userId:id,products:oldProduct}})
+                        .then(function(data){
+                            res.status(200).json({
+                                data
+                            })
+                         })
+                         .catch(function(error){
+                            res.status(500).json({
+                                success:"Not edited"
+                            });
+                         })
                 }else{
                     oldProduct.push(obj.products)
                     productModel.userCart.findOneAndUpdate({userId:id},
