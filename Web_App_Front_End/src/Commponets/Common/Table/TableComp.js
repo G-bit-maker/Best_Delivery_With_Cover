@@ -67,6 +67,7 @@ class TableComponent extends React.Component {
                         : 
                         <>
                         <td>{data.shopName || "NA"}</td>
+                        <td>{data.categorie || "NA"}</td>
                         <td>{data.email || "NA"}</td>
                         <td>{data.Address_2 || "NA"}</td>
                         <td>{data.swithStatus ? "Enabled" : "Disabled  "}</td>
@@ -87,7 +88,7 @@ class TableComponent extends React.Component {
                         <a
                           href={"#"}                       
                           onClick={()=>this.onClickAction("Add_Product", data._id, i)}>
-                          Add Product
+                          View
                         </a>
                       </td>
                     </tr>

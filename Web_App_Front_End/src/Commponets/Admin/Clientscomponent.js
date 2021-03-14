@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Col, Row, Table} from "react-bootstrap"
+import {Form, Col, Row, Spinner} from "react-bootstrap"
 import Button from "../Common/Buttons/ButtonOut";
 import Switch from '@material-ui/core/Switch';
 import TableComp from "../Common/Table/TableComp"
@@ -9,7 +9,7 @@ import * as BaseAction from "../../Actions/BaseAction";
 import Toster from "../Common/TosterComponent"
 
 const headList = [
-  "S.No", "Shop Name", "Email Id", "Address", "Status", "Action" 
+  "S.No", "Shop Name", "Categorie", "Email Id", "Address", "Status", "Action" 
 ]
 
 class ClientComponent extends React.Component { 
@@ -26,7 +26,7 @@ class ClientComponent extends React.Component {
           categorie: "",
           shopType: "",
           gst: "",
-          brocher: ""
+          brocher: "",
         }
     }
 
@@ -37,6 +37,7 @@ class ClientComponent extends React.Component {
     }
 
     onChangeHandle = (e) => {   
+      console.warn(e.target.value)
       this.setState({
         [e.target.id]: e.target.value
       })
@@ -90,8 +91,8 @@ class ClientComponent extends React.Component {
       }
   }
 
-  onFocusCategorie = () => {
-    alert("okkk")
+  onFocusCategorie = (e) => {
+    console.warn(e.target.value)
   }
     render(){
       return(
@@ -184,13 +185,20 @@ class ClientComponent extends React.Component {
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label>Categorie</Form.Label>
                   <Form.Control 
-                  as="select"
-                  onFocus={this.onFocusCategorie}>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    as= "select"
+                    id={"categorie"}
+                    onChange={this.onChangeHandle}
+                    custom>
+                      {this.props.pageLoading ? 
+                        <option>
+                          <Spinner animation="border" variant="dark" />
+                        </option>
+                      : 
+                        this.props.getAllCategoriesNameData && this.props.getAllCategoriesNameData.length !== 0 ? 
+                        this.props.getAllCategoriesNameData.map(data => 
+                          <option value={data.categorieId}>{data.categorieName}</option> 
+                        ) : <option >No Data Available</option> 
+                      }
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -198,11 +206,14 @@ class ClientComponent extends React.Component {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Shop Type</Form.Label>
                   <Form.Control 
+                    as= "select"
                     id={"shopType"}
-                    type="text" 
+                    defaultValue= {"Enter Shop Type"}
                     value={this.state.shopType}
-                    placeholder="Enter Shop Type" 
-                    onChange={this.onChangeHandle}/>
+                    onChange={this.onChangeHandle}>
+                  <option value={"retailer"}>{"Retailer"}</option>
+                  <option value={"whole_Saler"}>{"Whole Saler"}</option>
+                  </Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -311,6 +322,8 @@ const mapStateToProps = (state) => {
     toster: state && state.toster ? true : false,
     error: state && state.error ? true : false,
     clearStatus: state && state.clearStatus ? true : false,
+    getAllCategoriesNameData: state && state.getAllCategoriesNameData ? state.getAllCategoriesNameData : "",
+    pageLoading: state && state.pageLoading ? state.pageLoading : false,
   }
 }
 

@@ -7,6 +7,7 @@ const users = require("../models/RegisterModel")
 const bcrypt = require("bcryptjs");
 const mongodb = require("mongodb");
 const ObjectID = require('mongodb').ObjectID;
+const categorieModel = require("../models/categorieModel");
 
 
 exports.login = async (req, res, next) => {
@@ -165,6 +166,37 @@ exports.getAllCategories = async (req, res, next) => {
             res.status(200).json({
                 success:{
                     list: details,
+                    message:"seccess"
+                }
+            });
+        }else{
+            res.status(200).json({
+                failure:{
+                    message:"No lists are available"
+                }
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.getAllCategoriesName = async (req, res, next) => {
+    try {
+        let details = await saveCategories.find();
+        let dataName = await details.map(obj => {
+            return {
+                categorieName: obj.categorieName,
+                categorieId: obj._id}
+        })
+        if(details && details.length !== 0){
+            res.status(200).json({
+                success:{
+                    list: dataName,
                     message:"seccess"
                 }
             });
@@ -363,19 +395,41 @@ exports.deleteUser = async (req, res, next) => {
 exports.getAllShop = async (req, res, next) => {
     try {
         let details = await shopModel.find();
+        let CategorieData = await categorieModel.find();
+        let AlterdData = await details.map(data => {
+            let categorie = CategorieData.find(obj=>(
+                obj._id == data.categorie   || obj.categorieName == data.categorie
+            )).categorieName
+            console.log(categorie)
+            return {
+                _id: data._id,
+                swithStatus: data.swithStatus,
+                shopName: data.shopName,
+                ShopOwnerName: data.ShopOwnerName,
+                Address_1: data.Address_1,
+                Address_2: data.Address_2,
+                Phone: data.Phone,
+                email: data.email,
+                categorie: categorie,
+                shopType: data.shopType,    
+                gst: data.gst,
+                brocher: data.brocher,
+            }
+    })
         if(details && details.length !== 0){
             res.status(200).json({
-                    users: details,
+                    users: AlterdData,
                     message:"seccess"
             });
         }else{
             res.status(200).json({
                 failure:{
-                    message:"No users are available"
+                    message:"No shops available"
                 }
             });
         }
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             failure:{
                 message:"something went wrong"

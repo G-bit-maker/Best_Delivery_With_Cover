@@ -107,6 +107,25 @@ const BaseReducer = (state, actions) =>{
             }
         }
 
+        case "GET_COMMON_SUCCESS":{
+            if(actions.payload.failure){
+                return{
+                    ...state,
+                    pageLoading: false,
+                    [actions.key+"Data"]: "",
+                    failure: actions.payload.failure.message,
+                    clearStatus: false
+                }
+            }else{
+                return{
+                    ...state,
+                    pageLoading: false,
+                    [actions.key+"Data"]: actions.payload.success.list,
+                    clearStatus: false
+                }
+            }
+        }
+
         case "GET_CATEGORIE_FAILURE":{
             return{
                 ...state,

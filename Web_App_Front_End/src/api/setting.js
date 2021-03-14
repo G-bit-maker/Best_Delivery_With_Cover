@@ -7,6 +7,7 @@ const setting = {
     Admin: {
         saveCategorie: "/admin/saveCategories",
         getAllCategories: "/admin/getAllCategories",
+        getAllCategoriesName: "/admin/getAllCategoriesName",
         deleteCategore: "/admin/deleteCategories",
         updateCategorie: "/admin/updateCategories",
         getAllUser: "/admin/getAllUsers",
