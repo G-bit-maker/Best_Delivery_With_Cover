@@ -13,7 +13,8 @@ const {
     updateShop,
     deleteShop,
     deleteUser,
-    getAllShop
+    getAllShop,
+    getAllCategoriesName
 } = require('../controllers/adminContoller');
 
 //login
@@ -33,6 +34,9 @@ router.route("/saveCategories").post(saveCategories);
 
 //getAllCategories
 router.route("/getAllCategories").get(getAllCategories);
+
+//getAllCategoriesName
+router.route("/getAllCategoriesName").get(getAllCategoriesName);
 
 //Delete Categories
 router.route("/deleteCategories/:id").delete(deleteCategories);

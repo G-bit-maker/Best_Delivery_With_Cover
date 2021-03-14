@@ -18,7 +18,7 @@ let shopDetailsSchema = mongoose.Schema({
     email: {
         type: String
     },
-    category: {
+    categorie: {
         type: String
     },
     shopType: {

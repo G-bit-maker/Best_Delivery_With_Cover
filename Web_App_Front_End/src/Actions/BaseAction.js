@@ -83,17 +83,24 @@ export const GetAllCategories = (userType, methode, processName, inputData) => {
         })
         apiCall.SaveCategorieActionApi(userType, methode, processName, inputData)
         .then(responce=>{
-            dispatch({
-                type: "GET_CATEGORIE_SUCCESS",
-                payload: responce.data,
-            })
+            if(processName === "getAllCategoriesName"){
+                dispatch({
+                    type: "GET_COMMON_SUCCESS",
+                    payload: responce.data,
+                    key: processName
+                })
+            }else{
+                dispatch({
+                    type: "GET_CATEGORIE_SUCCESS",
+                    payload: responce.data,
+                })
+            }
         })
         .catch(err => {
             dispatch({
                 type: "GET_CATEGORIE_FAILURE",
                 payload: true,
             })
-            alert("Somthing Went Wrong With loginAction")
         })
     }
      

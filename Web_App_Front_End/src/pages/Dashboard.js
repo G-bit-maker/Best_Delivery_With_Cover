@@ -33,6 +33,7 @@ class Dashboard extends React.Component {
           this.props.GetAllUser(this.state.userType, "get", "getAllUser")
         }else if(tabVal === 5){
           this.props.GetAllShop(this.state.userType, "get", "getAllShop")
+          this.props.GetAllCategories(this.state.userType, "get", "getAllCategoriesName")
         }
       })
     }
