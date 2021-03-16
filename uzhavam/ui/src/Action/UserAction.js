@@ -20,6 +20,16 @@ export function getCartDetails(){
     } 
 }
 
+export function getAddressList(){
+    return function(dispatch){
+        UserApi.getAddressListApi()
+        .then((res)=>{
+            dispatch({type:"GET_ADDRESS_LIST",payload:res})
+            return res
+        })
+    } 
+}
+
 export function getProductList(id){
     return function(dispatch){
         UserApi.getProductListApi(id)
@@ -62,9 +72,13 @@ export function cartUpdate(id,c){
 }
 
 export function addressSave(data){
+    console.log("Action",data)
     return function(dispatch){
-        UserApi.addressSaveApi(data)
+        return UserApi.addressSaveApi(data)
         .then((res)=>{
+            if(res.success){
+                dispatch(getAddressList())
+            }
             return res
         })
     } 

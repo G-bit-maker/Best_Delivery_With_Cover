@@ -1,5 +1,41 @@
 const mongoose = require("mongoose");
 
+let addressSchema = mongoose.Schema({
+        userId:{
+            type: String
+        },
+        name:{
+            type: String,
+            required:[true,"Name can't be empty"]
+        },
+        flatno: {
+            type: String,
+            required:[true,"Flat No. or House can't be empty"]
+        },
+        street: {
+            type: String,
+            required:[true,"Street can't be empty"]
+        },
+        city: {
+            type: String,
+            required:[true,"City can't be empty"]
+        },
+        state: {
+            type: String,
+            required:[true,"State can't be empty"]
+        },
+        pincode:{
+            type: String,
+            required:[true,"Pincode can't be empty"]
+        },
+        mobile:{
+            type: String
+        },
+        gst:{
+            type: String
+        }
+});
+
 let categorySchema = mongoose.Schema({
     category: {
         type: String
@@ -171,8 +207,10 @@ let productDetailsSchema = mongoose.Schema({
 const product = mongoose.model("productDetails", productDetailsSchema, "productDetails");
 const category = mongoose.model("category", categorySchema, "category");
 const userCart = mongoose.model("userCart", cartSchema, "userCart");
+const userAddress = mongoose.model("userAddress", addressSchema, "userAddress");
 module.exports = {
     product,
     category,
+    userAddress,
     userCart
 }

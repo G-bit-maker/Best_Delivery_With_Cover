@@ -6,6 +6,9 @@ class UserApi{
     static getCartDetailsApi(){
         return axios.get(urls.getCartDetails)
     }   
+    static getAddressListApi(){
+        return axios.get(urls.getAddressList)
+    }   
     static getCategoryApi(data){
         return axios.get(urls.getCategoryForUser)
     }   
@@ -19,7 +22,7 @@ class UserApi{
     }   
     static addressSaveApi(data){
         return axios.post(urls.addressSave ,qs.stringify(
-            data.dataOnChange
+            data
         ) )
     }   
 }

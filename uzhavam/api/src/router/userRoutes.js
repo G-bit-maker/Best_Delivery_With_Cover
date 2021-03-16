@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {Registration} = require('../controllers/RegisterController');
-const {getProducts,login,updateCart,getCartProducts,updateProfileDetails} = require('../controllers/UserController');
+const {getProducts,login,updateCart,getCartProducts,getAddress,addressSave,updateProfileDetails} = require('../controllers/UserController');
 const auth = require("../Common/auth");
 
 //SignUp
@@ -16,8 +16,14 @@ router.route('/updateCart').post(auth,updateCart);
 //products
 router.route('/getProducts').get(auth,getProducts);
 
-//products
+//get cart
 router.route('/getCartDetails').get(auth,getCartProducts);
+
+//address save
+router.route('/addressSave').post(auth,addressSave);
+
+//address get
+router.route('/getAddress').get(auth,getAddress);
 
 //update user
 router.route("/updateProfileDetails").put(auth,updateProfileDetails);

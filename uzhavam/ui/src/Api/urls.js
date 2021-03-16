@@ -2,6 +2,7 @@ const urls={
     userLogin:"/user/signin",
     getProductForUser:"/user/getProducts",
     getCartDetails:"/user/getCartDetails",
+    getAddressList:"/user/getAddress",
     updateCart:"/user/updateCart",
     addressSave:"/user/addressSave",
 

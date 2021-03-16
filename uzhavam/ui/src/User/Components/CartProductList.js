@@ -19,7 +19,6 @@ import userimage from "../../Image/product1.jpg"
 import "../style/checkout.scss"
 import ButtonCus from "../../Common/button"
 import ModalComp from '../../Common/modal';
-import AddAddress from './AddAddress';
 
 
 export default function cartProductList(props) {

@@ -4,6 +4,13 @@ const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
 const message = require("../Common/constants");
 var TeleSignSDK = require('telesignsdk');
+const handleErrors = (err) =>{
+    let error_msg = {}
+    Object.values(err.errors).forEach(({properties})=>{
+        error_msg[properties.path] = properties.message
+    })
+    return error_msg;
+}
 /* let plivo = require('plivo');
 let client = new plivo.Client(); */
 
@@ -281,6 +288,97 @@ exports.updateProfileDetails = async (req, res, next) => {
                     failure: handleErrors(error)
                 });
             });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.getAddress = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        if(id){
+            productModel.userAddress.find({userId : id})
+            .then(function(data){
+                res.status(200).json({
+                    success:"address fetched successfully",
+                    list:data
+                })     
+             })
+             .catch(function (error) {
+                res.status(200).json({
+                    failure: handleErrors(error)
+                });
+            });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.addressSave = async (req, res, next) => {
+    try {
+        let body = req.body;
+        const { id } = req.user;
+        if(id){
+            let saveData = {
+                userId:id,
+                name: body.name,
+                flatno: body.flatno,
+                street: body.street,
+                city: body.city,
+                state: body.state,
+                pincode:body.pincode,
+                mobile: body.mobile,
+                gst:body.gst
+            }
+            let pd = null
+            if(body.addressId){
+                pd = await productModel.userAddress.findOne({_id : body.addressId})
+            }
+            if(pd != null && body.addressId){
+                productModel.userAddress.findOneAndUpdate({_id : body.addressId},saveData)
+                .then(function(data){
+                    if(data != null){
+                        res.status(200).json({
+                            success:"Address Edited Successfully",
+                            data
+                        })    
+                    }
+                }) .catch(function (error) {
+                    res.status(200).json({
+                        failure: handleErrors(error)
+                    });
+                });   
+            }else{
+                productModel.userAddress(saveData).save()
+                    .then(function(data){
+                            res.status(200).json({
+                                success:"Address added Successfully",
+                                data
+                            })    
+                     }).catch(function (error) {
+                        res.status(200).json({
+                            failure: handleErrors(error)
+                        });
+                    });   
+            }
         }else{
             return res.status(500).json({
                 message:message.Token_Invalid

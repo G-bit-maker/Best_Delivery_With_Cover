@@ -11,6 +11,11 @@ export default function userReducer(state,action){
                 ...state,
                 cartProductList:action.payload.list ? action.payload.list : []
             }
+        case "GET_ADDRESS_LIST":
+            return {
+                ...state,
+                addressList:action.payload.list ? action.payload.list : []
+            }
         case "GET_USER_PRODUCT_LIST":
             return {
                 ...state,
