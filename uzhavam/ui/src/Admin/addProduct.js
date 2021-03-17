@@ -102,10 +102,6 @@ function AddProduct(props) {
                     [e.target.id]:e.target.value
                 })
             }
-
-
-            
-            
         }
     }
     const imgonChange=(id,val)=>{

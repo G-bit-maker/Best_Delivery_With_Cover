@@ -204,13 +204,30 @@ let productDetailsSchema = mongoose.Schema({
     { type: Date, default: new Date() },
 });
 
+let orderSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        required:[true]
+    },
+    cartId:{
+        type: String,
+        required:[true]
+    },
+    addressId:{
+        type: String,
+        required:[true]
+    }
+});
+
 const product = mongoose.model("productDetails", productDetailsSchema, "productDetails");
 const category = mongoose.model("category", categorySchema, "category");
 const userCart = mongoose.model("userCart", cartSchema, "userCart");
 const userAddress = mongoose.model("userAddress", addressSchema, "userAddress");
+const orders = mongoose.model("orders",orderSchema,"orders")
 module.exports = {
     product,
     category,
     userAddress,
-    userCart
+    userCart,
+    orders
 }

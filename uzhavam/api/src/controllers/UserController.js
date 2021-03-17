@@ -392,3 +392,73 @@ exports.addressSave = async (req, res, next) => {
         });
     }
 };
+
+exports.ordersSave = async (req, res, next) => {
+    try {
+        let body = req.body;
+        const { id } = req.user;
+        if(id){
+            let saveData = {
+                userId:id,
+                cartId:body.cartId,
+                addressId:body.addressId
+            }
+            productModel.orders(saveData).save()
+            .then(function(data){
+                    res.status(200).json({
+                        success:"order placed Successfully",
+                        data
+                    })    
+                }).catch(function (error) {
+                res.status(200).json({
+                    failure: "Please enter valid details"
+                });
+            });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.getOrders = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        let orders = await productModel.orders.find({userId:id});
+        console.log(orders);
+        let productList = [];
+        orders.map(async (item)=>{
+            let product = await productModel.userCart.find({_id:item.cartId});
+            console.log(product)
+        })
+        /* if(id){
+            productModel.orders.find()
+            .then(function(data){
+                    res.status(200).json({
+                        List:data
+                    })    
+                }).catch(function (error) {
+                res.status(200).json({
+                    failure: "No data found"
+                });
+            });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        } */
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};

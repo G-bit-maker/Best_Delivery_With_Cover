@@ -8,7 +8,11 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true,
+  parameterLimit:50000
+}));
 const mongooseOptions = {  useNewUrlParser: true ,useUnifiedTopology: true,useCreateIndex: true,useFindAndModify: false}
 mongoose.connect('mongodb://localhost:27017/uzhavamdb',mongooseOptions)
    .then(()=>console.log("db connected"))

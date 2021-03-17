@@ -41,7 +41,7 @@ export default function MediaCard(props) {
           <Col xs={6} sm={12} md={12} lg={12} className={"adjustRow mobileImgD"}>
               <CardMedia
                 className={"img"}
-                image={userimage}
+                image={data.main_img ? data.main_img : userimage}
                 title="Contemplative Reptile"
               />
           </Col>
