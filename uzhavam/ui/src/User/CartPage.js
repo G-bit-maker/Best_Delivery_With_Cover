@@ -83,8 +83,7 @@ function Profile(props) {
                                 </Col>
                         </Row>
                         {props.cartProductList ? props.cartProductList.map((data,i)=>(
-                               <> <CartProductList data={data} />
-                                <CartProductList data={data} /> </>
+                               <CartProductList data={data} />
                         )):
                         <Col xs={12} sm={12} md={12} lg={2} className={" textAlignRight"}>
                             <br/>

@@ -6,6 +6,15 @@ const api = axios.create()
 api.interceptors.response.use(
     function(res){
         return res.data
+    },function(error){
+        if (
+            error &&
+            error.response &&
+            (error.response.status === 401 || error.response.statusText === "Unauthorized")
+        ){
+            session.delteCookies()
+            window.open("/Login", "_self");
+        }
     }
 )
 api.interceptors.request.use(

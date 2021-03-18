@@ -16,7 +16,8 @@
         color:#02b3ff
     }
     .img{
-        height: 150px;
+        height: auto;
+        width: 100%;
     }
     .Addbtn{
         margin: 10px;
@@ -73,4 +74,18 @@
         padding-right: 10px !important;
         padding-bottom: 10px;
     }
+  }
+
+  .orderCon{
+      border: 1px solid #aaa;
+      margin-bottom: 30px;
+  }
+  .borderLeft{
+      border-left: 1px solid #aaa;
+  }
+  .orderImg{
+      padding-top: 5px;
+  }
+  .orderName{
+      padding-bottom:10px
   }

@@ -38,14 +38,15 @@ export default function MediaCard(props) {
 
   return (
       <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
-          <Col xs={6} sm={12} md={12} lg={12} className={"adjustRow mobileImgD"}>
-              <CardMedia
+          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow mobileImgD"}>
+              {/* <CardMedia
                 className={"img"}
-                image={data.main_img ? data.main_img : userimage}
+                image={userimage}
                 title="Contemplative Reptile"
-              />
+              /> */}
+              <img src={userimage} className={"img"} />
           </Col>
-          <Col xs={6} sm={12} md={12} lg={12} className={"adjustRow"}>
+          <Col xs={8} sm={12} md={12} lg={12} className={"adjustRow"}>
               <div title={data.productName || ""} className={"proName "}>
                   {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
@@ -62,7 +63,7 @@ export default function MediaCard(props) {
                 <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
                 <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label>
                 
-                <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn "}>
+                <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn floatRight"}>
                   {/* <div>Add</div> */}
                   {state.count ? 
                   <Row>
