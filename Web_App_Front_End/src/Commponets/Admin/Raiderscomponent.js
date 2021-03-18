@@ -9,22 +9,26 @@ class Ordercomponent extends React.Component {
   constructor() {
     super();
     this.state = {
+      name: '',
       email: '',
       password: '',
       Mobilenumber: '',
       aadharnumber: '',
-      aadharfile: '',
+      address1 : '',
+      address2 : '',
+      aadharfile: 'Choose Files',
       bikenumber: '',
       Licencenumber: '',
-      Licencefile: '',
+      Licencefile: 'Choose Files',
       Tableheaderdetails: [
+        'S.No',
         'email - Id',
-        'Mobilenumber',
-        'aadharnumber',
-        'aadharfile',
-        'bikenumber',
-        'Licencenumber',
-        'Licencefile',
+        'Mobile number',
+        'aadhar number',
+        'aadhar file',
+        'bike number',
+        'Licence number',
+        'Licence file',
       ],
     };
   }
@@ -33,12 +37,25 @@ class Ordercomponent extends React.Component {
     console.log('Raider Actions');
   };
 
+  handleOnchange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value,
+    });
+  };
+
   onSubmit = () => {};
 
   render() {
     return (
       <div>
-        <Col style={{ display: 'flex' }} lg={12} md={12} sm={12} xs={12}>
+        <Col
+          className={'commonfont'}
+          style={{ display: 'flex' }}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+        >
           <Col
             style={{ borderRight: '2px solid' }}
             lg={4}
@@ -50,9 +67,37 @@ class Ordercomponent extends React.Component {
               <div>Rider Details</div>
               <div style={{ textAlign: 'start' }}>
                 <Form>
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Rider Name</Form.Label>
+                  <Form.Control
+                    type='text'
+                    id='name'
+                    onChange={this.handleOnchange}
+                    value={this.state.name}
+                    placeholder='Enter Name'
+                  />
+                  <Form.Label>Address 1</Form.Label>
+                  <Form.Control
+                    type='text'
+                    id='address1'
+                    onChange={this.handleOnchange}
+                    value={this.state.address1}
+                    placeholder='Enter Address / lane'
+                  />
+                  <Form.Label>Address 2</Form.Label>
+                  <Form.Control
+                    type='text'
+                    id='address2'
+                    onChange={this.handleOnchange}
+                    value={this.state.address2}
+                    placeholder='Enter Address 2'
+                  />
+                  <Form.Label style={{ paddingTop: '15px' }}>
+                    Email address
+                  </Form.Label>
                   <Form.Control
                     type='email'
+                    id='email'
+                    onChange={this.handleOnchange}
                     value={this.state.email}
                     placeholder='Enter email'
                   />
@@ -61,6 +106,8 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.Control
                     type='password'
+                    id='password'
+                    onChange={this.handleOnchange}
                     value={this.state.password}
                     placeholder='Password'
                   />
@@ -69,6 +116,8 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.Control
                     type='number'
+                    id='Mobilenumber'
+                    onChange={this.handleOnchange}
                     value={this.state.Mobilenumber}
                     placeholder='Mobile Number'
                   />
@@ -81,6 +130,8 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.Control
                     type='number'
+                    id='aadharnumber'
+                    onChange={this.handleOnchange}
                     value={this.state.aadharnumber}
                     placeholder='aadhar Number'
                   />
@@ -91,9 +142,12 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.File
                     style={{ textAlign: 'start', width: '70%' }}
-                    id='custom-file'
-                    label='Choose file'
-                    value={this.state.aadharfile}
+                    type='file'
+                    id='aadharfile'
+                    onChange={(e) =>
+                      this.setState({ aadharfile: e.target.files[0].name })
+                    }
+                    label={this.state.aadharfile}
                     custom
                   />
                 </div>
@@ -105,6 +159,8 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.Control
                     type='number'
+                    id='bikenumber'
+                    onChange={this.handleOnchange}
                     value={this.state.bikenumber}
                     placeholder='Bike Number'
                   />
@@ -117,6 +173,8 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.Control
                     type='number'
+                    id='Licencenumber'
+                    onChange={this.handleOnchange}
                     value={this.state.Licencenumber}
                     placeholder='Licence Number'
                   />
@@ -127,9 +185,12 @@ class Ordercomponent extends React.Component {
                   </Form.Label>
                   <Form.File
                     style={{ textAlign: 'start', width: '70%' }}
-                    id='custom-file'
-                    label='Choose file'
-                    value={this.state.Licencefile}
+                    type='file'
+                    id='Licencefile'
+                    onChange={(e) =>
+                      this.setState({ Licencefile: e.target.files[0].name })
+                    }
+                    label={this.state.Licencefile}
                     custom
                   />
                 </div>
@@ -143,31 +204,31 @@ class Ordercomponent extends React.Component {
             </Button>
           </Col>
           <Col lg={8} md={8} sm={8} xs={8}>
-            <Col style={{ display: 'flex' }} lg={12} md={12} sm={12} xs={12}>
-              <Col lg={4} md={4} sm={4} xs={4}>
-                <h4 className={'float-l'}>Riders List</h4>
-              </Col>
-              <Col lg={8} md={8} sm={8} xs={8}>
-                <Form className={'float-r'}>
-                  <Form.Row>
-                    <Col xs='auto'>
-                      <Form.Control
-                        className='mb-2'
-                        id='inlineFormInput'
-                        placeholder='search Riders Details'
-                      />
-                    </Col>
-                    <Col xs='auto'>
-                      <Button variant='dark'>Search</Button>
-                    </Col>
-                  </Form.Row>
-                </Form>
-              </Col>
+            <h4 className={'float-l'}>Riders</h4>
+            <Col xl={6} lg={6} md={6} sm={6} xs={6} className={'float-r p-r-0'}>
+              <Form className={'float-r'}>
+                <Form.Row>
+                  <Col xs='auto'>
+                    <Form.Control
+                      className='mb-2'
+                      onChange={this.handleOnchange}
+                      id='inlineFormInput'
+                      placeholder='Search Riders Details'
+                    />
+                  </Col>
+                  <Col xs='auto'>
+                    <Button onClick={this.onSubmit} variant='dark'>
+                      Search
+                    </Button>
+                  </Col>
+                </Form.Row>
+              </Form>
             </Col>
+
             <TableComp
               onClickAction={this.onClickAction}
               headList={this.state.Tableheaderdetails}
-              parentName={'updateTags'}
+              parentName={'RidersDetails'}
             />
           </Col>
         </Col>
