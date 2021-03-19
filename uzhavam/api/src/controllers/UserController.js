@@ -398,22 +398,29 @@ exports.ordersSave = async (req, res, next) => {
         let body = req.body;
         const { id } = req.user;
         if(id){
+            let  List = await productModel.userCart.findOne({userId:id});
             let saveData = {
                 userId:id,
-                cartId:body.cartId,
+                products:List.products,
                 addressId:body.addressId
             }
-            productModel.orders(saveData).save()
-            .then(function(data){
+           let orderPlaced = await productModel.orders(saveData).save();
+           if(orderPlaced){
+                productModel.userCart.findOneAndDelete({_id:List._id})
+                .then(function(data){
                     res.status(200).json({
-                        success:"order placed Successfully",
-                        data
+                        success:"order placed Successfully"
                     })    
                 }).catch(function (error) {
-                res.status(200).json({
-                    failure: "Please enter valid details"
-                });
+                    res.status(200).json({
+                        failure: "Please enter valid details"
+                    });
+               });
+           }else{
+            res.status(200).json({
+                failure: "Please enter valid details"
             });
+           }
         }else{
             return res.status(500).json({
                 message:message.Token_Invalid
@@ -431,13 +438,11 @@ exports.ordersSave = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
     try {
         const { id } = req.user;
-        let orders = await productModel.orders.find({userId:id});
-        console.log(orders);
-        let productList = [];
-        orders.map(async (item)=>{
-            let product = await productModel.userCart.find({_id:item.cartId});
-            console.log(product)
-        })
+        let orders = await productModel.orders.findOne({userId:id});
+        console.log(orders.products);
+
+        let products = await productModel.product.find({userId:id});
+        console.log(products);
         /* if(id){
             productModel.orders.find()
             .then(function(data){

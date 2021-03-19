@@ -209,10 +209,7 @@ let orderSchema = mongoose.Schema({
         type: String,
         required:[true]
     },
-    cartId:{
-        type: String,
-        required:[true]
-    },
+    products:[{}],
     addressId:{
         type: String,
         required:[true]
