@@ -5,6 +5,7 @@ const urls={
     getAddressList:"/user/getAddress",
     updateCart:"/user/updateCart",
     addressSave:"/user/addressSave",
+    placeOrder:"/user/placeOrder",
 
     //admin
     addEditUser:"/admin/updateUserDetails",

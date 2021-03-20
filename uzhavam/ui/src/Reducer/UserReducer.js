@@ -1,6 +1,12 @@
 
 export default function userReducer(state,action){
     switch (action.type){
+        case "SELECT_ADDRESS":
+            return {
+                ...state,
+                addressList:action.addressList,
+                at:Math.random()
+            }
         case "GET_USER_CATEGORY":
             return {
                 ...state,
@@ -22,7 +28,7 @@ export default function userReducer(state,action){
                 proudctList:action.payload ? action.payload : [],
                 cartList:action.cartList ? action.cartList : []
             }
-        case "UPDATE_USER_CART":
+        /* case "UPDATE_USER_CART":
             let cartList = state.cartList || []
             let i=cartList.findIndex(data=>data.productId===action.id)
             if(action.c === 0){
@@ -42,7 +48,7 @@ export default function userReducer(state,action){
                 ...state,
                 cartList:cartList,
                 at:Math.random()
-            }
+            } */
 
         default:
             return {...state}

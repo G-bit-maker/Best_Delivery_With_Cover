@@ -15,9 +15,13 @@
         font-size: 15px;
         color:#02b3ff
     }
+    .imgp{
+        height: 200px;
+        text-align: center;
+    }
     .img{
-        height: auto;
-        width: 100%;
+        max-width: 100%;
+        height: 100%;
     }
     .Addbtn{
         margin: 10px;

@@ -38,13 +38,14 @@ export default function MediaCard(props) {
 
   return (
       <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
-          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow mobileImgD"}>
+          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
               {/* <CardMedia
                 className={"img"}
-                image={userimage}
+                //src={data.main_img || userimage}
                 title="Contemplative Reptile"
-              /> */}
-              <img src={userimage} className={"img"} />
+                children={<img src={data.main_img || userimage} width={"100%"} height={"100%"} className={""} />}
+              />  */}
+               <img src={data.main_img || userimage} className={"img"} /> 
           </Col>
           <Col xs={8} sm={12} md={12} lg={12} className={"adjustRow"}>
               <div title={data.productName || ""} className={"proName "}>

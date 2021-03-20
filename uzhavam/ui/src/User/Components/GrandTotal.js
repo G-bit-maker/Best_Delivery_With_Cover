@@ -12,9 +12,42 @@ import { TableRow } from '@material-ui/core';
 function Profile(props) {
     
   const [state,setState] = useState({
-    Name:"",
-    failure:""
+    subtotal:0,
+    grandtotal:0
   })
+
+  useEffect(() => {
+      let subtotal = 0
+      let grandtotal = 0
+      let cgst = 18;
+      let sgst = 18;
+    if(props.cartProductList.length != 0){
+        props.cartProductList.map((data,i)=>{
+            subtotal += data.count * data.mrp
+        })
+    }
+    grandtotal = subtotal + cgst + sgst
+    setState({
+        ...state,
+        subtotal,
+        grandtotal
+    })
+  }, [props.cartProductList]);
+
+  const onSubmit=()=>{
+      console.log("onSubmit")
+    if(props.submitText === "PLACE ORDER"){
+        let id = props.addressList.findIndex(x=>x.selected===true)
+        console.log(props.addressList[id]._id)
+        console.log(id)
+        props.placeOrder(props.addressList[id]._id)
+        .then((res)=>{
+            alert("ORDER PLACED")
+        })
+    }else{
+        props.history.push("/Checkout")
+    }
+  }
 
     return (
             <Col xs={12} sm={8} md={9} lg={12} className={" totalCon"}>
@@ -39,7 +72,7 @@ function Profile(props) {
                     </Col>
                     <Col xs={6} sm={8} md={9} lg={5} className={" textAlignRight"}>
                         <h6>
-                        &#x20B9;699.00
+                        &#x20B9;{state.subtotal}
                         </h6>
                     </Col>
                 </Row>
@@ -77,14 +110,14 @@ function Profile(props) {
                         </Col>
                         <Col xs={12} sm={8} md={9} lg={5} className={" textAlignRight"}>
                             <h4>
-                            &#x20B9; 699.00
+                            &#x20B9;{state.grandtotal}
                             </h4>
                         </Col>
                     </Row>
                     <Row className={"mhide"}>
                         <Col xs={12} sm={12} md={12} lg={12} className={" textAlignRight"}>
                             <br/>
-                            <Buttons  primary  onClick={()=>props.history.push("/Checkout")}
+                            <Buttons  primary  onClick={onSubmit}
                                 className={""} text={props.submitText}
                             />
                         </Col>
@@ -112,12 +145,12 @@ function Profile(props) {
                                 </Col>
                                 <Col xs={6}   className={" textAlignRight"}>
                                     <h6>
-                                     &#x20B9; 699.00
+                                    &#x20B9;{state.grandtotal}
                                     </h6>
                                 </Col>
                         </Row>
                         <Row>
-                        <Buttons  primary onClick={()=>props.history.push("/Checkout")}
+                        <Buttons  primary onClick={onSubmit}
                                     className={"mobileTotalBtn"} text={props.submitText}
                                 />
                         </Row>
@@ -131,6 +164,7 @@ function Profile(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     cartProductList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
+    addressList: state.userReducer.addressList ? state.userReducer.addressList : [],
   }
 }
 

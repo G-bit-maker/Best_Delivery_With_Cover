@@ -8,6 +8,7 @@ import Inputbox from "../../Common/inputbox"
 import { useState,useEffect } from 'react';
 import "../style/checkout.scss"
 import ModalComp from '../../Common/modal';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 
 function AddressList(props) {
@@ -26,7 +27,8 @@ function AddressList(props) {
     isGst:false,
     gst:"",
     addressId:"",
-    failure:""
+    failure:"",
+    addressList:""
   })
 
   const addNewModal=(flag,i)=>{
@@ -76,6 +78,7 @@ function AddressList(props) {
       })
 } 
 
+
   useEffect(()=>{
     props.getAddressList()
   },[])
@@ -93,18 +96,35 @@ function AddressList(props) {
     ))
   }
 
+  const onSelect=(ind)=>{
+        let addressList = props.addressList
+        addressList.map((data,i)=>{
+            if(i === ind){
+                console.log(i,ind)
+                addressList[i].selected =true
+            }else{
+                addressList[i].selected =false
+            }
+        })
+        props.addressSelect(addressList)
+  }
+
   return (
     <>
             <Row className={"AddressList"}>
                   {props.addressList ? props.addressList.map((data,i)=>(
-                    <Col xs={12} sm={12} md={12} lg={4} className={"p10 "}>
-                        <div className={"con "} onClick={()=>addNewModal(true,i)}>
+                    <Col xs={12} sm={12} md={12} lg={4} className={"p10 "} onClick={()=>onSelect(i)}>
+                        <div className={"con "}>
                             <div>{data.name},</div>
                             <div>{data.flatno}{data.street},</div>
                             <div>{data.city},</div>
                             <div>{data.state} {data.pincode}</div>
                             <div>+91 {data.mobile}</div>
                             {data.gst ? <div>GST: {data.gst}</div> : ""}
+                            <div className={"floatRight edit"} onClick={()=>addNewModal(true,i)}>Edit</div>
+                            <div className={"floatRight select"} >
+                                <input type={"checkbox"} checked={data.selected} onClick={()=>onSelect(i)} />
+                            </div>
                         </div>
                     </Col>
                   )):""}
@@ -238,6 +258,7 @@ function AddressList(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     addressList: state.userReducer.addressList ? state.userReducer.addressList : [],
+    at: state.userReducer.at ? state.userReducer.at : "",
   }
 }
 

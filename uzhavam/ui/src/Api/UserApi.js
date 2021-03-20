@@ -25,6 +25,11 @@ class UserApi{
             data
         ) )
     }   
+    static placeOrderApi(id){
+        return axios.post(urls.placeOrder ,qs.stringify(
+            {addressId:id}
+        ) )
+    }   
 }
 
 export default UserApi;

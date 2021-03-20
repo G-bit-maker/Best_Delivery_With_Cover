@@ -1,10 +1,25 @@
 import UserApi from "../Api/UserApi"
 
+export function addressSelect(addressList){
+    return function(dispatch){
+            dispatch({type:"SELECT_ADDRESS",addressList})
+    } 
+}
+
 export function getCategory(){
     return function(dispatch){
         UserApi.getCategoryApi()
         .then((res)=>{
             dispatch({type:"GET_USER_CATEGORY",payload:res})
+            return res
+        })
+    } 
+}
+
+export function placeOrder(id){
+    return function(dispatch){
+        return UserApi.placeOrderApi(id)
+        .then((res)=>{
             return res
         })
     } 
@@ -62,10 +77,10 @@ export function cartUpdate(id,c){
     return function(dispatch){
         UserApi.cartUpdateApi(id,c)
         .then((res)=>{
-            dispatch({type:"UPDATE_USER_CART",payload:res,id,c})
-            if(c==0){
+            //dispatch({type:"UPDATE_USER_CART",payload:res,id,c})
+            //if(c==0){
                 dispatch(getCartDetails())
-            }
+            //}
             return res
         })
     } 

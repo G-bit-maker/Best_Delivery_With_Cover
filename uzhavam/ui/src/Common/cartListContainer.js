@@ -16,7 +16,8 @@ import "./common.scss"
 function Header(props) {
     
   const [state,setState] = useState({
-    userType:session.getCookie("UserType")
+    userType:session.getCookie("UserType"),
+    subtotal:0
   })
 
   const onChange=(e)=>{
@@ -26,12 +27,23 @@ function Header(props) {
       })
   }
 
-  const list =[1,2,3,4,5]
   useEffect(() => {
     props.getCartDetails()
   }, []);
 
   
+  useEffect(() => {
+        let subtotal = 0
+      if(props.cartProductList.length != 0){
+          props.cartProductList.map((data,i)=>{
+              subtotal += data.count * data.mrp
+          })
+      }
+      setState({
+          ...state,
+          subtotal
+      })
+    }, [props.cartProductList]);
   
     return (
         <>
@@ -59,7 +71,7 @@ function Header(props) {
                 </div>
                 <div className={"cartfooter"} onClick={()=>props.history.push("/Cart")}>
                 &nbsp;Go to cart
-                    <span className={"total"}>{props.cartProductList.length} items&nbsp;&nbsp;&nbsp;</span>
+                    <span className={"total"}>&#x20B9;{state.subtotal}</span>
                 </div>
             </div>
          </>

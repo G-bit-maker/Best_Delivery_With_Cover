@@ -45,7 +45,8 @@ export default function cartProductList(props) {
                         <h6>&#x20B9;{data.count * data.mrp}</h6>
                     </Col>
                     <Col sm={12} md={12} lg={1} className={" textAlignRight mhide"}>
-                        {/* <DeleteForever fontSize="small" /> */} X
+                        {/* <DeleteForever fontSize="small" /> */}
+                        <span onClick={()=>props.cartUpdate(data._id,"0")} style={{cursor:"pointer"}}> X </span>
                     </Col>
                     <Col xs={8} className={"mshow"} >
                         <h5>{data.productName}</h5> Sku:{data.SKU}
@@ -68,7 +69,7 @@ export default function cartProductList(props) {
                             <h5>Qty: {data.count}</h5>
                         </Col>
                         <Col xs={6} className={""} >
-                            <ButtonCus primary className={"width100"} text={"Remove"} />
+                            <ButtonCus primary onClick={()=>props.cartUpdate(data._id,"0")} className={"width100"} text={"Remove"} />
                         </Col>
                         </Row>
                     </Col>
