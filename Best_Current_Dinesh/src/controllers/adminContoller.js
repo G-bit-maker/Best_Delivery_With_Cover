@@ -8,6 +8,8 @@ const bcrypt = require("bcryptjs");
 const mongodb = require("mongodb");
 const ObjectID = require('mongodb').ObjectID;
 const categorieModel = require("../models/categorieModel");
+const productModel = require("../models/productModel");
+
 
 
 exports.login = async (req, res, next) => {
@@ -400,7 +402,6 @@ exports.getAllShop = async (req, res, next) => {
             let categorie = CategorieData.find(obj=>(
                 obj._id == data.categorie   || obj.categorieName == data.categorie
             )).categorieName
-            console.log(categorie)
             return {
                 _id: data._id,
                 swithStatus: data.swithStatus,
@@ -427,6 +428,38 @@ exports.getAllShop = async (req, res, next) => {
                     message:"No shops available"
                 }
             });
+        }
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
+            }
+        });
+    }
+};
+
+exports.addProduct = async (req, res, next) => {
+    try {
+        let {productName, categorie, productImage, price, showStatus} = req.body;
+        let Exist = await productModel.findOne({productName})
+        if(Exist){
+            res.status(200).json({
+                failure:{
+                    message:"this product is already exist"
+                }
+            });
+        }else{
+            let data = await productModel.save();
+            if(data){
+                res.status(200).json({
+                    message:"seccess"
+                });
+            }else{
+                res.status(200).json({
+                    message:"Not Saved"
+                });
+            }
         }
     } catch (err) {
         console.log(err)

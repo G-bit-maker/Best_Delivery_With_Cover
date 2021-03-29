@@ -14,7 +14,8 @@ const {
     deleteShop,
     deleteUser,
     getAllShop,
-    getAllCategoriesName
+    getAllCategoriesName,
+    addProduct
 } = require('../controllers/adminContoller');
 
 //login
@@ -59,5 +60,7 @@ router.route("/deleteShop/:id").delete(deleteShop);
 //user List
 router.route("/getAllShop").get(getAllShop);
 
+//Product add
+router.route("/addProduct").post(addProduct);
 
 module.exports = router;
