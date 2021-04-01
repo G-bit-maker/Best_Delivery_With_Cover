@@ -120,6 +120,9 @@ function Header(props) {
 
                         </div>
                       : ""}
+                  <Nav.Link eventKey={2} onClick={()=>props.history.push("/Orders")}>
+                    Orders
+                </Nav.Link>
                   <Nav.Link eventKey={2} onClick={logoutAction}>
                     Logout
                 </Nav.Link>

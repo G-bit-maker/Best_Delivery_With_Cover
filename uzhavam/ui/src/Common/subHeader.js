@@ -3,10 +3,12 @@ import {Navbar, Nav, Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
 import session from "../session"
+import { useHistory } from "react-router-dom";
 
 const JsonData = require("./subHeaderData.json")
 
 function Header(props) {
+  let history = useHistory();
     
   const [state,setState] = useState({
     uname:"",
@@ -39,7 +41,7 @@ function Header(props) {
     return <ul className="sul">
         {array.map((data,i)=>{
           return (<li className="sli" key={i}>
-                    <a onClick={()=>props.history.push(data.url)}>
+                    <a onClick={()=>history.push(data.url)}>
                     {data.name}
                     </a>
                     {data.subHeader ? subHeaderIteration(data.subHeader): ""}
@@ -54,7 +56,7 @@ function Header(props) {
                <ul  className="ul">
                  {JsonData[session.getCookie("UserType")].map((data,i)=>{
                    return (<li className="li" key={i}>
-                            <a onClick={()=>props.history.push(data.url)} className={"a"}>
+                            <a onClick={()=>history.push(data.url)} className={"a"}>
                               {data.name}
                             </a>
                             

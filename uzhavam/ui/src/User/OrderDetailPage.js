@@ -19,7 +19,7 @@ import React, { useState,useEffect } from 'react';
 import GrandTotal from './Components/GrandTotal';
 import CartProductList from './Components/CartProductList';
 
-function Profile(props) {
+function OrderDetails(props) {
     
   const [state,setState] = useState({
     uname:"",
@@ -47,7 +47,6 @@ function Profile(props) {
     console.log(data)
   }
 
-  let temp =[1,2,3,4]
     return (
         <>
       <Header {...props} />
@@ -56,38 +55,27 @@ function Profile(props) {
       <Container  /* fluid */ >
         <Row className={""}>
             <Col xs={12} sm={12} md={12} lg={12} className={" "}>
-              <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow "}>
+            <Col xs={12} sm={12} md={12} lg={12} className={" "}>
+            <Row className={""}>
+              <Col xs={12} sm={12} md={12} lg={8} className={"adjustRow "}>
                 <h2>
-                  Your orders ({props.cartProductList.length || 0})
+                    ORDER ID # 5TRG45TTW4SERT45345 
                 </h2>
               </Col>
+              <Col xs={12} sm={12} md={12} lg={4} className={"textAlignRight "}>
+                    <h3>14 October 2020 </h3> 
+              </Col>
+              </Row>
+            </Col>
             </Col>
             <br/>
             <br/>
             <br/>
             <Col xs={12} sm={12} md={12} lg={12} className={" "}>
                     <Col xs={12} sm={12} md={12} lg={12} className={" "}>
-                        {/* <Row className={"listCon mhide"}>
-                                <Col xs={12} sm={12} md={12} lg={6} className={" "}>
-                                    <h5>Product</h5> 
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={2} className={" textAlignCenter"}>
-                                    <h6>Price</h6>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={1} className={" textAlignCenter"}>
-                                    <h6>Qty</h6>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={2} className={" textAlignCenter"}>
-                                    <h6>Subtotal</h6>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={1} className={" textAlignRight"}>
-                                    
-                                </Col>
-                        </Row> */}
-                        { temp ? temp.map((data,i)=>( 
-                                 <Row className={"orderCon conPad"}>
-                                        <Col xs={4} sm={12} md={12} lg={6} className={" "}>
-                                            <Col xs={4} sm={12} md={12} lg={12} className={" "}>
+                    <Row className={"orderCon conPad"}>
+                                        <Col xs={4} sm={12} md={12} lg={12} className={"rowFlex borderBottom mb15px"}>
+                                            <Col xs={4} sm={12} md={12} lg={6} className={" "}>
                                                 <Row>
                                                     <Col xs={4} sm={12} md={12} lg={2} className={"orderImg "}>
                                                         <img width="100%" src={userimage} />
@@ -115,31 +103,35 @@ function Profile(props) {
                                                     </Col>
                                                 </Row>
                                             </Col>
+                                            <Col xs={4} sm={12} md={12} lg={6} className={" textAlignRight"}>
+                                                <ButtonCus text={"ORDER AGAIN"}/>
+                                            </Col>
                                         </Col>
-                                        <Col sm={12} md={12} lg={6} className={"textAlignRight borderLeft"}>
-                                            <h6><a href="#" onClick={()=>props.history.push("/OrderDetail")}>ORDER ID # 5TRG45TTW4SERT45345</a></h6> 
-                                            <h6>14 October 2020 </h6> 
-                                            <h6>Total: &#x20B9;699.99 </h6> 
+                                        <Col sm={12} md={12} lg={6} className={"pl25px"}>
+                                            <h3>Total: &#x20B9;699.99 </h3> 
                                             <h6>PENDING</h6> 
                                             <h6><a href="#">Cancel order </a></h6>
                                         </Col>
-                                        {/* <Col sm={12} md={12} lg={2} className={"textAlignRight "}>
-                                            <h6>To</h6> 
+                                        <Col sm={12} md={12} lg={2} className={" "}>
+                                            <h6>Delivery address</h6> 
                                             <address>
                                                 <div>Candidate name,</div>
                                                 <div>42/a street street,</div>
                                                 <div>chennai,</div>
                                                 <div>Tamilnadu 611105</div>
                                             </address>
-                                        </Col> */}
+                                        </Col> 
+                                        <Col sm={12} md={12} lg={2} className={" "}>
+                                            <h6>Billing address</h6> 
+                                            <address>
+                                                <div>Candidate name,</div>
+                                                <div>42/a street street,</div>
+                                                <div>chennai,</div>
+                                                <div>Tamilnadu 611105</div>
+                                            </address>
+                                        </Col> 
                                         
                                 </Row>
-                         )):
-                        <Col xs={12} sm={12} md={12} lg={2} className={" textAlignRight"}>
-                            <br/>
-                            <br/>
-                            <h6>No data found</h6>
-                        </Col> }
                         
                     </Col>
             </Col>
@@ -167,5 +159,5 @@ const mapDispatchToProps =(dispatch)=> {
 export default connect(
   mapStateToProps ,
   mapDispatchToProps 
-)(Profile)
+)(OrderDetails)
 

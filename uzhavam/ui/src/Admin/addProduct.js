@@ -13,12 +13,12 @@ import ImageEdit from "./Components/ProImageEdit"
 
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useCallback } from 'react';
 
-/* import createHistory from "history/createBrowserHistory";
+ import createHistory from "history/createBrowserHistory";
 const history = createHistory({
     forceRefresh: true
-}); */
+}); 
 
 function AddProduct(props) {
     
@@ -116,64 +116,66 @@ function AddProduct(props) {
         })
     }
     useEffect(() => {
+        props.getCategory()
+    }, []);
+
+     useEffect(() => {
         const {
             match: { params }
         } = props;
-        
         props.getProductDetails(params.id)
-        props.getCategory()
-    }, []);
+    }, [props.match]);  
 
     useEffect( () => {
         console.log(props.productDetails);
         let details = props.productDetails
-        if(props.productDetails){
+        //if(props.productDetails){
             setState({
                 ...state,
-                product_id:details._id,
+                product_id:details._id || "",
                 pageType:details._id ? "Edit":"Add",
-                productName:details.productName,
-                brand:details.brand,
-                productCategory:details.category,
-                sku:details.SKU,
-                shortDec:details.shortdescription,
-                description:details.description,
-                productFeatures:details.features,
-                ProductSpec:details.specs,
-                unitWeight:details.unit_for_weight,
-                weight:details.weight,
-                availableSaleQty:details.avail_quantity,
-                minSaleQty:details.min_sale_quantity,
-                maxSaleQty:details.max_sale_quantity,
+                productName:details.productName || "",
+                brand:details.brand || "",
+                productCategory:details.category || "",
+                sku:details.SKU || "",
+                shortDec:details.shortdescription || "",
+                description:details.description || "",
+                productFeatures:details.features || "",
+                ProductSpec:details.specs || "",
+                unitWeight:details.unit_for_weight || "",
+                weight:details.weight || "",
+                availableSaleQty:details.avail_quantity || "",
+                minSaleQty:details.min_sale_quantity || "",
+                maxSaleQty:details.max_sale_quantity || "",
                 IsStock:details.stock || "No",
-                mrp:details.mrp,
-                sellingPrice:details.selling_price,
-                specialPrice:details.special_price,
-                discount:details.discount,
-                discountAmt:details.discount_amount,
+                mrp:details.mrp || "",
+                sellingPrice:details.selling_price || "",
+                specialPrice:details.special_price || "",
+                discount:details.discount || "",
+                discountAmt:details.discount_amount || "",
                 status:details.status || "Active",
-                mainImg:details.main_img,
-                img2:details.img2,
-                img3:details.img3,
-                img4:details.img4,
-                img5:details.img1,
-                smallimg:details.small_img,
-                thumimg:details.thumbnail_image,
-                taxClassId:details.tax_class_id,
-                cgstp:details.cgst,
-                igstp:details.igst,
-                sgstp:details.sgst,
-                cgstamt:details.cgst_amount,
-                igstamt:details.igst_amount,
-                sgstamt:details.sgst_amount,
-                groupid:details.group_id,
-                metakey:details.meta_keyword,
+                mainImg:details.main_img || "",
+                img2:details.img2 || "",
+                img3:details.img3 || "",
+                img4:details.img4 || "",
+                img5:details.img1 || "",
+                smallimg:details.small_img || "",
+                thumimg:details.thumbnail_image || "",
+                taxClassId:details.tax_class_id || "",
+                cgstp:details.cgst || "",
+                igstp:details.igst || "",
+                sgstp:details.sgst || "",
+                cgstamt:details.cgst_amount || "",
+                igstamt:details.igst_amount || "",
+                sgstamt:details.sgst_amount || "",
+                groupid:details.group_id || "",
+                metakey:details.meta_keyword || "",
                 proVisible:details.product_visible || "No",
-                ean:details.ean,
-                retailQtyAllowed:details.retail_quantity,
-                wholsaleQtyAllowed:details.wholesale_quantity,
+                ean:details.ean || "",
+                retailQtyAllowed:details.retail_quantity || "",
+                wholsaleQtyAllowed:details.wholesale_quantity || "",
             })
-        }
+        //}
         
     }, [props.productDetails])
 

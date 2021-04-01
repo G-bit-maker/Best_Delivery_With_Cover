@@ -15,6 +15,11 @@ body, html {
      outline: none;
  } 
 
+ .rowFlex{
+     display: flex;
+     flex-wrap: wrap;
+ }
+
 .mty{
     //color: rgb(250, 112, 112);
 }
@@ -92,6 +97,9 @@ body, html {
 }
 
 //padding
+.pl25px{
+    padding-left: 25px;
+}
 .p10{
     padding: 10px;
 }

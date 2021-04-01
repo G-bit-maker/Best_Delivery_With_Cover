@@ -73,7 +73,7 @@ export function productRemove(id){
 }
 export function getProductDetails(id){
     return function(dispatch){
-        if(id){
+        if(id && id != "Add"){
             DashboardApi.getProductDetailsApi(id)
             .then((res)=>{
                 dispatch({type:"GET_PRODUCT_DETAILS",payload:res.product })
