@@ -33,6 +33,6 @@ router.route("/placeOrder").post(auth,ordersSave);
 
 //get order history
 
-router.route("/getOrderHistory").post(auth,getOrders);
+router.route("/getOrderHistory").get(auth,getOrders);
 
 module.exports = router;

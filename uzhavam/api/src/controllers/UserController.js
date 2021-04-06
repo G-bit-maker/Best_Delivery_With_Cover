@@ -435,14 +435,99 @@ exports.ordersSave = async (req, res, next) => {
     }
 };
 
+
 exports.getOrders = async (req, res, next) => {
     try {
         const { id } = req.user;
-        let orders = await productModel.orders.findOne({userId:id});
-        console.log(orders.products);
+        let orders = await productModel.orders.aggregate([
+            {
+                "$match": { "userId": id }
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",  
+                    //"let": { "_id": "addressId" },
+                    "as": 'Address' 
+                } 
+            },
 
-        let products = await productModel.product.find({userId:id});
-        console.log(products);
+            { "$addFields": { "productList": "$products"}},
+            {"$map":{
+                "input":{
+                    "$filter": {
+                      "input": "$productList",
+                      "as": "hobbyf",
+                      "cond": "$$hobbyf.productId"
+                    }
+                  },
+                  "as": "hobbym",
+                  /* "in": {
+                    "name": "$$hobbym.count"
+                  } */
+            }},
+           
+            /* {
+                "pipeline":[
+                    {
+                        $match: {
+                          "$expr": {
+                            $eq: [
+                              "$_id",
+                              "$$child_id"
+                            ]
+                          }
+                        }
+                      }
+                ]
+            } */
+        ])
+
+        console.log(orders)
+        return res.status(200).json({
+            orders
+        });
+        
+        
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:err
+            }
+        });
+    }
+};
+
+
+exports.getOrdersById = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        let orders = await productModel.orders.findOne({userId:id});
+        
+        let productId = orders.products.map(item=>item.productId);
+
+        let productsList = await productModel.product.find().where('_id').in(productId).exec();
+        let productsListDetails =  productsList;
+         if(orders.products && orders.products.length !== 0){
+            orders.products.map((data)=>{
+                let i = productsListDetails.findIndex(x=>x._id == data.productId);
+                if(i !== -1 ){
+                    productsListDetails[i].count = data.count;
+                }
+            });
+            if(productsListDetails && productsListDetails.length !== 0){
+                res.status(200).json({
+                    orders:productsListDetails
+                })  
+            }else{
+                res.status(200).json({
+                    orders:[]
+                }) 
+            }
+        } 
+        
         /* if(id){
             productModel.orders.find()
             .then(function(data){
