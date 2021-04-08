@@ -327,26 +327,59 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.getUsersOrders = async (req, res, next) => {
     try {
-        const { id } = req.user;
-        if(id){
-            let details = await productModel.userCart.find();
-            if(details && details.length !== 0){
-                res.status(200).json({
-                    list:details
-                });
-            }else{
-                res.status(200).json({
-                    message:"No lists are available"
-                });
-            }
-        }else{
-            return res.status(500).json({
-                message:message.Token_Invalid
-            });    
-        }
+        //const { id } = req.user;
+        let orders = await productModel.orders.aggregate([
+            { "$addFields": { "userId": { "$toObjectId": "$userId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userRegistration', 
+                     "localField": 'userId', 
+                    "foreignField": "_id",
+                    "as": 'User' 
+                } 
+            },
+            {
+                $unwind: '$products'
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",
+                    "as": 'Address' 
+                } 
+            },
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
+                }
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+             { $unwind: '$User' },
+            { "$group": {
+                "_id": "$_id",products:{$addToSet : "$productsDetails"},
+                address:{$addToSet : "$Address"},
+                user:{$addToSet:"$User"}
+              }},
+        ])
+        return res.status(200).json({
+            orders
+        });
+        
+        
     } catch (err) {
         return res.status(500).json({
-            message:"No lists are available"
+            failure:{
+                message:err
+            }
         });
     }
 };

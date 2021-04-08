@@ -402,7 +402,8 @@ exports.ordersSave = async (req, res, next) => {
             let saveData = {
                 userId:id,
                 products:List.products,
-                addressId:body.addressId
+                addressId:body.addressId,
+                status:"Pending"
             }
            let orderPlaced = await productModel.orders(saveData).save();
            if(orderPlaced){
@@ -443,49 +444,36 @@ exports.getOrders = async (req, res, next) => {
             {
                 "$match": { "userId": id }
             },
+            {
+                $unwind: '$products'
+            },
             { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
             { 
                 "$lookup": { 
                     "from": 'userAddress', 
                      "localField": 'addressId', 
-                    "foreignField": "_id",  
-                    //"let": { "_id": "addressId" },
+                    "foreignField": "_id",
                     "as": 'Address' 
                 } 
             },
-
-            { "$addFields": { "productList": "$products"}},
-            {"$map":{
-                "input":{
-                    "$filter": {
-                      "input": "$productList",
-                      "as": "hobbyf",
-                      "cond": "$$hobbyf.productId"
-                    }
-                  },
-                  "as": "hobbym",
-                  /* "in": {
-                    "name": "$$hobbym.count"
-                  } */
-            }},
-           
-            /* {
-                "pipeline":[
-                    {
-                        $match: {
-                          "$expr": {
-                            $eq: [
-                              "$_id",
-                              "$$child_id"
-                            ]
-                          }
-                        }
-                      }
-                ]
-            } */
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
+                }
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+            { "$group": {
+                "_id": "$_id",products:{$addToSet : "$productsDetails"},
+                address:{$addToSet : "$Address"},
+              }},
         ])
-
-        console.log(orders)
         return res.status(200).json({
             orders
         });
@@ -501,53 +489,51 @@ exports.getOrders = async (req, res, next) => {
 };
 
 
-exports.getOrdersById = async (req, res, next) => {
+exports.getOrderById = async (req, res, next) => {
     try {
         const { id } = req.user;
-        let orders = await productModel.orders.findOne({userId:id});
-        
-        let productId = orders.products.map(item=>item.productId);
-
-        let productsList = await productModel.product.find().where('_id').in(productId).exec();
-        let productsListDetails =  productsList;
-         if(orders.products && orders.products.length !== 0){
-            orders.products.map((data)=>{
-                let i = productsListDetails.findIndex(x=>x._id == data.productId);
-                if(i !== -1 ){
-                    productsListDetails[i].count = data.count;
+        const {orderId} = req.query;
+        let orders = await productModel.orders.aggregate([
+            {
+                "$match": {"_id":orderId}
+            },
+            {
+                $unwind: '$products'
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",
+                    "as": 'Address' 
+                } 
+            },
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
                 }
-            });
-            if(productsListDetails && productsListDetails.length !== 0){
-                res.status(200).json({
-                    orders:productsListDetails
-                })  
-            }else{
-                res.status(200).json({
-                    orders:[]
-                }) 
-            }
-        } 
-        
-        /* if(id){
-            productModel.orders.find()
-            .then(function(data){
-                    res.status(200).json({
-                        List:data
-                    })    
-                }).catch(function (error) {
-                res.status(200).json({
-                    failure: "No data found"
-                });
-            });
-        }else{
-            return res.status(500).json({
-                message:message.Token_Invalid
-            });    
-        } */
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+            { "$group": {
+                "_id": "$_id",products:{$addToSet : "$productsDetails"},
+                address:{$addToSet : "$Address"},
+              }},
+        ])
+        return res.status(200).json({
+            orders
+        });
     } catch (err) {
         return res.status(500).json({
             failure:{
-                message:"something went wrong"
+                message:err
             }
         });
     }
