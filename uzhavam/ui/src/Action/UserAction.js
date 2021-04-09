@@ -45,6 +45,26 @@ export function getAddressList(){
     } 
 }
 
+export function getOrderList(){
+    return function(dispatch){
+        UserApi.getOrderListApi()
+        .then((res)=>{
+            dispatch({type:"GET_ORDER_LIST",payload:res})
+            return res
+        })
+    } 
+}
+
+export function getOrderById(id){
+    return function(dispatch){
+        return UserApi.getOrderByIdApi(id)
+         .then((res)=>{
+            //dispatch({type:"GET_ORDER_LIST",payload:res})
+            return res
+        }) 
+    } 
+}
+
 export function getProductList(id){
     return function(dispatch){
         UserApi.getProductListApi(id)

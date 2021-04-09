@@ -9,6 +9,12 @@ class UserApi{
     static getAddressListApi(){
         return axios.get(urls.getAddressList)
     }   
+    static getOrderListApi(){
+        return axios.get(urls.getOrderList)
+    }   
+    static getOrderByIdApi(id){
+        return axios.get(urls.getOrderById,{params:{orderId:id}})
+    }   
     static getCategoryApi(data){
         return axios.get(urls.getCategoryForUser)
     }   

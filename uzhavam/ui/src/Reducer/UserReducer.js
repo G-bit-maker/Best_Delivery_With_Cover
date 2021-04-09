@@ -22,6 +22,11 @@ export default function userReducer(state,action){
                 ...state,
                 addressList:action.payload.list ? action.payload.list : []
             }
+        case "GET_ORDER_LIST":
+            return {
+                ...state,
+                orderList:action.payload.orders ? action.payload.orders : []
+            }
         case "GET_USER_PRODUCT_LIST":
             return {
                 ...state,

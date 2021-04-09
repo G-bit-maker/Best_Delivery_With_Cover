@@ -19,7 +19,8 @@ function Profile(props) {
     uname:"",
     pass:"",
     tab:0,
-    productCategory:"All"
+    productCategory:"All",
+    selectedCategory:"All"
   })
 
   const onChange=(e)=>{
@@ -27,9 +28,6 @@ function Profile(props) {
         ...state,
         [e.target.id]:e.target.value
       })
-  }
-  const selectCategory=(e)=>{
-    props.getProductList(e.target.value)
   }
 
 
@@ -39,6 +37,10 @@ function Profile(props) {
   }, []);
   const tagActive =(data)=>{
     console.log(data)
+    props.getProductList(data._id || "All")
+    setState({
+      selectedCategory:data._id || "All"
+    })
   }
   const cartUpdate =(id,count)=>{
     props.cartUpdate(id,count)
@@ -65,10 +67,10 @@ function Profile(props) {
                         }) :""}
                     </select>
               </Col> */}
-               <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow "}>
-              <Tags active onActive={()=>tagActive("all")} text={"All"} />
+               <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow categoryCon"}>
+              <Tags active={state.selectedCategory == "All"} onActive={()=>tagActive("all")} text={"All"} />
                 {props.categoryList.length != 0 ? props.categoryList.map((data,i)=>(
-                    <Tags active={data.active} onActive={()=>tagActive(data,i)} text={data.category} />
+                    <Tags active={state.selectedCategory == data._id} onActive={()=>tagActive(data,i)} text={data.category} />
                 )):""}
               </Col> 
             </Col>

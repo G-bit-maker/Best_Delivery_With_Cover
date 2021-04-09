@@ -28,24 +28,18 @@ function OrderDetails(props) {
     productCategory:"All"
   })
 
-  const onChange=(e)=>{
-    setState({
-        ...state,
-        [e.target.id]:e.target.value
-      })
-  }
-  const selectCategory=(e)=>{
-    props.getProductList(e.target.value)
-  }
-
 
   useEffect(() => {
-      console.log(window.innerWidth)
-    props.getCartDetails()
+    const {
+        match: { params }
+    } = props;
+    props.getOrderById(params.id)
+    .then((data)=>{
+      setState({
+        details:data
+      })
+    })
   }, []);
-  const tagActive =(data)=>{
-    console.log(data)
-  }
 
     return (
         <>

@@ -57,6 +57,10 @@
     height: 100%;
     overflow-y: auto;
 }
+.categoryCon{
+    display: flex;
+    overflow-x: auto;
+}
 
 .userList{
     .Imagecon{
