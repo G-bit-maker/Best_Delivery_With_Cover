@@ -31,12 +31,25 @@
         width: 100%;
         outline: none;
     }
+    .proweight{
+        color: #666;
+    }
     .proPrice1{
         color: #666;
         text-decoration: line-through;
     }
     .proPrice{
-        font-size: 23px;
+        b{
+            font-size: 23px;
+        }
+        span{
+            text-decoration: line-through;
+        }
+        
+        .pActive{
+            text-decoration: none;
+            font-size: 23px;
+        }
     }
     .rateUserCount{
         position: absolute;

@@ -83,7 +83,7 @@ function Profile(props) {
                   : ""
                 }
                   
-                  <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
+                  {/* <Col xs={12} sm={6} md={4} lg={3} className={"adjustRow "}>
                       <ProductContainer cartUpdate={cartUpdate} data={
                         {
                           productName:"Test Product name",
@@ -92,7 +92,7 @@ function Profile(props) {
                           mrp:699
                         }
                       }/>
-                  </Col>
+                  </Col> */}
                   
               </Row>
             </Col>

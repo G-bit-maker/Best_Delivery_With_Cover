@@ -51,18 +51,23 @@ export default function MediaCard(props) {
               <div title={data.productName || ""} className={"proName "}>
                   {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
+              <div  className={"proweight "}>
+                  {/* <h5> */}{(data.weight || "")+""+( data.wholesale_quantity || "")}{/* </h5> */}
+              </div>
               <div>
-                {data.discount_amount ?
-                  <span className={"proPrice1"}>&#x20B9;{data.discount_amount || ""}</span>  :""}
-                  {data.discount ? 
-                  <span className={"offer"}>&nbsp;&nbsp;&nbsp;{data.discount}% off</span> :""}
+                {data.mrp ?
+                  <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span>  :""}
+                  {data.selling_price && data.mrp ? 
+                  <span className={"offer"}>&nbsp;&nbsp;&nbsp;{((data.selling_price/data.mrp)*100).toFixed(2)}% off</span> :""}
               </div>
               <div className={"proPrice"}>
-                  &#x20B9;{data.mrp || ""}
+                  <span className={state.count < data.wholesale_quantity ? "pActive" :""}>&#x20B9;{data.selling_price || ""}</span><b>/</b>
+                  <span className={state.count >= data.wholesale_quantity ? "pActive" :""}>&#x20B9;{data.special_price || ""}</span>
+                  <label>&nbsp;&nbsp;( for min {data.wholesale_quantity} qty )</label>
               </div>
           
-                <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
-                <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label>
+                {/* <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
+                <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label> */}
                 
                 <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn floatRight"}>
                   {/* <div>Add</div> */}
