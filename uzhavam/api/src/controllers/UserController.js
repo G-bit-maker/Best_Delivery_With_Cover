@@ -402,7 +402,8 @@ exports.ordersSave = async (req, res, next) => {
             let saveData = {
                 userId:id,
                 products:List.products,
-                addressId:body.addressId
+                addressId:body.addressId,
+                status:"Pending"
             }
            let orderPlaced = await productModel.orders(saveData).save();
            if(orderPlaced){
@@ -435,34 +436,104 @@ exports.ordersSave = async (req, res, next) => {
     }
 };
 
+
 exports.getOrders = async (req, res, next) => {
     try {
         const { id } = req.user;
-        let orders = await productModel.orders.findOne({userId:id});
-        console.log(orders.products);
-
-        let products = await productModel.product.find({userId:id});
-        console.log(products);
-        /* if(id){
-            productModel.orders.find()
-            .then(function(data){
-                    res.status(200).json({
-                        List:data
-                    })    
-                }).catch(function (error) {
-                res.status(200).json({
-                    failure: "No data found"
-                });
-            });
-        }else{
-            return res.status(500).json({
-                message:message.Token_Invalid
-            });    
-        } */
+        let orders = await productModel.orders.aggregate([
+            {
+                "$match": { "userId": id }
+            },
+            {
+                $unwind: '$products'
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",
+                    "as": 'Address' 
+                } 
+            },
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
+                }
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+            { "$group": {
+                "_id": "$_id",products:{$addToSet : "$productsDetails"},
+                address:{$addToSet : "$Address"},
+              }},
+        ])
+        return res.status(200).json({
+            orders
+        });
+        
+        
     } catch (err) {
         return res.status(500).json({
             failure:{
-                message:"something went wrong"
+                message:err
+            }
+        });
+    }
+};
+
+
+exports.getOrderById = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        const {orderId} = req.query;
+        let orders = await productModel.orders.aggregate([
+            {
+                "$match": {"_id":orderId}
+            },
+            {
+                $unwind: '$products'
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",
+                    "as": 'Address' 
+                } 
+            },
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
+                }
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+            { "$group": {
+                "_id": "$_id",products:{$addToSet : "$productsDetails"},
+                address:{$addToSet : "$Address"},
+              }},
+        ])
+        return res.status(200).json({
+            orders
+        });
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:err
             }
         });
     }
