@@ -13,8 +13,7 @@ function SignUP(props) {
         failure:"",
         userName:"",
         gender:"",
-        address1:"",
-        address2:"",
+        pincode:"",
         mobile:"",
         email:""
       })
@@ -22,7 +21,7 @@ function SignUP(props) {
   const onChange=(e)=>{
     let id = e.target.id
     const re = /^[0-9\b]+$/;
-    if(id === "mobile"){
+    if(id === "mobile" || (id === "pincode" && (e.target.value && e.target.value.length < 7))){
         if(re.test(e.target.value) || e.target.value===""){
              setState({
                   ...state,
@@ -90,6 +89,7 @@ function SignUP(props) {
                   <div className="form-group">
                       <label>Mobile</label>
                       <input type="text" id="mobile" onChange={onChange} 
+                          value={state.mobile}
                           className={"form-control"+(state.failure.mobile ?" error ":"")} 
                           placeholder="Enter mobile number" 
                       />
@@ -110,14 +110,18 @@ function SignUP(props) {
                   </div>
 
                   <div className="form-group">
-                      <label>Address 1</label>
-                      <input type="text" id="address1" onChange={onChange} className="form-control" placeholder="Address line 1" />
+                      <label>Pincode</label>
+                      <input type="text" id="pincode" onChange={onChange} 
+                        value={state.pincode}
+                        className={"form-control"+(state.failure.pincode ?" error ":"")}  
+                        placeholder="Pincode" />
+                        {state.failure.pincode ? 
+                          <label className={"labelError"}>
+                            {state.failure.pincode}
+                          </label> : 
+                        ""}
                   </div>
 
-                  <div className="form-group">
-                      <label>Address 2</label>
-                      <input type="text" id="address2" onChange={onChange} className="form-control" placeholder="Address line 2" />
-                  </div>
                   <Button primary loading={state.loading}
                      onClick={signup}
                      className={"btn btn-dark btn-lg btn-block "} 

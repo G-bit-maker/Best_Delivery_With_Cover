@@ -15,7 +15,8 @@ export default function userReducer(state,action){
         case "GET_CART_DETAILS":
             return {
                 ...state,
-                cartProductList:action.payload.list ? action.payload.list : []
+                cartProductList:action.payload.list ? action.payload.list : [],
+                at:Math.random()
             }
         case "GET_ADDRESS_LIST":
             return {

@@ -51,14 +51,16 @@ export default function MediaCard(props) {
               <div title={data.productName || ""} className={"proName "}>
                   {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
-              <div  className={"proweight "}>
-                  {/* <h5> */}{(data.weight || "")+""+( data.wholesale_quantity || "")}{/* </h5> */}
-              </div>
               <div>
-                {data.mrp ?
-                  <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span>  :""}
-                  {data.selling_price && data.mrp ? 
-                  <span className={"offer"}>&nbsp;&nbsp;&nbsp;{((data.selling_price/data.mrp)*100).toFixed(2)}% off</span> :""}
+                <span  className={"proweight "}>
+                    {(data.weight || "")+""+( data.wholesale_quantity || "")}
+                </span>
+                <span className={"floatRight"}>
+                  {data.mrp ?<><span>MRP</span>
+                    <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span> </> :""}
+                    {data.selling_price && data.mrp ? 
+                    <span className={"offer"}>&nbsp;&nbsp;&nbsp;{((data.selling_price/data.mrp)*100).toFixed(0)}% off</span> :""}
+                </span>
               </div>
               <div className={"proPrice"}>
                   <span className={state.count < data.wholesale_quantity ? "pActive" :""}>&#x20B9;{data.selling_price || ""}</span><b>/</b>
