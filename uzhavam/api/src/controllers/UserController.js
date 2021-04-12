@@ -3,6 +3,8 @@ const config = require("../config");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
 const message = require("../Common/constants");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 var TeleSignSDK = require('telesignsdk');
 const handleErrors = (err) =>{
     let error_msg = {}
@@ -492,10 +494,10 @@ exports.getOrders = async (req, res, next) => {
 exports.getOrderById = async (req, res, next) => {
     try {
         const { id } = req.user;
-        const {orderId} = req.query;
+        const { orderId } = req.body;
         let orders = await productModel.orders.aggregate([
             {
-                "$match": {"_id":orderId}
+                "$match": {"_id":ObjectId(orderId)}
             },
             {
                 $unwind: '$products'
