@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../Common/auth");
 const {login,createlogin,createProductDetails,getproduct,getproductDetails,getUserList,createCategory,getCategories,
-    updateUserDetails,deleteUser,getUsersOrders} = require('../controllers/adminContoller');
+    updateUserDetails,deleteUser,getUsersOrders,getUserById,
+    updateOrderStatus} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -28,6 +29,9 @@ router.route("/getProduct").get(auth,getproduct);
 //get user list
 router.route("/getUserList").get(auth,getUserList);
 
+//get user
+router.route("/getUserById").get(auth,getUserById);
+
 //update user
 router.route("/updateUserDetails").put(auth,updateUserDetails);
 
@@ -35,7 +39,9 @@ router.route("/updateUserDetails").put(auth,updateUserDetails);
 router.route("/deleteUser").delete(auth,deleteUser);
 
 //get orders
+router.route("/getUsersOrder").get(auth,getUsersOrders);
 
-router.route("/getUsersOrder").get(auth,getUsersOrders)
+//update orders status
+router.route("/updateOrderStatus").put(auth,updateOrderStatus);
 
 module.exports = router;

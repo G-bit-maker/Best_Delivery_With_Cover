@@ -39,15 +39,14 @@ exports.Registration = async (req, res, next) => {
         }
         client.sms.message(messageCallback, phoneNumber, message, messageType);
  */
-        const { userName, mobile,email,dob,gender,address1,address2} = req.body;
+        const { userName, mobile,email,dob,gender,pincode} = req.body;
         let List = {};
         List.userName = userName;
         List.mobile = mobile;
         List.email = email;
         List.dob = dob;
         List.gender = gender;
-        List.address1 = address1;
-        List.address2 = address2;
+        List.pincode = pincode;
         let userDetails = new registerModel(List);
         userDetails.save()
             .then(function (data) {

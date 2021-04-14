@@ -267,13 +267,14 @@ exports.updateUserDetails = async (req, res, next) => {
     try {
         let {id} = req.user;
         if(id){
-            let {userId,userName, mobile,email,dob,gender,address1,address2} = req.body;
+            let {userId,userName, mobile,email,dob,gender,pincode} = req.body;
 
-            let List = {userName, mobile,email,dob,gender,address1,address2};
+            let List = {userName, mobile,email,dob,gender,pincode};
             userModel.findOneAndUpdate({_id : userId},List)
             .then(function(data){
                 res.status(200).json({
-                    success:"User edited Successfully"
+                    success:"User edited Successfully",
+                    data
                 })     
              })
              .catch(function (error) {
@@ -379,6 +380,68 @@ exports.getUsersOrders = async (req, res, next) => {
         return res.status(500).json({
             failure:{
                 message:err
+            }
+        });
+    }
+};
+
+exports.getUserById = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        const {userId} = req.body;
+        if(id){
+            let details = await userModel.findOne({"_id":userId});
+            let address = await productModel.userAddress.find({userId})
+            if(details){
+                res.status(200).json({
+                    userDetails:{
+                        profile:details,
+                        address
+                    }
+                    });
+            }else{
+                res.status(200).json({
+                    message:"No user are available"
+                });
+            }
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
+        });
+    }
+};
+
+exports.updateOrderStatus = async (req, res, next) => {
+    try {
+        let {id} = req.user;
+        if(id){
+            let {orderId,status} = req.body;
+            productModel.orders.findOneAndUpdate({_id : orderId},{ $set:{status:status}},{new: true})
+            .then(function(data){
+                res.status(200).json({
+                    success:"User edited Successfully",
+                    data
+                })     
+             })
+             .catch(function (error) {
+                res.status(200).json({
+                    failure: handleErrors(error)
+                });
+            });
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:"something went wrong"
             }
         });
     }

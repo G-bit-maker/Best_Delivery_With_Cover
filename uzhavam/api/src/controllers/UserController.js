@@ -275,14 +275,15 @@ exports.updateCart = async (req, res, next) => {
 
 exports.updateProfileDetails = async (req, res, next) => {
     try {
-        let {userName, mobile,email,dob,gender,address1,address2} = req.body;
+        let {userName, mobile,email,dob,gender,pincode} = req.body;
         const { id } = req.user;
         if(id){
-            let List = {userName, mobile,email,dob,gender,address1,address2};
+            let List = {userName, mobile,email,dob,gender,pincode};
             userModel.findOneAndUpdate({_id : id},List)
             .then(function(data){
                 res.status(200).json({
-                    success:"User edited Successfully"
+                    success:"User edited Successfully",
+                    data
                 })     
              })
              .catch(function (error) {
@@ -537,6 +538,36 @@ exports.getOrderById = async (req, res, next) => {
             failure:{
                 message:err
             }
+        });
+    }
+};
+
+exports.getUserById = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        if(id){
+            let details = await userModel.findOne({"_id":id});
+            let address = await productModel.userAddress.find({userId:id})
+            if(details){
+                res.status(200).json({
+                    userDetails:{
+                        profile:details,
+                        address
+                    }
+                    });
+            }else{
+                res.status(200).json({
+                    message:"No user are available"
+                });
+            }
+        }else{
+            return res.status(500).json({
+                message:message.Token_Invalid
+            });    
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message:"No lists are available"
         });
     }
 };
