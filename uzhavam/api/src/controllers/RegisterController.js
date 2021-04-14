@@ -39,8 +39,9 @@ exports.Registration = async (req, res, next) => {
         }
         client.sms.message(messageCallback, phoneNumber, message, messageType);
  */
-        const { userName, mobile,email,dob,gender,pincode} = req.body;
+        const {name, userName, mobile,email,dob,gender,pincode} = req.body;
         let List = {};
+        List.name = name;
         List.userName = userName;
         List.mobile = mobile;
         List.email = email;

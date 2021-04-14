@@ -275,10 +275,10 @@ exports.updateCart = async (req, res, next) => {
 
 exports.updateProfileDetails = async (req, res, next) => {
     try {
-        let {userName, mobile,email,dob,gender,pincode} = req.body;
+        let {name,userName, mobile,email,dob,gender,pincode} = req.body;
         const { id } = req.user;
         if(id){
-            let List = {userName, mobile,email,dob,gender,pincode};
+            let List = {name,userName, mobile,email,dob,gender,pincode};
             userModel.findOneAndUpdate({_id : id},List)
             .then(function(data){
                 res.status(200).json({
@@ -472,9 +472,8 @@ exports.getOrders = async (req, res, next) => {
              { "$addFields": { "product": "$productsDetails"}},
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
-            { "$group": {
-                "_id": "$_id",products:{$addToSet : "$productsDetails"},
-                address:{$addToSet : "$Address"},
+             { "$group": {
+                "_id": {orderStatus:"$status",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
@@ -525,9 +524,8 @@ exports.getOrderById = async (req, res, next) => {
              { "$addFields": { "product": "$productsDetails"}},
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
-            { "$group": {
-                "_id": "$_id",products:{$addToSet : "$productsDetails"},
-                address:{$addToSet : "$Address"},
+              { "$group": {
+                "_id": {orderStatus:"$status",address:"$Address"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({

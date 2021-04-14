@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../Common/auth");
 const {login,createlogin,createProductDetails,getproduct,getproductDetails,getUserList,createCategory,getCategories,
     updateUserDetails,deleteUser,getUsersOrders,getUserById,
-    updateOrderStatus} = require('../controllers/adminContoller');
+    updateOrderStatus,getOrderById} = require('../controllers/adminContoller');
 
 //login
 router.route('/login').post(login);
@@ -40,6 +40,9 @@ router.route("/deleteUser").delete(auth,deleteUser);
 
 //get orders
 router.route("/getUsersOrder").get(auth,getUsersOrders);
+
+//get orders id
+router.route("/getOrderById").get(auth,getOrderById);
 
 //update orders status
 router.route("/updateOrderStatus").put(auth,updateOrderStatus);

@@ -4,6 +4,8 @@ const LoginModel = require("../models/adminloginModel");
 const productModel = require("../models/productModel");
 const userModel = require("../models/RegisterModel");
 const message = require("../Common/constants");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const handleErrors = (err) =>{
     let error_msg = {}
     Object.values(err.errors).forEach(({properties})=>{
@@ -267,9 +269,9 @@ exports.updateUserDetails = async (req, res, next) => {
     try {
         let {id} = req.user;
         if(id){
-            let {userId,userName, mobile,email,dob,gender,pincode} = req.body;
+            let {name,userId,userName, mobile,email,dob,gender,pincode} = req.body;
 
-            let List = {userName, mobile,email,dob,gender,pincode};
+            let List = {name,userName, mobile,email,dob,gender,pincode};
             userModel.findOneAndUpdate({_id : userId},List)
             .then(function(data){
                 res.status(200).json({
@@ -365,10 +367,8 @@ exports.getUsersOrders = async (req, res, next) => {
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
              { $unwind: '$User' },
-            { "$group": {
-                "_id": "$_id",products:{$addToSet : "$productsDetails"},
-                address:{$addToSet : "$Address"},
-                user:{$addToSet:"$User"}
+             { "$group": {
+                "_id": {orderStatus:"$status",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
@@ -426,7 +426,7 @@ exports.updateOrderStatus = async (req, res, next) => {
                 res.status(200).json({
                     success:"User edited Successfully",
                     data
-                })     
+                })
              })
              .catch(function (error) {
                 res.status(200).json({
@@ -442,6 +442,56 @@ exports.updateOrderStatus = async (req, res, next) => {
         return res.status(500).json({
             failure:{
                 message:"something went wrong"
+            }
+        });
+    }
+};
+
+
+exports.getOrderById = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        const { orderId } = req.body;
+        let orders = await productModel.orders.aggregate([
+            {
+                "$match": {"_id":ObjectId(orderId)}
+            },
+            {
+                $unwind: '$products'
+            },
+            { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { 
+                "$lookup": { 
+                    "from": 'userAddress', 
+                     "localField": 'addressId', 
+                    "foreignField": "_id",
+                    "as": 'Address' 
+                } 
+            },
+            { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
+            {
+                $lookup: {
+                    from: 'productDetails',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productsDetails'
+                }
+            },
+             { "$addFields": { "productsDetails.count": "$products.count"}}, 
+             { "$addFields": { "product": "$productsDetails"}},
+             { $unwind: '$productsDetails' },
+             { $unwind: '$Address' },
+              { "$group": {
+                "_id": {orderStatus:"$status",address:"$Address"},products:{$addToSet : "$productsDetails"},
+              }},
+        ])
+        return res.status(200).json({
+            orders
+        });
+    } catch (err) {
+        return res.status(500).json({
+            failure:{
+                message:err
             }
         });
     }
