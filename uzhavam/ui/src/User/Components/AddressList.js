@@ -16,10 +16,12 @@ function AddressList(props) {
   const data=props.data
   const [state,setState] = useState({
     addNew:false,
+    editStatus:false,
 
     name:"",
     flatno:"",
     street:"",
+    landmark:"",
     city:"",
     state:"",
     pincode:"",
@@ -40,6 +42,7 @@ function AddressList(props) {
       flatno: i !== "" ? props.addressList[i].flatno : "",
       street: i !== "" ? props.addressList[i].street : "",
       city: i !== "" ? props.addressList[i].city : "",
+      landmark: i !== "" ? props.addressList[i].landmark : "",
       state: i !== "" ? props.addressList[i].state : "",
       pincode: i !== "" ? props.addressList[i].pincode : "",
       mobile: i !== "" ? props.addressList[i].mobile : "",
@@ -55,7 +58,8 @@ function AddressList(props) {
       data.isGst = data.gst ? true : false
    console.log(data)
     setState({
-       ...data
+       ...data,
+       editStatus:props.addressList[i] ? true : false
     })
   }
 
@@ -119,12 +123,14 @@ function AddressList(props) {
                             <div>{data.flatno}{data.street},</div>
                             <div>{data.city},</div>
                             <div>{data.state} {data.pincode}</div>
+                            <div>{data.landmark}</div>
                             <div>+91 {data.mobile}</div>
                             {data.gst ? <div>GST: {data.gst}</div> : ""}
                             <div className={"floatRight edit"} onClick={()=>addNewModal(true,i)}>Edit</div>
+                            {props.select ?
                             <div className={"floatRight select"} >
                                 <input type={"checkbox"} checked={data.selected} onClick={()=>onSelect(i)} />
-                            </div>
+                            </div> :""}
                         </div>
                     </Col>
                   )):""}
@@ -137,7 +143,7 @@ function AddressList(props) {
                     </Col>
             </Row>
             <ModalComp
-                title={"Add new"}
+                title={state.editStatus ? "Edit" : "Add new"}
                 closeText={"Close"}
                 close={()=>addNewModal(false,"")}
                 submitText={"Save"}
@@ -208,6 +214,16 @@ function AddressList(props) {
                                   className="form-control" placeholder="Pincode" 
                                   error={state.failure.pincode || ""}
                                   onlyNumber
+                              />
+                          </div>
+                      </Col>
+                      <Col xs={12} sm={12} md={6} lg={6} className={" "}>
+                          <div className="form-group">
+                              <label>Landmark</label>
+                              <Inputbox type="text" id="landmark" 
+                                  value={state.landmark} onChange={onChange} 
+                                  className="form-control" placeholder="landmark" 
+                                  error={state.failure.landmark || ""}
                               />
                           </div>
                       </Col>

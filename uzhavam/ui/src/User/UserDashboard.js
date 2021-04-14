@@ -12,6 +12,7 @@ import ProductContainer from "./Components/ProductContainer"
 import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 function Profile(props) {
     
@@ -35,10 +36,23 @@ function Profile(props) {
     props.getCategory()
     props.getProductList("All")
   }, []);
+
+  useEffect(() => {
+    let total=0
+    for (let i = 0; i < props.cartList.length; i++) {
+      let x = props.cartList[i]
+        total += x.count < x.wholesale_quantity ?(x.count * x.selling_price) : (x.count * x.special_price)
+    }
+    setState({
+      ...state,
+      totalAmount:total
+    })
+  }, [props.cartList]);
+
   const tagActive =(data)=>{
-    console.log(data)
     props.getProductList(data._id || "All")
     setState({
+      ...state,
       selectedCategory:data._id || "All"
     })
   }
@@ -68,7 +82,7 @@ function Profile(props) {
                     </select>
               </Col> */}
                <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow categoryCon"}>
-              <Tags active={state.selectedCategory == "All"} onActive={()=>tagActive("all")} text={"All"} />
+              <Tags active={state.selectedCategory == "All"} onActive={()=>tagActive("All")} text={"All"} />
                 {props.categoryList.length != 0 ? props.categoryList.map((data,i)=>(
                     <Tags active={state.selectedCategory == data._id} onActive={()=>tagActive(data,i)} text={data.category} />
                 )):""}
@@ -99,6 +113,12 @@ function Profile(props) {
               </Row>
             </Col>
         </Row>
+                   {state.totalAmount != 0 ?  
+                    <div className={"cartBar"}>
+                        <h5>Total Amount: &#x20B9;{state.totalAmount} <ArrowForwardIosIcon /></h5>
+                    </div>
+                     :""  
+                    } 
          
       </Container>
       </>
@@ -109,6 +129,7 @@ function Profile(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
     console.log(state)
   return {
+    cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
     categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : [],
     proudctList: state.userReducer.proudctList ? state.userReducer.proudctList : []
   }
