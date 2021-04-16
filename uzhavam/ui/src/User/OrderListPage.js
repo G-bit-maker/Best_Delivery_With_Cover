@@ -30,7 +30,7 @@ function Profile(props) {
 
 
   useEffect(() => {
-    props.getOrderList()
+    props.getOrderList("User")
   }, []);
 
   const getTotal=(arr,type)=>{
@@ -94,11 +94,11 @@ function Profile(props) {
                                             </Col>
                                         </Col>
                                         <Col sm={12} md={12} lg={6} className={"textAlignRight borderLeft"}>
-                                            <h6><a href="#" onClick={()=>props.history.push("/OrderDetail/"+data._id)}>ORDER ID # {data._id.toUpperCase()}</a></h6> 
-                                            <h6>14 October 2020 </h6> 
-                                            <h6>Total: &#x20B9;699.99 </h6> 
-                                            <h6>PENDING</h6> 
-                                            <h6><a href="#">Cancel order </a></h6>
+                                            <h6><a href="#" onClick={()=>props.history.push("/OrderDetail/"+data._id.orderId)}>ORDER ID # {data._id.orderId.toUpperCase()}</a></h6> 
+                                            <h6>14 October 2020 </h6>
+                                            <h6>{data._id.orderStatus === "Pending" ? "PENDING" : data._id.orderStatus.toUpperCase()+"ED" }</h6> 
+                                            { data._id.orderStatus === "Pending" ? <h6><a href="#">Cancel order </a></h6> : ""}
+                                            
                                         </Col>
                                         
                                 </Row>

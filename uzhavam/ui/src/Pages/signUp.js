@@ -15,14 +15,18 @@ function SignUP(props) {
         gender:"",
         pincode:"",
         mobile:"",
+        name:"",
         email:""
       })
       
   const onChange=(e)=>{
     let id = e.target.id
     const re = /^[0-9\b]+$/;
-    if(id === "mobile" || (id === "pincode" && (e.target.value && e.target.value.length < 7))){
-        if(re.test(e.target.value) || e.target.value===""){
+    if((id === "pincode" && e.target.value.length > 6) || (id === "mobile" && e.target.value.length > 10)){
+      return false
+    }
+    if(id === "mobile" || (id === "pincode" && e.target.value && e.target.value.length < 7)){
+        if(re.test(e.target.value) || e.target.value==="" ){
              setState({
                   ...state,
                   [e.target.id]:e.target.value 
@@ -59,6 +63,19 @@ function SignUP(props) {
           <Col lg={5} className={"ShadowBox p10 mt80 mb30px login"}>
               <div>
                   <h3 className={"textAlignCenter"}>Sign up</h3>
+
+                  <div className="form-group">
+                      <label>Name</label>
+                      <input type="text" id="name" onChange={onChange} 
+                          className={"form-control"+(state.failure.name ?" error ":"")} 
+                          placeholder="Enter full name" 
+                      />
+                      {state.failure.email ? 
+                        <label className={"labelError"}>
+                          {state.failure.email}
+                        </label> : 
+                      ""}
+                  </div>
 
                   <div className="form-group">
                       <label>Email</label>

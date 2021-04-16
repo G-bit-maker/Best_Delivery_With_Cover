@@ -26,23 +26,30 @@ function Profile(props) {
       mobile:"",
       email:""
     })
-    
-const onChange=(e)=>{
-  let id = e.target.id
-  const re = /^[0-9\b]+$/;
-  if(id === "mobile" || (id === "pincode" && (e.target.value && e.target.value.length < 7))){
-      if(re.test(e.target.value) || e.target.value===""){
-           setState({
-                ...state,
-                [e.target.id]:e.target.value 
-            })
-      }
-  }else{
-      setState({
-          ...state,
-          [e.target.id]:e.target.value
-        })
-  }
+       
+  useEffect(() => {
+    props.getProfileDetail()
+  }, []);
+
+  const onChange=(e)=>{
+    let id = e.target.id
+    const re = /^[0-9\b]+$/;
+    if((id === "pincode" && e.target.value.length > 6) || (id === "mobile" && e.target.value.length > 10)){
+      return false
+    }
+    if(id === "mobile" || (id === "pincode" && e.target.value && e.target.value.length < 7)){
+        if(re.test(e.target.value) || e.target.value==="" ){
+             setState({
+                  ...state,
+                  [e.target.id]:e.target.value 
+              })
+        }
+    }else{
+        setState({
+            ...state,
+            [e.target.id]:e.target.value
+          })
+    }
 }
 
  const onProfileEdit=()=>{

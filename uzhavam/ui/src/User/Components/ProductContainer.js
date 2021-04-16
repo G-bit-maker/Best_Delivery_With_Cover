@@ -31,7 +31,8 @@ export default function MediaCard(props) {
       ...state,
       count:count
     })
-    props.cartUpdate(data._id,count)
+    let price = count < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
+    props.cartUpdate(data._id,count,price)
   }
 
   let wwidth = window.innerWidth

@@ -26,6 +26,7 @@ import reportWebVitals from './reportWebVitals';
 import session from "./session"
 import Thankyou from './User/Thankyou';
 import profile from './User/profile';
+import OrderListForAdmin from './Admin/OrderListForAdmin';
 
 const LoginRoute =()=>{
   const jwt = session.getCookie("TOKEN")
@@ -58,8 +59,9 @@ ReactDOM.render(
       {/*  <Route exact path="/profile" component={Profile} />  */}
        <Route exact path="/User/Dashboard" component={UserDashboard} /> 
        <Route exact path="/Dashboard" component={Dashboard} /> 
-       <Route exact path="/Profile" component={profile} /> 
+       <Route exact path="/Profile/:id" component={profile} /> 
        <Route exact path="/ViewProduct" component={ViewProducts} /> 
+       <Route exact path="/ViewOrders" component={OrderListForAdmin} />  
        <Route exact path="/EditProduct/:id" component={AddProduct} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 
        <Route exact path="/AddUser" component={AddUser} /> 

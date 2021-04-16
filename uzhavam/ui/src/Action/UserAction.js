@@ -45,11 +45,31 @@ export function getAddressList(){
     } 
 }
 
-export function getOrderList(){
+export function getOrderList(userType){
     return function(dispatch){
-        UserApi.getOrderListApi()
+        UserApi.getOrderListApi(userType)
         .then((res)=>{
             dispatch({type:"GET_ORDER_LIST",payload:res})
+            return res
+        })
+    } 
+}
+
+export function getProfileDetail(id){
+    return function(dispatch){
+        UserApi.getProfileDetailApi(id)
+        .then((res)=>{
+            dispatch({type:"GET_ORDER_LIST",payload:res})
+            return res
+        })
+    } 
+}
+
+export function orderStatusChange(status){
+    return function(dispatch){
+        return UserApi.orderStatusChangeApi(status)
+        .then((res)=>{
+            dispatch({type:"CHANGE_ORDER_STATUS",payload:status})
             return res
         })
     } 
@@ -93,9 +113,9 @@ export function getProductList(id){
     } 
 }
 
-export function cartUpdate(id,c){
+export function cartUpdate(id,c,price){
     return function(dispatch){
-        UserApi.cartUpdateApi(id,c)
+        UserApi.cartUpdateApi(id,c,price)
         .then((res)=>{
             //dispatch({type:"UPDATE_USER_CART",payload:res,id,c})
             //if(c==0){

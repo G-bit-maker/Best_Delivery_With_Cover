@@ -56,8 +56,8 @@ function Profile(props) {
       selectedCategory:data._id || "All"
     })
   }
-  const cartUpdate =(id,count)=>{
-    props.cartUpdate(id,count)
+  const cartUpdate =(id,count,price)=>{
+    props.cartUpdate(id,count,price)
   }
     return (
         <>
