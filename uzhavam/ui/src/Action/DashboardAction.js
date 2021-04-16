@@ -65,7 +65,6 @@ export function productRemove(id){
         .then((res)=>{
             if(res.success){
                 dispatch(getProductList())
-               alert("Product removed successfully")
             }
             return res
         })

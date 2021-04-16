@@ -18,8 +18,10 @@ import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 import React, { useState,useEffect } from 'react';
 import GrandTotal from './Components/GrandTotal';
 import CartProductList from './Components/CartProductList';
+import session from "../session"
 
 function OrderDetails(props) {
+  const userType = session.getCookie("UserType")
     
   const [state,setState] = useState({
     uname:"",
@@ -33,7 +35,7 @@ function OrderDetails(props) {
     const {
         match: { params }
     } = props;
-    props.getOrderById(params.id)
+    props.getOrderById(params.id,userType)
     .then((data)=>{
       setState({
         details:data

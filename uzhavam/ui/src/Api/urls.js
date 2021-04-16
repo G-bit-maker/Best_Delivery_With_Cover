@@ -3,7 +3,6 @@ const urls={
     getProductForUser:"/user/getProducts",
     getCartDetails:"/user/getCartDetails",
     getAddressList:"/user/getAddress",
-    getOrderById:"/user/getOrderById",
     updateCart:"/user/updateCart",
     addressSave:"/user/addressSave",
     placeOrder:"/user/placeOrder",
@@ -27,8 +26,16 @@ const urls={
         Admin:"/admin/getUsersOrder"
     },
     getProfileDetails:{
-        User:"/user/getOrderHistory",
-        Admin:"/admin/getUsersOrder"
+        User:"/user/getUserById",
+        Admin:"/admin/getUserById"
+    },
+    profileDetailSave:{
+        User:"/user/updateProfileDetails",
+        Admin:"/admin/updateUserDetails"
+    },
+    getOrderById:{
+        User:"/user/getOrderById",
+        Admin:"/admin/getOrderById"
     },
 }
 

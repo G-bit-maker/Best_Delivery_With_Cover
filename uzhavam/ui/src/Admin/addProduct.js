@@ -255,7 +255,7 @@ function AddProduct(props) {
                     <div className="form-group">
                         <label>SKU</label>
                         <span className={"mty"}>&nbsp;*</span>
-                        <Inputbox type="text" id="sku" value={state.sku} 
+                        <Inputbox type="text" id="sku" value={state.sku}  disabled={state.sku? true : false}
                             onChange={onChange} className="form-control" placeholder="SKU" 
                             error={state.failure.SKU || ""}
                         />

@@ -13,15 +13,20 @@ class UserApi{
         return axios.get(urls.getOrderList[userType])
     }   
     static getProfileDetailApi(id){
-        return axios.get(urls.getProfileDetails[id ? "Admin" : "User"])
+        return axios.get(urls.getProfileDetails[id ? "Admin" : "User"],{params:{userId:id}})
     }   
     static orderStatusChangeApi(data){
         return axios.put(urls.orderStatus,qs.stringify(
             data
         ))
     }   
-    static getOrderByIdApi(id){
-        return axios.get(urls.getOrderById,{params:{orderId:id}})
+    static onProfileDetailsSaveApi(data){
+        return axios.put(urls.profileDetailSave[data.userId ? "Admin" : "User"],qs.stringify(
+            data
+        ))
+    }   
+    static getOrderByIdApi(id,userType){
+        return axios.get(urls.getOrderById[userType],{params:{orderId:id}})
     }   
     static getCategoryApi(data){
         return axios.get(urls.getCategoryForUser)

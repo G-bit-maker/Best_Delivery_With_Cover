@@ -9,9 +9,12 @@ import { useState,useEffect } from 'react';
 import "../style/checkout.scss"
 import ModalComp from '../../Common/modal';
 import { propTypes } from 'react-bootstrap/esm/Image';
+import session from "../../session"
 
 
 function AddressList(props) {
+
+    const userType = session.getCookie("UserType")
 
   const data=props.data
   const [state,setState] = useState({
@@ -126,7 +129,8 @@ function AddressList(props) {
                             <div>{data.landmark}</div>
                             <div>+91 {data.mobile}</div>
                             {data.gst ? <div>GST: {data.gst}</div> : ""}
-                            <div className={"floatRight edit"} onClick={()=>addNewModal(true,i)}>Edit</div>
+                            {userType === "User" ?<div className={"floatRight edit"} onClick={()=>addNewModal(true,i)}>Edit</div> : ""}
+                            
                             {props.select ?
                             <div className={"floatRight select"} >
                                 <input type={"checkbox"} checked={data.selected} onClick={()=>onSelect(i)} />
@@ -134,13 +138,13 @@ function AddressList(props) {
                         </div>
                     </Col>
                   )):""}
-                    
+                    {userType === "User" ?
                     <Col xs={12} sm={12} md={12} lg={4} className={"p10 "}>
                         <div className={"con "} onClick={()=>addNewModal(true,"")}>
                             <div className={"plus mhide textAlignCenter"}>+</div>
                             <div className={"textAlignCenter"}>Add new Address</div>
                         </div>
-                    </Col>
+                    </Col> : ""}
             </Row>
             <ModalComp
                 title={state.editStatus ? "Edit" : "Add new"}

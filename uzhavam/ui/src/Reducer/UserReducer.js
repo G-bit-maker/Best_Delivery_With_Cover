@@ -28,6 +28,11 @@ export default function userReducer(state,action){
                 ...state,
                 orderList:action.payload.orders ? action.payload.orders : []
             }
+        case "GET_PROFILE_DETAIL":
+            return {
+                ...state,
+                profileDetails:action.payload.profile ? action.payload.profile : ""
+            }
         case "CHANGE_ORDER_STATUS":
             let orderList = state.orderList
             orderList.find(x=>x._id.orderId === action.payload.orderId ? x.orderStatus = action.payload.status : "")

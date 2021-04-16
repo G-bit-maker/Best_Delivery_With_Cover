@@ -59,7 +59,17 @@ export function getProfileDetail(id){
     return function(dispatch){
         UserApi.getProfileDetailApi(id)
         .then((res)=>{
-            dispatch({type:"GET_ORDER_LIST",payload:res})
+            dispatch({type:"GET_PROFILE_DETAIL",payload:res.userDetails || ""})
+            return res
+        })
+    } 
+}
+
+export function onProfileDetailsSave(data){
+    return function(dispatch){
+        return UserApi.onProfileDetailsSaveApi(data)
+        .then((res)=>{
+            dispatch({type:"GET_PROFILE_DETAIL",payload:{profile:data}})
             return res
         })
     } 
@@ -75,9 +85,9 @@ export function orderStatusChange(status){
     } 
 }
 
-export function getOrderById(id){
+export function getOrderById(id,userType){
     return function(dispatch){
-        return UserApi.getOrderByIdApi(id)
+        return UserApi.getOrderByIdApi(id,userType)
          .then((res)=>{
             //dispatch({type:"GET_ORDER_LIST",payload:res})
             return res
