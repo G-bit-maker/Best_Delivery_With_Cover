@@ -49,7 +49,13 @@ exports.Registration = async (req, res, next) => {
         List.gender = gender;
         List.pincode = pincode;
         let userDetails = new registerModel(List);
-        userDetails.save()
+        let users =  await registerModel.findOne({userName});
+        if(users !== null){
+            res.status(200).json({
+                failure: {userName:"User name already taken"}
+            });
+        }else{
+            userDetails.save()
             .then(function (data) {
                 let token = jwt.sign({ id: data._id }, config.secret, {
                     expiresIn: 86400 // expires in 24 hours
@@ -66,6 +72,8 @@ exports.Registration = async (req, res, next) => {
                     failure: handleErrors(error)
                 });
             });
+        }
+        
     } catch (err) {
         return res.status(500).json({
             failure: "Invalid Details"

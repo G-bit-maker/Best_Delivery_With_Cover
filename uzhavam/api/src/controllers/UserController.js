@@ -413,7 +413,8 @@ exports.ordersSave = async (req, res, next) => {
                 productModel.userCart.findOneAndDelete({_id:List._id})
                 .then(function(data){
                     res.status(200).json({
-                        success:"order placed Successfully"
+                        success:"order placed Successfully",
+                        orderId:data._id
                     })    
                 }).catch(function (error) {
                     res.status(200).json({
@@ -473,7 +474,7 @@ exports.getOrders = async (req, res, next) => {
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
              { "$group": {
-                "_id": {orderStatus:"$status",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
@@ -503,6 +504,7 @@ exports.getOrderById = async (req, res, next) => {
                 $unwind: '$products'
             },
             { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { "$addFields": { "userId": { "$toObjectId": "$userId" }}},
             { 
                 "$lookup": { 
                     "from": 'userAddress', 
@@ -520,12 +522,20 @@ exports.getOrderById = async (req, res, next) => {
                     as: 'productsDetails'
                 }
             },
+            { 
+                "$lookup": { 
+                    "from": 'userRegistration', 
+                     "localField": 'userId', 
+                    "foreignField": "_id",
+                    "as": 'User' 
+                } 
+            },
              { "$addFields": { "productsDetails.count": "$products.count"}}, 
              { "$addFields": { "product": "$productsDetails"}},
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
               { "$group": {
-                "_id": {orderStatus:"$status",address:"$Address"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
