@@ -301,11 +301,12 @@ exports.deleteUser = async (req, res, next) => {
     try {
         const { id } = req.user;
         if(id){
-            const {userId} = req.body;
-            userModel.findOneAndDelete({"_id":userId})
+            const {userId} = req.query;
+            userModel.findOneAndDelete({"_id":ObjectId(userId)})
             .then(function(data){
                 res.status(200).json({
-                    success:"User deleted Successfully"
+                    success:"User deleted Successfully",
+                    
                 })     
              })
              .catch(function(error){
@@ -368,7 +369,7 @@ exports.getUsersOrders = async (req, res, next) => {
              { $unwind: '$Address' },
              { $unwind: '$User' },
              { "$group": {
-                "_id": {orderStatus:"$status",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
@@ -451,7 +452,7 @@ exports.updateOrderStatus = async (req, res, next) => {
 exports.getOrderById = async (req, res, next) => {
     try {
         const { id } = req.user;
-        const { orderId } = req.body;
+        const { orderId } = req.query;
         let orders = await productModel.orders.aggregate([
             {
                 "$match": {"_id":ObjectId(orderId)}
@@ -460,12 +461,21 @@ exports.getOrderById = async (req, res, next) => {
                 $unwind: '$products'
             },
             { "$addFields": { "addressId": { "$toObjectId": "$addressId" }}},
+            { "$addFields": { "userId": { "$toObjectId": "$userId" }}},
             { 
                 "$lookup": { 
                     "from": 'userAddress', 
                      "localField": 'addressId', 
                     "foreignField": "_id",
                     "as": 'Address' 
+                } 
+            },
+            { 
+                "$lookup": { 
+                    "from": 'userRegistration', 
+                     "localField": 'userId', 
+                    "foreignField": "_id",
+                    "as": 'User' 
                 } 
             },
             { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
@@ -481,8 +491,9 @@ exports.getOrderById = async (req, res, next) => {
              { "$addFields": { "product": "$productsDetails"}},
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
+             { $unwind: '$User' },
               { "$group": {
-                "_id": {orderStatus:"$status",address:"$Address"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
