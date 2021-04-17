@@ -27,6 +27,7 @@ import session from "./session"
 import Thankyou from './User/Thankyou';
 import profile from './User/profile';
 import OrderListForAdmin from './Admin/OrderListForAdmin';
+import excelImport from './Admin/excelImport';
 
 const LoginRoute =()=>{
   const jwt = session.getCookie("TOKEN")
@@ -64,6 +65,7 @@ ReactDOM.render(
        <Route exact path="/ViewOrders" component={OrderListForAdmin} />  
        <Route exact path="/EditProduct/:id" component={AddProduct} /> 
        <Route exact path="/AddProduct" component={AddProduct} /> 
+       <Route exact path="/ExcelSheetImport" component={excelImport} /> 
        <Route exact path="/AddUser" component={AddUser} /> 
        <Route exact path="/EditUser/:id" component={AddUser} /> 
        <Route exact path="/Attributes" component={UpdateTags} /> 
