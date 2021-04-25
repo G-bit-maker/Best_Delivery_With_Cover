@@ -18,7 +18,7 @@ import React, { useState,useEffect } from 'react';
 import { TableRow } from '@material-ui/core';
 
 import XLSX from "xlsx"
-import {OutTable, ExcelRenderer} from 'react-excel-renderer';
+//import {OutTable, ExcelRenderer} from 'react-excel-renderer';
 
 function ExcelImport(props) {
     
