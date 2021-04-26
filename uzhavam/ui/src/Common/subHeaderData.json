@@ -16,6 +16,11 @@
               "url":"/AddProduct"
             },
             {
+              "id":"excelImport",
+              "name":"Excel sheet import",
+              "url":"/ExcelSheetImport"
+            },
+            {
               "id":"viewProduct",
               "name":"View Product",
               "url":"/ViewProduct"

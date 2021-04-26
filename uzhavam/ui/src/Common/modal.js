@@ -37,12 +37,12 @@ export default function ModalComp(props) {
                      text={props.closeText}
                   />
 
-            
+            {props.submitText ?
             <Buttons primary loading={props.submitLoading}
                      onClick={props.submit}
                      //className={"btn btn-dark btn-lg btn-block "} 
                      text={props.submitText}
-                  />
+                  /> :""}
             {/* <Button  variant="primary"></Button> */}
             </Modal.Footer>
         </Modal>

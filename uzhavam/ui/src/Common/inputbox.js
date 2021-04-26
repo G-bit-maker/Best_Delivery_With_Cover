@@ -4,6 +4,7 @@ import "./common.scss"
 function InputBox(props) {
     return <>
             <input 
+                accept={props.accept || ""}
                  pattern={props.onlyNumber ? "[0-9]*" : ".*"}
                 disabled={props.disabled}
                 type={props.type || ""}

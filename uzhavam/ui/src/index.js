@@ -29,6 +29,7 @@ import profile from './User/profile';
 import OrderListForAdmin from './Admin/OrderListForAdmin';
 import excelImport from './Admin/excelImport';
 
+document.title="uzhavam"
 const LoginRoute =()=>{
   const jwt = session.getCookie("TOKEN")
   const userType = session.getCookie("UserType")

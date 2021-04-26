@@ -30,6 +30,7 @@ function ExcelImport(props) {
 
   const onChange=(e)=>{
     setState({
+        ...state,
         file:e.target.files[0]
     })
   }
@@ -39,6 +40,20 @@ function ExcelImport(props) {
 
   const onSubmit=(id)=>{
     console.log(state.file);
+    if(!state.file){
+      setState({
+        ...state,
+        errorMsg:"File can't be empty"
+      })
+      return false
+    }
+    if(state.file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+      setState({
+        ...state,
+        errorMsg:"Invalid file format"
+      })
+      return false
+    }
     const reader = new FileReader();
     reader.onload = (evt) => { // evt = on_file_select event
         /* Parse data */
@@ -52,7 +67,12 @@ function ExcelImport(props) {
         /* Update state */
         console.log(data);
         setState({
-            tableData:data
+            ...state,
+            errorMsg:"",
+            tableData:data,
+            showUpload:true,
+            totalcount:0,
+            resultArray:""
         })
     };
     reader.readAsBinaryString(state.file);
@@ -62,21 +82,51 @@ function ExcelImport(props) {
         ...state,
         upLoading:true
       })    
-      state.tableData.map(data=>{
+      let resultArray =[]
+      let count = 0
+      let length = state.tableData.length
+      state.tableData.map((data,i)=>{
            let data2 = data
           data2.pageType = "Add" 
           props.addProductDetails(data2)
-          //.then(res=>{return true})
+          .then(res=>{
+            resultArray[i] = true
+             if(res.success){
+              count++
+              resultArray[i] = true
+            }else{
+              resultArray[i] = false
+            } 
+            if(i === (length - 1)){
+              setState({
+                ...state,
+                showUpload:false,
+                upLoading:false,
+                //tableData:"",
+                totalcount:count,
+                resultAlertmodal:true,
+                resultArray:resultArray
+              }) 
+            }else{
+               setState({
+                ...state,
+                resultArray:resultArray
+              }) 
+            }
+            
+          })
       })  
-      setState({
+     /*  setState({
         ...state,
+        showUpload:false,
         upLoading:false,
-        tableData:""
-      }) 
+        //tableData:"",
+        resultAlertmodal:true
+      })  */
   }
   
     return (
-        <>
+        <> {console.log(state.resultAlertmodal)}
       <Header {...props} />
       <SubHeader  {...props} />
          
@@ -89,8 +139,9 @@ function ExcelImport(props) {
                 <Row>
                 <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                     <div className="form-group">
-                        <InputBox type="file" id="file"
+                        <InputBox type="file" id="file" accept={"application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
                             onChange={onChange} className="form-control" placeholder="SKU" 
+                            error={state.errorMsg}
                             //error={state.failure.file || ""}
                         />
                     </div>
@@ -98,9 +149,10 @@ function ExcelImport(props) {
                 <Col xs={12} sm={6} md={3} lg={2} className={" mb30px"}>
                     <Button  primary onClick={onSubmit} className={""} text={"Import"} />
                 </Col>
+                {state.showUpload ?
                 <Col xs={12} sm={6} md={3} lg={2} className={" mb30px"}>
                     <Button loading={state.upLoading}  primary onClick={onUpload} className={""} text={"Upload"} />
-                </Col>
+                </Col> :""}
                 </Row>
             </Col>
             {state.tableData ?
@@ -109,6 +161,7 @@ function ExcelImport(props) {
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
+                    {state.resultArray ?<th>#</th> :""}
                     <th>Product Category</th>
                     <th>Product Name</th>
                     <th>Brand</th>
@@ -127,12 +180,35 @@ function ExcelImport(props) {
                     <th>Product visible in frontend</th>
                     <th>Retail qty allowed</th>
                     <th>Wholesale qty allowed</th>
+                    <th>Product Features</th>
+                    <th>Product Specification</th>
+                    <th>Discount %</th>
+                    <th>Discount Amount</th>
+                    <th>Cgst %</th>
+                    <th>Igst %</th>
+                    <th>Sgst %</th>
+                    <th>Cgst Amount</th>
+                    <th>Igst Amount</th>
+                    <th>Sgst Amount</th>
+                    <th>Group Id</th>
+                    <th>Meta Keyword</th>
+                    <th>Ean</th>
+                    <th>Short Description</th>
+                    <th>Description</th>
+                    <th>Main Image</th>
+                    <th>Image 2</th>
+                    <th>Image 3</th>
+                    <th>Image 4</th>
+                    <th>Image 5</th>
+                    <th>Small Image</th>
+                    <th>Thumbnail Image</th>
                     {/* <th style={{width:"6%"}}>#</th> */}
                     </tr>
                 </thead>
                 <tbody>
                   {state.tableData && state.tableData.length != 0 ? state.tableData.map((data,i)=>{
                     return <tr key={i}>
+                              {state.resultArray ?<td>{state.resultArray[i]? <>&#10003;</> :<>&#x2715;</>}</td> :""}
                               <td>{data.productCategory || ""}</td>
                               <td>{data.productName || ""}</td>
                               <td>{data.brand || ""}</td>
@@ -151,6 +227,28 @@ function ExcelImport(props) {
                               <td>{data.proVisible || ""}</td>
                               <td>{data.retailQtyAllowed || ""}</td>
                               <td>{data.wholsaleQtyAllowed || ""}</td>
+                              <td>{data.productFeatures || ""}</td>
+                              <td>{data.ProductSpec || ""}</td>
+                              <td>{data.discount || ""}</td>
+                              <td>{data.discountAmt || ""}</td>
+                              <td>{data.cgstp || ""}</td>
+                              <td>{data.igstp || ""}</td>
+                              <td>{data.sgstp || ""}</td>
+                              <td>&#x20B9;{data.cgstamt || ""}</td>
+                              <td>&#x20B9;{data.igstamt || ""}</td>
+                              <td>&#x20B9;{data.sgstamt || ""}</td>
+                              <td>{data.groupid || ""}</td>
+                              <td>{data.metakey || ""}</td>
+                              <td>{data.ean || ""}</td>
+                              <td>{data.shortDec ? <span title={data.shortDec}>{data.shortDec.slice(0,5)+"..."}</span> : ""}</td>
+                              <td>{data.description ? <span title={data.description}>{data.description.slice(0,5)+"..."}</span> : ""}</td>
+                              <td>{data.mainImg  ? <a href={data.mainImg}>Img</a> : ""}</td>
+                              <td>{data.img2 ? <a href={data.img2}>Img</a> : ""}</td>
+                              <td>{data.img3 ? <a href={data.img3}>Img</a> : ""}</td>
+                              <td>{data.img4 ? <a href={data.img4}>Img</a> : ""}</td>
+                              <td>{data.img5 ? <a href={data.img5}>Img</a> : ""}</td>
+                              <td>{data.smallimg ? <a href={data.smallimg}>Img</a> : ""}</td>
+                              <td>{data.thumimg ? <a href={data.thumimg}>Img</a> : ""}</td>
                               {/* <td>
                                   &nbsp;
                                 <Edit fontSize="small"
@@ -170,23 +268,23 @@ function ExcelImport(props) {
             </Table>
             </Col>
               : ""}
-            {/* <ModalComp
+             <ModalComp
                 size={"sm"}
-                title={"Are you sure?"}
-                closeText={"No"}
-                close={()=>setState({...state,confirmationModal:false})}
-                submitText={"Yes"}
+                title={"Result"}
+                closeText={"Ok"}
+                close={()=> setState({...state,resultAlertmodal:false}) }
+                /* submitText={"Yes"}
                 submitLoading={state.modalLoading}
-                submit={productRemoveConfirmation}
+                submit={productRemoveConfirmation} */
                 component={
                   <Row>
                       <Col xs={12} sm={12} md={12} lg={12} className={" "}>
-                          {state.modalContent}
+                          {state.totalcount ? "There are "+state.totalcount+" records are uploaded succefully" : "Something wrong in the records"}
                       </Col>
                   </Row>
                 }
-                show={state.confirmationModal}
-            /> */}
+                show={state.resultAlertmodal}
+            /> 
             {/* state.removeAlert ? 
               <div className={"CustomAlert"}>
                   {state.removeAlert} 

@@ -39,16 +39,17 @@ function ViewProduct(props) {
       setState({
         ...state,
         modalContent:"Do you want remove this product?",
-        confirmationModal:true
+        confirmationModal:true,
+        selectedId:id
       })      
   }
-  const productRemoveConfirmation=(id)=>{
+  const productRemoveConfirmation=()=>{
     setState({
       ...state,
       modalLoading:true,
       confirmationModal:true
     })      
-      props.productRemove(id)
+      props.productRemove(state.selectedId)
       .then((res)=>{
         setState({
           ...state,
