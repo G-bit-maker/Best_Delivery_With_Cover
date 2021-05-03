@@ -27,19 +27,29 @@ export default function MediaCard(props) {
   })
 
   const cartUpdate=(count)=>{
+    if(Number.isNaN(count)){
+      return false
+    }
     setState({
       ...state,
-      count:count
+      count:Number(count) || 0
     })
     let price = count < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
     props.cartUpdate(data._id,count,price)
   }
 
-  let wwidth = window.innerWidth
+  
+  useEffect(() => {
+    const count= props.data ? props.data.count || 0 : 0
+    setState({
+      ...state,
+      count:Number(count) || 0
+    })
+  }, [props.data.count])
 
   return (
-      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
-          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
+      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>{console.log(props.data.count)}
+          <Col xs={3} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
               {/* <CardMedia
                 className={"img"}
                 //src={data.main_img || userimage}
@@ -48,19 +58,21 @@ export default function MediaCard(props) {
               />  */}
                <img src={data.main_img || userimage} className={"img"} /> 
           </Col>
-          <Col xs={8} sm={12} md={12} lg={12} className={"adjustRow"}>
+          <Col xs={9} sm={12} md={12} lg={12} className={"adjustRow"}>
               <div title={data.productName || ""} className={"proName "}>
                   {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
               <div>
                 <span  className={"proweight "}>
-                    {(data.weight || "")+""+( data.wholesale_quantity || "")}
+                    {(data.weight || "")+""+( data.unit_for_weight || "")}
                 </span>
                 <span className={"floatRight"}>
                   {data.mrp ?<><span>MRP</span>
                     <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span> </> :""}
                     {data.selling_price && data.mrp ? 
-                    <span className={"offer"}>&nbsp;&nbsp;&nbsp;{((data.selling_price/data.mrp)*100).toFixed(0)}% off</span> :""}
+                    <span className={"offer"}>&nbsp;&nbsp;&nbsp;{(
+                        ((data.mrp - (state.count < data.wholesale_quantity ? data.selling_price  : data.special_price)) /data.mrp) *100).toFixed(0)}
+                        % off</span> :""}
                 </span>
               </div>
               <div className={"proPrice"}>
@@ -74,7 +86,7 @@ export default function MediaCard(props) {
                 
                 <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn floatRight"}>
                   {/* <div>Add</div> */}
-                  {state.count ? 
+                  {//state.count !== 0 ? 
                   <Row>
                     <Col xs={5} sm={5} md={5} lg={5} className={" "}>
                       <Button className={"remove"} onClick={()=>cartUpdate(state.count-1)} >
@@ -82,7 +94,8 @@ export default function MediaCard(props) {
                       </Button>
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2} className={"adjustRow count"}>
-                      <span className={""} >{state.count}</span>
+                      {/* <span className={""} >{state.count}</span> */}
+                      <input className={""} onChange={(e)=>cartUpdate(e.target.value)} value={state.count} />
                     </Col>
                     <Col xs={5} sm={5} md={5} lg={5} className={" "}>
                       <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
@@ -90,10 +103,10 @@ export default function MediaCard(props) {
                       </Button>
                     </Col>
                   </Row> 
-                :
-                    <Button onClick={()=>cartUpdate(1)}>
+                /* :
+                    <Button onClick={()=>cartUpdate(data.wholesale_quantity)}>
                         Add
-                    </Button>
+                    </Button> */
                   }
               </Col>
             </Col>

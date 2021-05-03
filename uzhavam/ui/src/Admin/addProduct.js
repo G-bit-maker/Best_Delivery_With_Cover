@@ -76,6 +76,7 @@ function AddProduct(props) {
             ...state,
             [e.target.id]:e.target.value,
             discountAmt:(state2.mrp - state2.wholeSalePrice),
+            discount:(state2.mrp - state2.wholeSalePrice)*100/state2.mrp,
             cgstp:(state2.taxClassId / 2),
             sgstp:(state2.taxClassId / 2),
             cgstamt:(state2.retailPrice * state2.cgstp),

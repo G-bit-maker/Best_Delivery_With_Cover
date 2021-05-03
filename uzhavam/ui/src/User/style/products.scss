@@ -68,6 +68,15 @@
             font-weight: 600;
             padding: 6px;
         }
+        input:focus{
+            outline: none;
+        }
+        input{
+            height: 100%;
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
         
         .add,.remove{
             min-width: 0;
@@ -92,6 +101,7 @@
         margin-top: 0;
     }
     .mobileImgD{
+        height: auto  !important;
         padding-right: 10px !important;
         padding-bottom: 10px;
     }

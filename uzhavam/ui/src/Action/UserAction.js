@@ -127,7 +127,7 @@ export function cartUpdate(id,c,price){
     return function(dispatch){
         UserApi.cartUpdateApi(id,c,price)
         .then((res)=>{
-            //dispatch({type:"UPDATE_USER_CART",payload:res,id,c})
+            dispatch({type:"PRODUCT_COUNT_UPDATE",id,count:c})
             //if(c==0){
                 dispatch(getCartDetails())
             //}

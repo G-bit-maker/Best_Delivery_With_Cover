@@ -129,7 +129,8 @@ function Profile(props) {
 const mapStateToProps = (state /*, ownProps*/) => {
     console.log(state)
   return {
-    cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
+    at: state.userReducer.at ? state.userReducer.at : "",
+    cartList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
     categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : [],
     proudctList: state.userReducer.proudctList ? state.userReducer.proudctList : []
   }

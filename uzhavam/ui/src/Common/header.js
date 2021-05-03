@@ -8,6 +8,8 @@ import * as UserAction from '../Action/UserAction'
 import { ShoppingCartOutlined } from '@material-ui/icons';
 import Badge from '@material-ui/core/Badge';
 import Popover from '@material-ui/core/Popover';
+import SearchIcon from '@material-ui/icons/Search';
+import RoomIcon from '@material-ui/icons/Room';
 
 import CartList from "./cartListContainer"
 
@@ -50,7 +52,11 @@ function Header(props) {
         <>
          <Navbar  fixed="top"  collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand onClick={()=>props.history.push(state.userType === "Admin" ? "/Dashboard" : "/User/Dashboard")} href="#">Uzhavam</Navbar.Brand>
-                
+              
+              <Nav className={"mhide HeaderSearch"}><input className="form-control" placeholder={"Search..."} />{/* <SearchIcon /> */}</Nav>
+              <Nav className={"mhide HeaderPincode"}> <RoomIcon />Deliver to 611105</Nav>
+
+
                 {state.userType != "Admin" ? <div className={"mshow"}>
                       <Nav.Link className={"MobileCart"} eventKey={1} onClick={handleClick} variant="contained" aria-describedby={id}>
                                     
@@ -136,8 +142,14 @@ function Header(props) {
                 </Nav>
             </Navbar.Collapse>
             </Navbar>
-            <div style={{height:"55px"}}>
-
+            {state.userType != "Admin" ?<>
+              <div className={"msearch mshow"}>
+                <input className="form-control" placeholder={"Search..."} />
+                <RoomIcon />Deliver to 611105
+              </div>
+            <div className={"mshow"} style={{height:"110px"}}>
+            </div></> : ""}
+            <div className={"mhide"}  style={{height:"55px"}}>
             </div>
          </>
     );
@@ -146,7 +158,7 @@ function Header(props) {
   //export default Header
  const mapStateToProps = (state) => {
   return {
-    cartList: state.userReducer.cartList ? state.userReducer.cartList : [],
+    cartList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
     at: state.userReducer.at ? state.userReducer.at : "",
   }
 }

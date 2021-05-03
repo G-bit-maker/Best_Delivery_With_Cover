@@ -38,6 +38,14 @@ export default function userReducer(state,action){
                 ...state,
                 profileDetails:action.payload.profile ? action.payload.profile : ""
             }
+        case "PRODUCT_COUNT_UPDATE":
+            let proudctList = state.proudctList
+            proudctList.find(x=>x._id === action.id ? x.count = action.count || 0 : "")
+            return {
+                ...state,
+                proudctList:proudctList || [],
+                at:Math.random()
+            }
         case "CHANGE_ORDER_STATUS":
             let orderList = state.orderList
             orderList.find(x=>x._id.orderId === action.payload.orderId ? x.orderStatus = action.payload.status : "")
@@ -50,7 +58,8 @@ export default function userReducer(state,action){
             return {
                 ...state,
                 proudctList:action.payload ? action.payload : [],
-                cartList:action.cartList ? action.cartList : []
+                cartList:action.cartList ? action.cartList : [],
+                at:Math.random()
             }
         /* case "UPDATE_USER_CART":
             let cartList = state.cartList || []
