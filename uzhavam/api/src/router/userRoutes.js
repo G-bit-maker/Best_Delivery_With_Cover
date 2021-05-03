@@ -39,6 +39,7 @@ router.route("/getOrderHistory").get(auth,getOrders);
 router.route("/getOrderById").get(auth,getOrderById);
 
 //get user details
-router.route("/getUserById").get(auth,getUserById)
+router.route("/getUserById").get(auth,getUserById);
+
 
 module.exports = router;

@@ -127,7 +127,6 @@ function AddProduct(props) {
     }, [props.match]);  
 
     useEffect( () => {
-        console.log(props.productDetails);
         let details = props.productDetails
         //if(props.productDetails){
             setState({
@@ -181,13 +180,15 @@ function AddProduct(props) {
 
   
     const onSubmit=()=>{
-        console.log(state)
             setState({
                 ...state,
                 loading:true
             })
             props.addProductDetails(state)
             .then((res)=>{
+                if(res.success){
+                  props.history.push("/ViewProduct")
+                }
                 setState({
                     ...state,
                     loading:false,
@@ -255,7 +256,7 @@ function AddProduct(props) {
                     <div className="form-group">
                         <label>SKU</label>
                         <span className={"mty"}>&nbsp;*</span>
-                        <Inputbox type="text" id="sku" value={state.sku}  disabled={state.sku? true : false}
+                        <Inputbox type="text" id="sku" value={state.sku} 
                             onChange={onChange} className="form-control" placeholder="SKU" 
                             error={state.failure.SKU || ""}
                         />
@@ -424,7 +425,7 @@ function AddProduct(props) {
                         <span className={"mty"}>&nbsp;*</span>
                         <Inputbox type="text" id="taxClassId" value={state.taxClassId} 
                             onChange={onChange} className="form-control" placeholder="Tax class id" 
-                            error={state.failure.taxClassId || ""}
+                            error={state.failure.tax_class_id || ""}
                             onlyNumber
                         />
                     </div>

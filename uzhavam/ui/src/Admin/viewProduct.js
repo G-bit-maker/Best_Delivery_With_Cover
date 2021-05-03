@@ -80,7 +80,7 @@ function ViewProduct(props) {
                     <th>Product Name</th>
                     <th>Brand</th>
                     <th>Available Qty</th>
-                    <th>Max Sale Qty</th>
+                    <th>SKU</th>
                     <th>Mrp</th>
                     <th>Sgst %</th>
                     <th>Cgst %</th>
@@ -94,7 +94,7 @@ function ViewProduct(props) {
                               <td>{data.productName || ""}</td>
                               <td>{data.brand || ""}</td>
                               <td>{data.avail_quantity || ""}</td>
-                              <td>{data.max_sale_quantity || ""}</td>
+                              <td>{data.SKU || ""}</td>
                               <td>&#x20B9;{data.mrp || ""}</td>
                               <td>{data.sgst || ""}</td>
                               <td>{data.cgst || ""}</td>

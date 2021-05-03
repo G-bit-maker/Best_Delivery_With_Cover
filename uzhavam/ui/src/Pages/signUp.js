@@ -16,7 +16,8 @@ function SignUP(props) {
         pincode:"",
         mobile:"",
         name:"",
-        email:""
+        email:"",
+        password:""
       })
       
   const onChange=(e)=>{
@@ -118,13 +119,27 @@ function SignUP(props) {
                   </div>
 
                   <div className="form-group">
+                      <label>Password</label>
+                      <input type="password" id="password" onChange={onChange} 
+                          value={state.password}
+                          className={"form-control"+(state.failure.password ?" error ":"")} 
+                          placeholder="Enter password" 
+                      />
+                      {state.failure.password ? 
+                        <label className={"labelError"}>
+                          {state.failure.password}
+                        </label> : 
+                      ""}
+                  </div>
+
+                  {/* <div className="form-group">
                       <label>Gender</label>
                       <select id="gender" onChange={onChange} className="form-control">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                       </select>
-                  </div>
+                  </div> */}
 
                   <div className="form-group">
                       <label>Pincode</label>

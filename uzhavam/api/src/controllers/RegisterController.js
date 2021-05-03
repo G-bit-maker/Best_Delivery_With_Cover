@@ -39,20 +39,31 @@ exports.Registration = async (req, res, next) => {
         }
         client.sms.message(messageCallback, phoneNumber, message, messageType);
  */
-        const {name, userName, mobile,email,dob,gender,pincode} = req.body;
+        const {name, userName, mobile,email,dob,pincode,password} = req.body;
         let List = {};
         List.name = name;
         List.userName = userName;
         List.mobile = mobile;
         List.email = email;
         List.dob = dob;
-        List.gender = gender;
         List.pincode = pincode;
+        List.password = password;
         let userDetails = new registerModel(List);
         let users =  await registerModel.findOne({userName});
+        let failure = "";
+        if(userName === null || userName === ""){
+            failure = {...failure, userName:"Please enter user name"}
+        }
+        if(password === null || password === ""){
+            failure = {...failure, password:"Please enter password"}
+        }
+        
         if(users !== null){
+            failure = {...failure, userName:"User name already taken"}
+        }
+        if(failure){
             res.status(200).json({
-                failure: {userName:"User name already taken"}
+                failure: failure,
             });
         }else{
             userDetails.save()

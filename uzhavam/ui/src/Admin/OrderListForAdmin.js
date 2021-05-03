@@ -81,7 +81,7 @@ function OrderListForAdmin(props) {
                         <th>Total Qty</th>
                         <th>Total weight</th>
                         <th>Total Amount</th>
-                        <th>Delivery</th>
+                        <th>Status</th>
                         <th>#</th>
                     </tr>
                 </thead>
@@ -94,7 +94,7 @@ function OrderListForAdmin(props) {
                                 <td>{getTotal(data.products,"qty")}</td>
                                 <td>{getTotal(data.products,"weight")}</td>
                                 <td>&#x20B9;{getTotal(data.products,"amount")}</td>
-                                <td>{data._id.address.pincode || ""}</td>
+                                <td>{data._id.orderStatus || ""}</td>
                                 {data._id.orderStatus == "Accept" ? 
                                   <td>
                                     <a href={"#"} onClick={()=>onAction("Deliver",data._id.orderId)}>Deliver</a>

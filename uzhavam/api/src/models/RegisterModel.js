@@ -15,10 +15,10 @@ let registerSchema = mongoose.Schema({
     dob: {
         type: String
     },
-    gender: {
-        type: String
-    },
     pincode:{
+        type:String
+    },
+    password:{
         type:String
     }
 

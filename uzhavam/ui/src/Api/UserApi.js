@@ -32,7 +32,7 @@ class UserApi{
         return axios.get(urls.getCategoryForUser)
     }   
     static getProductListApi(id){
-        return axios.get(urls.getProductForUser,{params:{id:id}})
+        return axios.get(urls.getProductForUser,{params:{categoryId:id}})
     }   
     static cartUpdateApi(id,i,price){
         return axios.post(urls.updateCart ,qs.stringify({

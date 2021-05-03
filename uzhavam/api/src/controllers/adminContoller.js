@@ -163,6 +163,21 @@ exports.createProductDetails = async (req, res, next) => {
                             failure: handleErrors(error)
                         });
                     });   
+            }else if(List.addStatus === "Edit"){
+                const category = await productModel.category.find({category:List.category});
+                List.category_id = category && category.length !== 0 ? category.map(itme=>itme._id):"";
+                productModel.product.findOneAndUpdate({_id : List.product_id},List)
+                .then(function(data){
+                    res.status(200).json({
+                        success:"Product edited Successfully",
+                        data
+                    })     
+                 })
+                 .catch(function (error) {
+                    res.status(200).json({
+                        failure: handleErrors(error)
+                    });
+                });
             }else{
                 productModel.product.findOneAndDelete({"_id":List.product_id})
                 .then(function(data){

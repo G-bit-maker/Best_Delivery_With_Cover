@@ -21,7 +21,6 @@ export function signUp(data){
     return function(dispatch){
         return LoginApi.signUp(data)
         .then((res)=>{
-            console.log(res)
             dispatch({type:"SIGN_UP_SUCCESS",payload:res})
             if(res.success){
                 session.setCookie("UserType",data.userName === "Admin" ? "Admin" : "User",30)

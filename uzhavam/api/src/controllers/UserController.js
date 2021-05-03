@@ -59,7 +59,15 @@ exports.login = async (req, res, next) => {
         client.sms.message(messageCallback, phoneNumber, message, messageType); */
         const { userName, password } = req.body;
         let failure = "";
-        let details = await userModel.findOne({ userName });    
+        let details = await userModel.findOne({ $or: [
+            {'userName': userName},
+            {'email': userName}
+          ]});
+        let isPassCrct = "";
+
+        if(details){
+            isPassCrct = details.password == password;
+        }
         if(!userName){
             failure = {...failure,"emailFailure":"Please enter user name"}
         }else if(details === "" || details === null){
@@ -67,6 +75,8 @@ exports.login = async (req, res, next) => {
         }
         if(!password){
             failure = {...failure,"passFailure":"Please enter password"}
+        }else if(!isPassCrct){
+            failure = {...failure,"passFailure":"Please enter valid password"}
         }
 
         if(failure){
@@ -92,9 +102,11 @@ exports.login = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
     try {
         const { id } = req.user;
+        const {categoryId} = req.query;
         if(id){
             let userCart = await productModel.userCart.find({userId:id});
-            let details = await productModel.product.find();
+            let details = await productModel.product.find({product_visible:"Yes"});
+            let filtered = details.filter(item=>item.category_id == categoryId);
             let newarr=[];
             userCart && userCart.length !== 0 ? userCart.map(x=>
                 x && x.products.length !== 0 ? x.products.map(item=>{
@@ -106,9 +118,9 @@ exports.getProducts = async (req, res, next) => {
                     }
                 }):""
             ):""
-            console.log(newarr)
+            
             res.status(200).json({
-                list:details,
+                list:filtered && filtered.length !== 0 ? filtered: details,
                 userCart:newarr
             });
             //console.log(userCart,details)
