@@ -143,7 +143,7 @@ function Header(props) {
             </Navbar>
             {state.userType != "Admin" ?<>
               <div className={"msearch mshow"}>
-                {props.search ?<input className="form-control" placeholder={"Search..."} /> :""}
+                {props.search ?<input onChange={onSearch} className="form-control" placeholder={"Search..."} /> :""}
                 <RoomIcon />Deliver to 611105
               </div>
             <div className={"mshow"} style={{height:"110px"}}>
