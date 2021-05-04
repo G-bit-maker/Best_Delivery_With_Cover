@@ -123,6 +123,17 @@ export function getProductList(id){
     } 
 }
 
+export function onSearchAction(data){
+    return function(dispatch){
+        dispatch({type:"ON_PRODUCT_SEARCH",data})
+        /* UserApi.cartUpdateApi(data)
+        .then((res)=>{
+            dispatch({type:"ON_PRODUCT_SEARCH",data})
+            return res
+        }) */
+    } 
+}
+
 export function cartUpdate(id,c,price){
     return function(dispatch){
         UserApi.cartUpdateApi(id,c,price)

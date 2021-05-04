@@ -19,14 +19,15 @@ function Header(props) {
     userType:session.getCookie("UserType")
   })
 
-  const onChange=(e)=>{
+  const onSearch=(e)=>{
     setState({
         ...state,
-        [e.target.id]:e.target.value
+        searchVal:e.target.value
       })
+      props.onSearchAction(e.target.value)
   }
   useEffect(() => {
-    //props.getUserDetails({userId:"5fe6338648dbce25f84702b9"})
+    props.getCartDetails()
   }, []);
 
   const logoutAction=()=>{
@@ -52,10 +53,8 @@ function Header(props) {
         <>
          <Navbar  fixed="top"  collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand onClick={()=>props.history.push(state.userType === "Admin" ? "/Dashboard" : "/User/Dashboard")} href="#">Uzhavam</Navbar.Brand>
-              
-              <Nav className={"mhide HeaderSearch"}><input className="form-control" placeholder={"Search..."} />{/* <SearchIcon /> */}</Nav>
-              <Nav className={"mhide HeaderPincode"}> <RoomIcon />Deliver to 611105</Nav>
-
+              {props.search && state.userType != "Admin" ? <Nav className={"mhide HeaderSearch"}><input onChange={onSearch} className="form-control" placeholder={"Search..."} />{/* <SearchIcon /> */}</Nav> : ""}
+              {state.userType != "Admin" ? <Nav className={"mhide HeaderPincode"}> <RoomIcon />Deliver to 611105</Nav> : ""}
 
                 {state.userType != "Admin" ? <div className={"mshow"}>
                       <Nav.Link className={"MobileCart"} eventKey={1} onClick={handleClick} variant="contained" aria-describedby={id}>
@@ -144,7 +143,7 @@ function Header(props) {
             </Navbar>
             {state.userType != "Admin" ?<>
               <div className={"msearch mshow"}>
-                <input className="form-control" placeholder={"Search..."} />
+                {props.search ?<input className="form-control" placeholder={"Search..."} /> :""}
                 <RoomIcon />Deliver to 611105
               </div>
             <div className={"mshow"} style={{height:"110px"}}>

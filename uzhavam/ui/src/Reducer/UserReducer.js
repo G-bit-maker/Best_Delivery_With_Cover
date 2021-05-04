@@ -61,6 +61,20 @@ export default function userReducer(state,action){
                 cartList:action.cartList ? action.cartList : [],
                 at:Math.random()
             }
+        case "ON_PRODUCT_SEARCH":
+            let proudctListarr = state.proudctList || []
+            proudctListarr.map(data=>{
+                if(data.productName.toLowerCase().indexOf(action.data.toLowerCase()) == -1){
+                    data.hiddenStatus = true
+                }else{
+                    data.hiddenStatus = false
+                }
+            })
+            return {
+                ...state,
+                proudctList:proudctListarr,
+                at:Math.random()
+            }
         /* case "UPDATE_USER_CART":
             let cartList = state.cartList || []
             let i=cartList.findIndex(data=>data.productId===action.id)

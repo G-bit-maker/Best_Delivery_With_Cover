@@ -64,7 +64,7 @@ export default function MediaCard(props) {
               </div>
               <div>
                 <span  className={"proweight "}>
-                    {(data.weight || "")+""+( data.unit_for_weight || "")}
+                    {(data.weight || "")+" "+( data.unit_for_weight || "")}
                 </span>
                 <span className={"floatRight"}>
                   {data.mrp ?<><span>MRP</span>
@@ -89,7 +89,7 @@ export default function MediaCard(props) {
                   {//state.count !== 0 ? 
                   <Row>
                     <Col xs={5} sm={5} md={5} lg={5} className={" "}>
-                      <Button className={"remove"} onClick={()=>cartUpdate(state.count-1)} >
+                      <Button disabled={state.count == 0 ? true : false} className={"remove"} onClick={()=>cartUpdate(state.count-1)} >
                         <Remove fontSize="small"/> 
                       </Button>
                     </Col>

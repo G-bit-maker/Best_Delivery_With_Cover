@@ -89,7 +89,7 @@ function ViewProduct(props) {
                 </thead>
                 <tbody>
                   {props.productList && props.productList.length != 0 ? props.productList.map((data,i)=>{
-                    return <tr key={i}>
+                    return data ? <tr key={i}>
                               <td>{data.category || ""}</td>
                               <td>{data.productName || ""}</td>
                               <td>{data.brand || ""}</td>
@@ -111,7 +111,7 @@ function ViewProduct(props) {
                                 </div>
                                 
                               </td>
-                            </tr>
+                            </tr> : ""
                   }) : <tr><td colspan="100%"> <div className="textAlignCenter">No data available. click <a onClick={()=>props.history.push("/AddProduct")} href="#">here</a> to add </div></td></tr> }
                 </tbody>
             </Table>
