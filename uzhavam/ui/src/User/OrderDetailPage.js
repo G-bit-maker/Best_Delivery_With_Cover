@@ -49,8 +49,8 @@ function OrderDetails(props) {
     let grandtotal = 0
     let cgst = 18;
     let sgst = 18;
-  if(props.orderDetails.products.length != 0){
-    props.orderDetails.products.map((data,i)=>{
+  if(props.products.length != 0){
+    props.products.map((data,i)=>{
           subtotal += data.count * data.selling_price
       })
   }
@@ -103,7 +103,7 @@ function OrderDetails(props) {
             <Row className={""}>
               <Col xs={12} sm={12} md={12} lg={8} className={"adjustRow "}>
                 <h2>
-                    ORDER ID # {props.orderDetails._id.orderId.toUpperCase()}
+                    ORDER ID # {props.extra.orderId.toUpperCase()}
                 </h2>
               </Col>
               <Col xs={12} sm={12} md={12} lg={4} className={"textAlignRight "}>
@@ -120,7 +120,7 @@ function OrderDetails(props) {
                     <Row className={"orderCon conPad"}>
                                         <Col xs={4} sm={12} md={12} lg={12} className={"rowFlex borderBottom mb15px"}>
                                             <Col xs={4} sm={12} md={12} lg={6} className={" "}>
-                                              {props.orderDetails.products.map((data=>(
+                                              {props.products.map((data=>(
                                                 <Row>
                                                     <Col xs={4} sm={12} md={12} lg={2} className={"orderImg "}>
                                                         <img width="100%" src={data.main_img || userimage} />
@@ -155,10 +155,10 @@ function OrderDetails(props) {
                                             </Col> */}
                                         </Col>
                                         <Col sm={12} md={12} lg={6} className={"pl25px"}>
-                                            <h6>{props.orderDetails._id.user.name || ""}</h6> 
-                                            <h6>{props.orderDetails._id.user.mobile || ""}</h6> <br/>
-                                            <h6>{props.orderDetails._id.orderStatus.toUpperCase()+(props.orderDetails._id.orderStatus === "pending" ? "" : "ED")}</h6> 
-                                            {props.orderDetails._id.orderStatus === "pending" ?<h6><a  onClick={()=>onAction("Cancel",props.orderDetails._id.orderId)} href="#">Cancel order </a></h6> : ""}
+                                            <h6>{props.extra.user.name || ""}</h6> 
+                                            <h6>+91 {props.extra.user.mobile || ""}</h6> <br/>
+                                            <h6>{props.extra.orderStatus.toUpperCase()+(props.extra.orderStatus === "Pending" ? "" : "ED")}</h6> 
+                                            {props.extra.orderStatus === "pending" ?<h6><a  onClick={()=>onAction("Cancel",props.extra.orderId)} href="#">Cancel order </a></h6> : ""}
                                             <h5>Subtotal: &#x20B9;{state.subtotal}</h5> 
                                             <h6>Cgst: &#x20B9;18</h6> 
                                             <h6>Sgst: &#x20B9;18</h6> 
@@ -167,25 +167,25 @@ function OrderDetails(props) {
                                         <Col sm={12} md={12} lg={2} className={" "}>
                                             <h6>Delivery address</h6> 
                                             <address>
-                                                <div>{props.orderDetails._id.address.name},</div>
-                                                <div>{props.orderDetails._id.address.flatno}{props.orderDetails._id.address.street},</div>
-                                                <div>{props.orderDetails._id.address.city},</div>
-                                                <div>{props.orderDetails._id.address.state}{props.orderDetails._id.address.pincode},</div>
-                                                <div>{props.orderDetails._id.address.landmark}</div>
-                                                <div>{props.orderDetails._id.address.mobile}</div>
-                                                <div>GST:{props.orderDetails._id.address.gst}</div>
+                                                <div>{props.extra.address.name},</div>
+                                                <div>{props.extra.address.flatno}{props.extra.address.street},</div>
+                                                <div>{props.extra.address.city},</div>
+                                                <div>{props.extra.address.state}{props.extra.address.pincode},</div>
+                                                <div>{props.extra.address.landmark}</div>
+                                                <div>{props.extra.address.mobile}</div>
+                                                <div>GST:{props.extra.address.gst}</div>
                                             </address>
                                         </Col> 
                                         <Col sm={12} md={12} lg={2} className={" "}>
                                             <h6>Billing address</h6> 
                                             <address>
-                                                <div>{props.orderDetails._id.address.name},</div>
-                                                <div>{props.orderDetails._id.address.flatno}{props.orderDetails._id.address.street},</div>
-                                                <div>{props.orderDetails._id.address.city},</div>
-                                                <div>{props.orderDetails._id.address.state}{props.orderDetails._id.address.pincode},</div>
-                                                <div>{props.orderDetails._id.address.landmark}</div>
-                                                <div>{props.orderDetails._id.address.mobile}</div>
-                                                <div>GST:{props.orderDetails._id.address.gst}</div>
+                                                <div>{props.extra.address.name},</div>
+                                                <div>{props.extra.address.flatno}{props.extra.address.street},</div>
+                                                <div>{props.extra.address.city},</div>
+                                                <div>{props.extra.address.state}{props.extra.address.pincode},</div>
+                                                <div>{props.extra.address.landmark}</div>
+                                                <div>{props.extra.address.mobile}</div>
+                                                <div>GST:{props.extra.address.gst}</div>
                                             </address>
                                         </Col> 
                                         
@@ -222,6 +222,8 @@ function OrderDetails(props) {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
+    products: state.userReducer.orderDetails && state.userReducer.orderDetails.products ? state.userReducer.orderDetails.products : "",
+    extra: state.userReducer.orderDetails && state.userReducer.orderDetails._id ? state.userReducer.orderDetails._id : "",
     orderDetails: state.userReducer.orderDetails ? state.userReducer.orderDetails : "",
   }
 }

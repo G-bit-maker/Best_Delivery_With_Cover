@@ -43,7 +43,9 @@ function Profile(props) {
         if(props.addressList[id]){
             props.placeOrder(props.addressList[id]._id)
             .then((res)=>{
-                alert("ORDER PLACED")
+                if(res){
+                    props.history.push("/Thankyou/"+res.orderId )
+                }
             })
         }else{
             setState({

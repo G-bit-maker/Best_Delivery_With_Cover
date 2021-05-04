@@ -27,6 +27,7 @@ export default function MediaCard(props) {
   })
 
   const cartUpdate=(count)=>{
+    console.log(count,data.wholesale_quantity,count < data.wholesale_quantity,count < data.wholesale_quantity ? data.selling_price * count : data.special_price * count)
     if(Number.isNaN(count)){
       return false
     }
@@ -34,7 +35,7 @@ export default function MediaCard(props) {
       ...state,
       count:Number(count) || 0
     })
-    let price = count < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
+    let price = parseInt(count) < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
     props.cartUpdate(data._id,count,price)
   }
 

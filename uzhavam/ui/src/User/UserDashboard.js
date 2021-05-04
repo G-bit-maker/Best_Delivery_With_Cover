@@ -41,7 +41,8 @@ function Profile(props) {
     let total=0
     for (let i = 0; i < props.cartList.length; i++) {
       let x = props.cartList[i]
-        total += x.count < x.wholesale_quantity ?(x.count * x.selling_price) : (x.count * x.special_price)
+      console.log(typeof x.count,x.count , x.wholesale_quantity,x.count < x.wholesale_quantity,x.count < x.wholesale_quantity ?(x.count * x.selling_price) : (x.count * x.special_price))
+        total += parseInt(x.count) < x.wholesale_quantity ?(x.count * x.selling_price) : (x.count * x.special_price)
     }
     setState({
       ...state,
@@ -115,7 +116,7 @@ function Profile(props) {
             </Col>
         </Row>
                    {state.totalAmount != 0 ?  
-                    <div className={"cartBar"}>
+                    <div onClick={()=>props.history.push("/Cart")} className={"cartBar"}>
                         <h5>Total Amount: &#x20B9;{state.totalAmount} <ArrowForwardIosIcon /></h5>
                     </div>
                      :""  

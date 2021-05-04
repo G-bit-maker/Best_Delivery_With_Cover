@@ -36,7 +36,7 @@ function Header(props) {
         let subtotal = 0
       if(props.cartProductList.length != 0){
           props.cartProductList.map((data,i)=>{
-              subtotal += (data.count < data.wholesale_quantity ? data.selling_price  : data.special_price) * data.count
+              subtotal += (parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price) * data.count
           })
       }
       setState({
@@ -58,7 +58,7 @@ function Header(props) {
                                 </Col>
                                 <Col xs={6} sm={6} md={6} lg={7} className={"adjustRow"}>
                                     <div className={"proName"}>{data.productName}</div>
-                                    <div className={"price"}>&#x20B9;{(data.count < data.wholesale_quantity ? data.selling_price  : data.special_price)} x {data.count}</div>
+                                    <div className={"price"}>&#x20B9;{(parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)} x {data.count}</div>
                                 </Col>
                                 <Col xs={3} sm={3} md={3} lg={2} className={"close adjustRow"}>
                                     <CloseIcon onClick={()=>props.cartUpdate(data._id,"0")} />

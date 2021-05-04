@@ -48,7 +48,7 @@ export default function userReducer(state,action){
             }
         case "CHANGE_ORDER_STATUS":
             let orderList = state.orderList
-            orderList.find(x=>x._id.orderId === action.payload.orderId ? x.orderStatus = action.payload.status : "")
+            orderList.find(x=>x._id.orderId === action.payload.orderId ? x._id.orderStatus = action.payload.status : "")
             return {
                 ...state,
                 orderList:orderList || [],
