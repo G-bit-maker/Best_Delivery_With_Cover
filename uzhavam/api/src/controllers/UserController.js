@@ -216,20 +216,50 @@ exports.updateCart = async (req, res, next) => {
             let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
-                        oldProduct.push(obj.products)//.filter(item=>item.productId !== obj.productId).flat()
-                        oldProduct =  [...new Map(oldProduct.map(item => [item["productId"], item])).values()]
-                        productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
-                        {$set:{userId:id,products:oldProduct}})
-                        .then(function(data){
+                  if(obj.count == 0){
+                    let filterData = oldProduct.filter(item => item.productId !== obj.productId);
+                    productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
+                    {$set:{userId:id,products:filterData}},{new: true})
+                    .then(function(data){
+                        if(data.products && data.products.length !== 0){
                             res.status(200).json({
                                 data
                             })
-                         })
-                         .catch(function(error){
-                            res.status(500).json({
-                                success:"Not edited"
-                            });
-                         })
+                        }else{
+                            productModel.userCart.findOneAndDelete({_id:ObjectId(data._id)})
+                            .then(function(data){
+                                res.status(200).json({
+                                    data
+                                })
+                            })
+                            .catch(function(error){
+                                res.status(500).json({
+                                    success:"Not edited"
+                                });
+                             })
+                        }
+                     })
+                     .catch(function(error){
+                        res.status(500).json({
+                            success:"Not edited"
+                        });
+                     })
+                  }else{
+                    oldProduct.push(obj.products)
+                    oldProduct =  [...new Map(oldProduct.map(item => [item["productId"], item])).values()]
+                    productModel.userCart.findOneAndUpdate({userId:id,"products.productId":obj.productId},
+                    {$set:{userId:id,products:oldProduct}},{new: true})
+                    .then(function(data){
+                        res.status(200).json({
+                            data
+                        })
+                     })
+                     .catch(function(error){
+                        res.status(500).json({
+                            success:"Not edited"
+                        });
+                     })
+                  } 
                 }else{
                     oldProduct.push(obj.products)
                     productModel.userCart.findOneAndUpdate({userId:id},
@@ -245,7 +275,6 @@ exports.updateCart = async (req, res, next) => {
                         });
                      })
                 }
-                 
             }else{
                 userCartDetails.save()
                 .then((data)=>{
@@ -254,34 +283,6 @@ exports.updateCart = async (req, res, next) => {
                     });
                 })
              }
-            /* if(obj.count == "0"){
-                productModel.userCart.findOneAndDelete({userId:id,products:obj.productId})
-                .then((data)=>{
-                    res.status(200).json({
-                        data
-                    });
-                })
-            } */
-            /* //let cartDetails = new productModel.userCart()
-            else{
-                productModel.userCart.findOneAndUpdate({userId:id},
-                    {$set:{userId:id,products:obj}}, 
-                    {new: true},(err, doc)=>{
-                        if(err) {
-                            res.status(200).json({
-                                err
-                            });
-                        }else{
-                            if(doc === null){ */
-                                
-                           /*  }else{
-                                res.status(200).json({
-                                    doc
-                                });
-                            }
-                        } */
-                   // })
-           // }
             }
 };
 
