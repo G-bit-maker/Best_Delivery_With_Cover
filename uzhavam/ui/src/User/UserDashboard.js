@@ -94,7 +94,7 @@ function Profile(props) {
                 {props.proudctList && props.proudctList.length != 0 ? 
                 props.proudctList.map((data1,i)=>(
                   data1.hiddenStatus != true ?
-                    <Col xs={12} sm={6} md={4} lg={3} className={" adjustRow"}>
+                    <Col xs={11} sm={6} md={4} lg={3} className={" adjustRow productView"}>
                         <ProductContainer cartUpdate={cartUpdate} data={data1} />
                     </Col> :""
                 ))

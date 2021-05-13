@@ -118,7 +118,7 @@ function Profile(props) {
                             />
                         </div>
                     </Col>
-                    <Col xs={12} sm={6} md={3} lg={3} className={" "}>
+                    {/* <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                         <div className="form-group">
                             <label>Gender</label>
                             <span className={"mty"}>&nbsp;*</span>
@@ -129,7 +129,7 @@ function Profile(props) {
                                 <option value={"Other"}>Other</option>
                             </select>
                         </div>
-                    </Col>
+                    </Col> */}
                     <Col xs={12} sm={6} md={3} lg={3} className={" "}>
                         <div className="form-group">
                             <label>Pincode</label>

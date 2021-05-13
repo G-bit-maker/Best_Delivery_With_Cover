@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const {isEmail} = require("validator");
 let registerSchema = mongoose.Schema({
+    name:{
+        type:String
+    },
     userName: {
         type: String,
         required:[true,"Please enter user name"]

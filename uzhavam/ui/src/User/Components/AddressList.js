@@ -20,7 +20,6 @@ function AddressList(props) {
   const [state,setState] = useState({
     addNew:false,
     editStatus:false,
-
     name:"",
     flatno:"",
     street:"",

@@ -181,14 +181,14 @@ function Profile(props) {
                                 ""}
                             </div>
 
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Gender</label>
                                 <select id="gender" value={state.gender} onChange={onChange} className="form-control">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                                 </select>
-                            </div>
+                            </div> */}
 
                             <div className="form-group">
                                 <label>Pincode</label>

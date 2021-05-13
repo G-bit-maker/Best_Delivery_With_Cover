@@ -33,6 +33,9 @@ let addressSchema = mongoose.Schema({
         },
         gst:{
             type: String
+        },
+        landmark:{
+            type:String
         }
 });
 

@@ -362,7 +362,8 @@ exports.addressSave = async (req, res, next) => {
                 state: body.state,
                 pincode:body.pincode,
                 mobile: body.mobile,
-                gst:body.gst
+                gst:body.gst,
+                landmark:body.landmark
             }
             let pd = null
             if(body.addressId){
@@ -508,7 +509,7 @@ exports.getOrders = async (req, res, next) => {
 exports.getOrderById = async (req, res, next) => {
     try {
         const { id } = req.user;
-        const { orderId } = req.body;
+        const { orderId } = req.query;
         let orders = await productModel.orders.aggregate([
             {
                 "$match": {"_id":ObjectId(orderId)}
@@ -526,6 +527,14 @@ exports.getOrderById = async (req, res, next) => {
                     "as": 'Address' 
                 } 
             },
+            { 
+                "$lookup": { 
+                    "from": 'userRegistration', 
+                     "localField": 'userId', 
+                    "foreignField": "_id",
+                    "as": 'User' 
+                } 
+            },
             { "$addFields": { "productId": { "$toObjectId": "$products.productId" }}},
             {
                 $lookup: {
@@ -535,18 +544,11 @@ exports.getOrderById = async (req, res, next) => {
                     as: 'productsDetails'
                 }
             },
-            { 
-                "$lookup": { 
-                    "from": 'userRegistration', 
-                     "localField": 'userId', 
-                    "foreignField": "_id",
-                    "as": 'User' 
-                } 
-            },
              { "$addFields": { "productsDetails.count": "$products.count"}}, 
              { "$addFields": { "product": "$productsDetails"}},
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
+             { $unwind: '$User' },
               { "$group": {
                 "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},

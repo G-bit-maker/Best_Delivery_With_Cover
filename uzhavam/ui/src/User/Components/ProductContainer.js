@@ -49,8 +49,8 @@ export default function MediaCard(props) {
   }, [props.data.count])
 
   return (
-      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>{console.log(props.data.count)}
-          <Col xs={3} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
+      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
+          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
               {/* <CardMedia
                 className={"img"}
                 //src={data.main_img || userimage}
@@ -58,8 +58,10 @@ export default function MediaCard(props) {
                 children={<img src={data.main_img || userimage} width={"100%"} height={"100%"} className={""} />}
               />  */}
                <img src={data.main_img || userimage} className={"img"} /> 
+               <span class="offer"> <span class="free_font">{(
+                        ((data.mrp - (state.count < data.wholesale_quantity ? data.selling_price  : data.special_price)) /data.mrp) *100).toFixed(0)}</span>%<div class="clearfix free_font"></div>OFF </span>
           </Col>
-          <Col xs={9} sm={12} md={12} lg={12} className={"adjustRow"}>
+          <Col xs={8} sm={12} md={12} lg={12} className={""}>
               <div title={data.productName || ""} className={"proName "}>
                   {/* <h5> */}{data.productName || ""}{/* </h5> */}
               </div>
@@ -70,10 +72,6 @@ export default function MediaCard(props) {
                 <span className={"floatRight"}>
                   {data.mrp ?<><span>MRP</span>
                     <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span> </> :""}
-                    {data.selling_price && data.mrp ? 
-                    <span className={"offer"}>&nbsp;&nbsp;&nbsp;{(
-                        ((data.mrp - (state.count < data.wholesale_quantity ? data.selling_price  : data.special_price)) /data.mrp) *100).toFixed(0)}
-                        % off</span> :""}
                 </span>
               </div>
               <div className={"proPrice"}>
@@ -85,7 +83,7 @@ export default function MediaCard(props) {
                 {/* <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
                 <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label> */}
                 
-                <Col xs={12} sm={12} md={12} lg={12} className={"adjustRow addCartbtn floatRight"}>
+                <Col xs={8} sm={12} md={12} lg={12} className={"adjustRow addCartbtn floatRight"}>
                   {/* <div>Add</div> */}
                   {//state.count !== 0 ? 
                   <Row>
