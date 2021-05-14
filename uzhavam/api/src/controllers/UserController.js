@@ -206,14 +206,12 @@ exports.updateCart = async (req, res, next) => {
          if(id){
             obj.userId = id;
             obj.products = {productId: obj.productId,count:obj.count};
-            let cartDetails = await productModel.userCart.find({userId:id});
+            let cartDetails = await productModel.userCart.findOne({userId:id});
             let userCartDetails = new productModel.userCart(obj)
-            let oldProduct = cartDetails && cartDetails.length !== 0 ?
-             cartDetails.map(item=>item.products ? item.products:[]).flat():[];
-            let result = cartDetails && cartDetails.length !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
-                subItem.productId === obj.productId)).flat():[];
-            let userResult = cartDetails && cartDetails.length !== 0 ? cartDetails.filter(item=>item.userId === obj.userId).flat():[];
-            if((userResult && userResult.length !== 0)){
+            let oldProduct = cartDetails && cartDetails.products;
+            let result = cartDetails && cartDetails.length !== 0 ? cartDetails.products.filter(subItem=>subItem.productId === obj.productId):[];
+            let userResult = cartDetails ? cartDetails.userId === obj.userId:"";
+            if((userResult !== "")){
                 if(result && result.length !== 0){
                   if(obj.count == 0){
                     let filterData = oldProduct.filter(item => item.productId !== obj.productId);
