@@ -212,7 +212,7 @@ exports.updateCart = async (req, res, next) => {
              cartDetails.map(item=>item.products).flat():[];
             let result = cartDetails && cartDetails.length !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
                 subItem.productId === obj.productId)).flat():[];
-            let userResult = cartDetails && cartDetails.length !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
+            let userResult = cartDetails && cartDetails.length !== 0 ? cartDetails.filter(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
                   if(obj.count == 0){
