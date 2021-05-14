@@ -5,14 +5,14 @@ export default function profileReducer(state,action){
         case "ADD_REMOVE_CATEGORY":
             if(action.flag === "Add"){
                 let list = state.productList || []
-                list.push(action.payload.list ? action.payload.list[0] : null)
+                list.push(action.payload && action.payload.list? action.payload.list[0] : null)
                 return {
                     ...state,
                     productList:list || []
                 }
             }else if(action.flag === "Remove"){
                 let list = state.productList || []
-                list.push(action.payload.list ? action.payload.list[0] : null)
+                list.push(action.payload && action.payload.list ? action.payload.list[0] : null)
                 return {
                     ...state,
                     productList:list || []
@@ -32,20 +32,20 @@ export default function profileReducer(state,action){
         case "GET_PRODUCT_LIST":
             return {
                 ...state,
-                productList:action.payload.list || [],
+                productList:action.payload && action.payload.list || [],
                 at:Math.random()
 
             }
         case "GET_CATEGORY":
             return {
                 ...state,
-                categoryList:action.payload.list ? action.payload.list : []
+                categoryList:action.payload && action.payload.list ? action.payload.list : []
             }
         case "GET_USER_LIST":
             console.log(action.payload)
             return {
                 ...state,
-                userList:action.payload.list ? action.payload.list : []
+                userList:action.payload && action.payload.list ? action.payload.list : []
             }
 
         default:

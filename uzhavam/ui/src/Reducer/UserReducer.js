@@ -10,33 +10,33 @@ export default function userReducer(state,action){
         case "GET_USER_CATEGORY":
             return {
                 ...state,
-                categoryList:action.payload.list ? action.payload.list : []
+                categoryList:action.payload && action.payload.list ? action.payload.list : []
             }
         case "GET_CART_DETAILS":
             return {
                 ...state,
-                cartProductList:action.payload.list ? action.payload.list : [],
+                cartProductList:action.payload && action.payload.list ? action.payload.list : [],
                 at:Math.random()
             }
         case "GET_ADDRESS_LIST":
             return {
                 ...state,
-                addressList:action.payload.list ? action.payload.list : []
+                addressList:action.payload && action.payload.list ? action.payload.list : []
             }
         case "GET_ORDER_LIST":
             return {
                 ...state,
-                orderList:action.payload.orders ? action.payload.orders : []
+                orderList:action.payload && action.payload.orders ? action.payload.orders : []
             }
         case "GET_ORDER_DETAILS":
             return {
                 ...state,
-                orderDetails:action.payload.orders ? action.payload.orders[0] : ""
+                orderDetails:action.payload && action.payload.orders ? action.payload.orders[0] : ""
             }
         case "GET_PROFILE_DETAIL":
             return {
                 ...state,
-                profileDetails:action.payload.profile ? action.payload.profile : ""
+                profileDetails:action.payload && action.payload.profile ? action.payload.profile : ""
             }
         case "PRODUCT_COUNT_UPDATE":
             let proudctList = state.proudctList

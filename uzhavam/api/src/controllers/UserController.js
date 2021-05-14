@@ -169,7 +169,6 @@ exports.getCartProducts = async (req, res, next) => {
                 x && x.products.length !== 0 ? x.products.map(item=>{
                     let i = details.findIndex(y=>y._id == item.productId)
                     if(i != -1){
-                        console.log(item.productId)
                         let obj = details[i]
                         obj.count = item.count
                         newarr.push(obj)
@@ -211,9 +210,9 @@ exports.updateCart = async (req, res, next) => {
             let userCartDetails = new productModel.userCart(obj)
             let oldProduct = cartDetails && cartDetails.length !== 0 ?
              cartDetails.map(item=>item.products).flat():[];
-            let result = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
+            let result = cartDetails && cartDetails.length !== 0 ? cartDetails.map(item=>item.products.filter(subItem=>
                 subItem.productId === obj.productId)).flat():[];
-            let userResult = cartDetails && cartDetails !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
+            let userResult = cartDetails && cartDetails.length !== 0 ? cartDetails.map(item=>item.userId === obj.userId).flat():[];
             if((userResult && userResult.length !== 0)){
                 if(result && result.length !== 0){
                   if(obj.count == 0){
