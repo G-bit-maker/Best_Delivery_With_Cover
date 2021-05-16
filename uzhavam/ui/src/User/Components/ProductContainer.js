@@ -18,9 +18,7 @@ import { useState,useEffect } from 'react';
 import userimage from "../../Image/product1.jpg"
 import "../style/products.scss"
 
-
 export default function MediaCard(props) {
-
   const data=props.data
   const [state,setState] = useState({
     count:Number(data.count) || 0
@@ -49,8 +47,8 @@ export default function MediaCard(props) {
   }, [props.data.count])
 
   return (
-      <Col xs={12} sm={12} md={12} lg={12} className={"proCon"}>
-          <Col xs={4} sm={12} md={12} lg={12} className={"adjustRow imgp mobileImgD"}>
+      <Col xs={12} sm={12} md={12} lg={12} className={"proCon adjustRowMob"}>
+          <Col xs={4} sm={12} md={12} lg={12} className={"imgp mobileImgD adjustRow"}>
               {/* <CardMedia
                 className={"img"}
                 //src={data.main_img || userimage}
@@ -61,25 +59,21 @@ export default function MediaCard(props) {
                <span class="offer"> <span class="free_font">{(
                         ((data.mrp - (state.count < data.wholesale_quantity ? data.selling_price  : data.special_price)) /data.mrp) *100).toFixed(0)}</span>%<div class="clearfix free_font"></div>OFF </span>
           </Col>
-          <Col xs={8} sm={12} md={12} lg={12} className={""}>
+          <Col xs={8} sm={12} md={12} lg={12} className={"adjustRow mobSizeCon"}>
               <div title={data.productName || ""} className={"proName "}>
-                  {/* <h5> */}{data.productName || ""}{/* </h5> */}
-              </div>
-              <div>
-                <span  className={"proweight "}>
-                    {(data.weight || "")+" "+( data.unit_for_weight || "")}
-                </span>
-                <span className={"floatRight"}>
-                  {data.mrp ?<><span>MRP</span>
-                    <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span> </> :""}
-                </span>
+                  {/* <h5> */}{(data.productName || "")+" "+(data.weight || "")+" "+( data.unit_for_weight || "")}{/* </h5> */}
               </div>
               <div className={"proPrice"}>
                   <span className={state.count < data.wholesale_quantity ? "pActive" :""}>&#x20B9;{data.selling_price || ""}</span><b>/</b>
                   <span className={state.count >= data.wholesale_quantity ? "pActive" :""}>&#x20B9;{data.special_price || ""}</span>
-                  <label>&nbsp;&nbsp;( for min {data.wholesale_quantity} qty )</label>
+                  <span className={"floatRight mrpCon"}>
+                  {data.mrp ?<><span>MRP</span>
+                    <span className={"proPrice1"}>&#x20B9;{data.mrp || ""}</span> </> :""}
+                </span>
               </div>
-          
+              <div>
+              <label>&nbsp;&nbsp;( for min {data.wholesale_quantity} qty )</label>
+              </div>
                 {/* <Rating name="read-only" value={3.6} precision={0.1} readOnly size="small" /> 
                 <label className={"rateUserCount"}>&nbsp;3.6 (17k)</label> */}
                 
