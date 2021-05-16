@@ -128,7 +128,7 @@ function AddressList(props) {
                             <div>{data.landmark}</div>
                             <div>+91 {data.mobile}</div>
                             {data.gst ? <div>GST: {data.gst}</div> : ""}
-                            {userType === "User" ?<div className={"floatRight edit"} onClick={()=>addNewModal(true,i)}>Edit</div> : ""}
+                            {userType === "User" ?<div className={" edit"} onClick={()=>addNewModal(true,i)}>Edit</div> : ""}
                             
                             {props.select ?
                             <div className={"floatRight select"} >

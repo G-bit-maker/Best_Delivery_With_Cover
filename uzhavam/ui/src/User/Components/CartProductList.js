@@ -33,16 +33,16 @@ export default function cartProductList(props) {
                         <img width="100%" src={data.main_img || userimage} />
                     </Col>
                     <Col sm={12} md={12} lg={4} className={" mhide"}>
-                        <h5>{data.productName}</h5> Sku:{data.SKU}
+                        <h5>{data.productName}</h5> Sku: {data.SKU}
                     </Col>
                     <Col sm={12} md={12} lg={2} className={" textAlignCenter mhide"}>
-                        <h6>&#x20B9;{data.mrp}</h6>
+                        <h6>&#x20B9;{(parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)}</h6>
                     </Col>
                     <Col sm={12} md={12} lg={1} className={" textAlignCenter mhide"}>
                         <h6>{data.count}</h6>
                     </Col>
                     <Col sm={12} md={12} lg={2} className={" textAlignCenter mhide"}>
-                        <h6>&#x20B9;{data.count * data.mrp}</h6>
+                        <h6>&#x20B9;{parseInt(data.count) * (parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)}</h6>
                     </Col>
                     <Col sm={12} md={12} lg={1} className={" textAlignRight mhide"}>
                         {/* <DeleteForever fontSize="small" /> */}
@@ -56,10 +56,10 @@ export default function cartProductList(props) {
                     <Col xs={12} className={"mshow p15 listCon"} >
                         <Row>
                         <Col xs={6} className={""} >
-                            <h5>Price: (&#x20B9;{data.mrp})</h5> 
+                            <h5>Price: (&#x20B9;{(parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)})</h5> 
                         </Col>
                         <Col xs={6} className={"textAlignRight"} >
-                            <h5> &#x20B9;{data.count * data.mrp}</h5>
+                            <h5> &#x20B9;{parseInt(data.count) * (parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)}</h5>
                         </Col>
                         </Row>
                     </Col>

@@ -19,18 +19,22 @@ function Profile(props) {
   useEffect(() => {
       let subtotal = 0
       let grandtotal = 0
-      let cgst = 18;
-      let sgst = 18;
+      let cgst = 0;
+      let sgst = 0;
     if(props.cartProductList.length != 0){
         props.cartProductList.map((data,i)=>{
-            subtotal += data.count * data.mrp
+            subtotal += parseInt(data.count) * (data.count < data.wholesale_quantity ? data.selling_price  : data.special_price)
+            cgst += parseInt(data.cgst_amount) 
+            sgst += parseInt(data.sgst_amount) 
         })
     }
     grandtotal = subtotal + cgst + sgst
     setState({
         ...state,
         subtotal,
-        grandtotal
+        grandtotal,
+        Totalcgst:cgst,
+        Totalsgst:sgst
     })
   }, [props.cartProductList]);
 
@@ -76,7 +80,7 @@ function Profile(props) {
                     </Col>
                     <Col xs={6} sm={8} md={9} lg={5} className={" textAlignRight"}>
                         <h6>
-                            2 ITEMS
+                            {props.cartProductList.length || 0} ITEMS
                         </h6>
                     </Col>
                 </Row>
@@ -101,7 +105,7 @@ function Profile(props) {
                     </Col>
                     <Col xs={6} sm={8} md={9} lg={5} className={" textAlignRight"}>
                         <h6>
-                        &#x20B9;18.00
+                        &#x20B9;{state.Totalcgst}
                         </h6>
                     </Col>
                 </Row>
@@ -113,7 +117,7 @@ function Profile(props) {
                     </Col>
                     <Col xs={6} sm={8} md={9} lg={5} className={" textAlignRight"}>
                         <h6>
-                        &#x20B9;18.00
+                        &#x20B9;{state.Totalsgst}
                         </h6>
                     </Col>
                 </Row>
