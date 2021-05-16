@@ -45,21 +45,25 @@ function OrderDetails(props) {
   }, []);
   
   useEffect(() => {
-    let subtotal = 0
-    let grandtotal = 0
-    let cgst = 18;
-    let sgst = 18;
-  if(props.products.length != 0){
-    props.products.map((data,i)=>{
-          subtotal += data.count * data.selling_price
-      })
-  }
-  grandtotal = subtotal + cgst + sgst
-  setState({
-      ...state,
-      subtotal,
-      grandtotal
-  })
+     let subtotal = 0
+      let grandtotal = 0
+      let cgst = 0;
+      let sgst = 0;
+    if(props.cartProductList.length != 0){
+        props.cartProductList.map((data,i)=>{
+            subtotal += parseInt(data.count) * (data.count < data.wholesale_quantity ? data.selling_price  : data.special_price)
+            cgst += parseInt(data.cgst_amount) 
+            sgst += parseInt(data.sgst_amount) 
+        })
+    }
+    grandtotal = subtotal + cgst + sgst
+    setState({
+        ...state,
+        subtotal,
+        grandtotal,
+        Totalcgst:cgst,
+        Totalsgst:sgst
+    })
 }, [props.orderDetails]);
 
 
@@ -160,8 +164,8 @@ function OrderDetails(props) {
                                             <h6>{props.extra.orderStatus.toUpperCase()+(props.extra.orderStatus === "Pending" ? "" : "ED")}</h6> 
                                             {props.extra.orderStatus === "pending" ?<h6><a  onClick={()=>onAction("Cancel",props.extra.orderId)} href="#">Cancel order </a></h6> : ""}
                                             <h5>Subtotal: &#x20B9;{state.subtotal}</h5> 
-                                            <h6>Cgst: &#x20B9;18</h6> 
-                                            <h6>Sgst: &#x20B9;18</h6> 
+                                            <h6>Cgst: &#x20B9;{state.Totalcgst}</h6> 
+                                            <h6>Sgst: &#x20B9;{state.Totalsgst}</h6> 
                                             <h3>Total: &#x20B9;{state.grandtotal} </h3> 
                                         </Col>
                                         <Col sm={12} md={12} lg={2} className={" "}>

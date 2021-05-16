@@ -127,6 +127,9 @@ function Header(props) {
                       : ""}
                     {state.userType != "Admin" ?
                       <>
+                        <Nav.Link eventKey={2} onClick={()=>props.history.push("/User/Dashboard")}>
+                            Home
+                        </Nav.Link> 
                         <Nav.Link eventKey={2} onClick={()=>props.history.push("/Orders")}>
                             Orders
                         </Nav.Link> 
