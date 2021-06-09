@@ -1,5 +1,5 @@
 
-import {Navbar, Nav, Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
+import {Navbar, Nav, Container, Col, Row, Tabs, Tab, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import React, { useState,useEffect } from 'react';
@@ -49,7 +49,16 @@ function Header(props) {
         <>
             <div className={"cartListCon"}>
                 <div className={"CartList"}>
-                    {props.cartProductList && props.cartProductList.length != 0 ? 
+                    {props.btnLoading ? 
+                    
+                    <Col className={'loading_s'}>
+                        <Spinner animation="border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
+                    </Col>
+                    :
+
+                    props.cartProductList && props.cartProductList.length != 0 ? 
                         props.cartProductList.map((data,i)=>(
                             <Col xs={12} sm={12} md={12} lg={12} className={"CartList2"}>
                             <Row>
@@ -60,12 +69,16 @@ function Header(props) {
                                     <div className={"proName"}>{data.productName}</div>
                                     <div className={"price"}>&#x20B9;{(parseInt(data.count) < data.wholesale_quantity ? data.selling_price  : data.special_price)} x {data.count}</div>
                                 </Col>
-                                <Col xs={3} sm={3} md={3} lg={2} className={"close adjustRow"}>
+                                <Col xs={3} sm={3} md={3} lg={2} className={"close adjustRow cursor_pointer"}>
                                     <CloseIcon onClick={()=>props.cartUpdate(data._id,"0")} />
                                 </Col>
                             </Row>
                         </Col>
-                        )) :""
+                        )) :
+                        <Col className={'loading_s'}>
+                            <h4>Your cart is empty!</h4>
+                            <h6>You have no items added in the cart.</h6>
+                        </Col>
                     }
                         
                 </div>
@@ -82,6 +95,7 @@ function Header(props) {
  const mapStateToProps = (state) => {
   return {
     cartProductList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
+    btnLoading: state.userReducer.btnLoading ? state.userReducer.btnLoading : false
   }
 }
 

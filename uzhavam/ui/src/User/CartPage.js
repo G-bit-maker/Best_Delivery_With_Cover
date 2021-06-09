@@ -96,7 +96,7 @@ function Profile(props) {
             <Col xs={12} sm={8} md={9} lg={4} className={" "}>
                 <GrandTotal
                     {...props}
-                    submitText={"PROCEED TO BUY"}
+                    submitText={"Continue Shopping"}
                 />
             </Col>
         </Row>

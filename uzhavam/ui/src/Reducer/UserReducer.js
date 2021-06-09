@@ -15,6 +15,14 @@ export default function userReducer(state,action){
         case "GET_CART_DETAILS":
             return {
                 ...state,
+                btnLoading: false,
+                cartProductList:action.payload && action.payload.list ? action.payload.list : [],
+                at:Math.random()
+            }
+        case "GET_CART_DETAILS_REQUEST":
+            return {
+                ...state,
+                btnLoading: true,
                 cartProductList:action.payload && action.payload.list ? action.payload.list : [],
                 at:Math.random()
             }
@@ -59,6 +67,15 @@ export default function userReducer(state,action){
                 ...state,
                 proudctList:action.payload ? action.payload : [],
                 cartList:action.cartList ? action.cartList : [],
+                productLoading: false,
+                at:Math.random()
+            }
+        case "GET_USER_PRODUCT_LIST_REQUEST": 
+            return {
+                ...state,
+                productLoading: true,
+                proudctList:[],
+                cartList:[],
                 at:Math.random()
             }
         case "ON_PRODUCT_SEARCH":

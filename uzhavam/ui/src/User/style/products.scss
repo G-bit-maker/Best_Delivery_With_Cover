@@ -2,164 +2,167 @@
     box-shadow: 0px 0px 30px -11px #aaa;
     cursor: pointer;
 } */
-.productView{
-    margin: 15px;
+.productView {
+  margin: 15px;
+  max-width: 22%;
 }
-.mrpCon{
-    padding-top: 8px;
+.mrpCon {
+  padding-top: 8px;
 }
-.offer{
-    background: url(../../Image/offer.svg) center no-repeat;
-    width: 38px;
-    height: 38px;
-    color: #ffffff;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0.5;
-    font-size: 10px;
-    padding: 8px 0px;
-    line-height: 11px;
-    font-family: JioMedium;
+.offer {
+  background: url(../../Image/offer.svg) center no-repeat;
+  width: 38px;
+  height: 38px;
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0.5;
+  font-size: 10px;
+  padding: 8px 0px;
+  line-height: 11px;
+  font-family: JioMedium;
+  text-align: center;
+}
+.MuiButton-root:hover.Mui-disabled {
+  background-color: #343a40 !important;
+}
+.free_font {
+  color: #ffffff;
+}
+.proCon {
+  box-shadow: 0px 0px 30px -11px #aaa;
+  flex-wrap: wrap;
+  display: flex;
+  padding: 15px;
+  height: 25pc;
+  //@at-root: 10px 0;
+  .proName {
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .imgp {
+    height: 200px;
     text-align: center;
-}
-.MuiButton-root:hover.Mui-disabled{
-    background-color: #343a40 !important;
-}
-.free_font{
-    color: #ffffff;
-}
-.proCon{
-    box-shadow: 0px 0px 30px -11px #aaa;
-    flex-wrap: wrap;
-    display: flex;
-    padding:15px;
-    //@at-root: 10px 0;
-    .proName{
-        font-size: 16px;
-        margin-top: 20px;
-        font-weight: bold;
+  }
+  .img {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  .Addbtn {
+    margin: 10px;
+    background-image: linear-gradient(to bottom right, #0252ff, #02ffff);
+  }
+  button {
+    width: 100%;
+    outline: none;
+  }
+  .proweight {
+    color: #666;
+  }
+  .proPrice1 {
+    color: #666;
+    text-decoration: line-through;
+  }
+  .proPrice {
+    b {
+      font-size: 20px;
     }
-    .imgp{
-        height: 200px;
-        text-align: center;
+    span {
+      text-decoration: line-through;
     }
-    .img{
-        max-width: 100%;
-        height: auto;
-        max-height: 100%;
+
+    .pActive {
+      text-decoration: none;
+      font-size: 20px;
     }
-    .Addbtn{
-        margin: 10px;
-        background-image: linear-gradient(to bottom right, #0252ff, #02ffff);
+  }
+  .rateUserCount {
+    position: absolute;
+    color: #666;
+    font-size: 14px;
+    margin-top: -2px;
+  }
+  .addCartbtn {
+    //padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    //color: #fff;
+    .count {
+      font-weight: 600;
+      padding: 6px;
     }
-    button{
-        width: 100%;
-        outline: none;
+    input:focus {
+      outline: none;
     }
-    .proweight{
-        color: #666;
+    input {
+      height: 100%;
+      border: none;
+      width: 100%;
+      text-align: center;
     }
-    .proPrice1{
-        color: #666;
-        text-decoration: line-through;
+
+    .add,
+    .remove {
+      min-width: 0;
+      //position: absolute;
+      padding: 8px;
+      border: 2px solid #343a40;
+      background-color: #343a40;
+      color: #fff;
     }
-    .proPrice{
-        b{
-            font-size: 20px;
-        }
-        span{
-            text-decoration: line-through;
-        }
-        
-        .pActive{
-            text-decoration: none;
-            font-size: 20px;
-        }
-    }
-    .rateUserCount{
-        position: absolute;
-        color: #666;
-        font-size: 14px;
-        margin-top: -2px;
-    }
-    .addCartbtn{
-        //padding: 10px;
-        text-align: center;
-        background-color: #fff;
-        //color: #fff;
-        .count{
-            font-weight: 600;
-            padding: 6px;
-        }
-        input:focus{
-            outline: none;
-        }
-        input{
-            height: 100%;
-            border: none;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .add,.remove{
-            min-width: 0;
-            //position: absolute;
-            padding: 8px;
-            border: 2px solid #343a40;
-            background-color: #343a40;
-            color: #fff;
-        }
-       /*  .add{
+    /*  .add{
             right:0
         }
         .remove{
             left:0
         } */
-    }
+  }
 }
 
-
 @media only screen and (max-width: 480px) {
-    .proCon{
-        border-bottom: 2px solid rgba(0,0,0,.09);
-        box-shadow: none;
-    }
-    .adjustRowMob{
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-    .mobSizeCon{
-        max-width: 210px;
-    }
-    .productView{
-        margin: 15px 0px 0px 15px;
-    }
-    .proCon .proName{
-        margin-top: 0;
-        font-weight: bold;
-    }
-    .mobileImgD{
-        height: auto  !important;
-        padding-right: 10px !important;
-        padding-bottom: 10px;
-        min-width: 130px;
-    }
-    .add,.remove{
-        border-radius: 50%;
-    }
+  .proCon {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.09);
+    box-shadow: none;
   }
+  .adjustRowMob {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .mobSizeCon {
+    max-width: 210px;
+  }
+  .productView {
+    margin: 15px 0px 0px 15px;
+  }
+  .proCon .proName {
+    margin-top: 0;
+    font-weight: bold;
+  }
+  .mobileImgD {
+    height: auto !important;
+    padding-right: 10px !important;
+    padding-bottom: 10px;
+    min-width: 130px;
+  }
+  .add,
+  .remove {
+    border-radius: 50%;
+  }
+}
 
-  .orderCon{
-      border: 1px solid #aaa;
-      margin-bottom: 30px;
-  }
-  .borderLeft{
-      border-left: 1px solid #aaa;
-  }
-  .orderImg{
-      padding-top: 5px;
-  }
-  .orderName{
-      padding-bottom:10px
-  }
+.orderCon {
+  border: 1px solid #aaa;
+  margin-bottom: 30px;
+}
+.borderLeft {
+  border-left: 1px solid #aaa;
+}
+.orderImg {
+  padding-top: 5px;
+}
+.orderName {
+  padding-bottom: 10px;
+}

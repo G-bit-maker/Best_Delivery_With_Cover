@@ -27,6 +27,7 @@ export function placeOrder(id){
 
 export function getCartDetails(){
     return function(dispatch){
+        dispatch({type:"GET_CART_DETAILS_REQUEST"})
         UserApi.getCartDetailsApi()
         .then((res)=>{
             dispatch({type:"GET_CART_DETAILS",payload:res})
@@ -97,6 +98,7 @@ export function getOrderById(id,userType){
 
 export function getProductList(id){
     return function(dispatch){
+        dispatch({type: "GET_USER_PRODUCT_LIST_REQUEST"})
         UserApi.getProductListApi(id)
         .then((res)=>{
             let userCart = res.userCart

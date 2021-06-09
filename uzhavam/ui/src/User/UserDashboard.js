@@ -9,7 +9,7 @@ import Tags from "../Common/tags"
 
 import ProductContainer from "./Components/ProductContainer"
 
-import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
+import { Container, Col, Row, Tabs, Tab, Spinner } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -91,10 +91,17 @@ function Profile(props) {
             </Col>
             <Col xs={12} sm={8} md={9} lg={12} className={" "}>
               <Row className={""}>
-                {props.proudctList && props.proudctList.length != 0 ? 
+                {props.productLoading ? 
+                <Col className={'loading_s'}>
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </Col>
+                 :
+                props.proudctList && props.proudctList.length != 0 ? 
                 props.proudctList.map((data1,i)=>(
                   data1.hiddenStatus != true ?
-                    <Col xs={11} sm={6} md={4} lg={3} className={" adjustRow productView"}>
+                    <Col xs={11} sm={6} md={4} lg={3} className={" adjustRow productView"} >
                         <ProductContainer cartUpdate={cartUpdate} data={data1} />
                     </Col> :""
                 ))
@@ -134,7 +141,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     at: state.userReducer.at ? state.userReducer.at : "",
     cartList: state.userReducer.cartProductList ? state.userReducer.cartProductList : [],
     categoryList: state.userReducer.categoryList ? state.userReducer.categoryList : [],
-    proudctList: state.userReducer.proudctList ? state.userReducer.proudctList : []
+    proudctList: state.userReducer.proudctList ? state.userReducer.proudctList : [],
+    productLoading: state.userReducer.productLoading ? state.userReducer.productLoading : false,
   }
 }
 
