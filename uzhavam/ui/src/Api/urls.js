@@ -1,6 +1,7 @@
 import {proxy} from './config';
 const urls={
     userLogin:`${proxy}user/signin`,
+    userSignUp:`${proxy}user/signUp`,
     getProductForUser:`${proxy}user/getProducts`,
     getCartDetails:`${proxy}user/getCartDetails`,
     getAddressList:`${proxy}user/getAddress`,
