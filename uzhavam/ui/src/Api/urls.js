@@ -1,41 +1,42 @@
+import {proxy} from './config';
 const urls={
-    userLogin:"/user/signin",
-    getProductForUser:"/user/getProducts",
-    getCartDetails:"/user/getCartDetails",
-    getAddressList:"/user/getAddress",
-    updateCart:"/user/updateCart",
-    addressSave:"/user/addressSave",
-    placeOrder:"/user/placeOrder",
+    userLogin:`${proxy}user/signin`,
+    getProductForUser:`${proxy}user/getProducts`,
+    getCartDetails:`${proxy}user/getCartDetails`,
+    getAddressList:`${proxy}user/getAddress`,
+    updateCart:`${proxy}user/updateCart`,
+    addressSave:`${proxy}user/addressSave`,
+    placeOrder:`${proxy}user/placeOrder`,
 
     //admin
-    orderStatus:"/admin/updateOrderStatus",
-    addEditUser:"/admin/updateUserDetails",
-    adminLogin:"/admin/login",
-    getCategory:"/admin/getCategories",
-    getCategoryForUser:"/admin/getCategories",
-    addProductList:"/admin/createProductDetails",
-    getProductList:"/admin/getProductList",
-    getProductDetails:"/admin/getProduct",
-    getUserList:"/admin/getUserList",
-    getUserDetails:"/admin/getUserList",
-    userRemove:"/admin/deleteUser",
+    orderStatus:`${proxy}admin/updateOrderStatus`,
+    addEditUser:`${proxy}admin/updateUserDetails`,
+    adminLogin:`${proxy}admin/login`,
+    getCategory:`${proxy}admin/getCategories`,
+    getCategoryForUser:`${proxy}admin/getCategories`,
+    addProductList:`${proxy}admin/createProductDetails`,
+    getProductList:`${proxy}admin/getProductList`,
+    getProductDetails:`${proxy}admin/getProduct`,
+    getUserList:`${proxy}admin/getUserList`,
+    getUserDetails:`${proxy}admin/getUserList`,
+    userRemove:`${proxy}admin/deleteUser`,
 
     //both
     getOrderList:{
-        User:"/user/getOrderHistory",
-        Admin:"/admin/getUsersOrder"
+        User:`${proxy}user/getOrderHistory`,
+        Admin:`${proxy}admin/getUsersOrder`
     },
     getProfileDetails:{
-        User:"/user/getUserById",
-        Admin:"/admin/getUserById"
+        User:`${proxy}user/getUserById`,
+        Admin:`${proxy}admin/getUserById`
     },
     profileDetailSave:{
-        User:"/user/updateProfileDetails",
-        Admin:"/admin/updateUserDetails"
+        User:`${proxy}user/updateProfileDetails`,
+        Admin:`${proxy}admin/updateUserDetails`
     },
     getOrderById:{
-        User:"/user/getOrderById",
-        Admin:"/admin/getOrderById"
+        User:`${proxy}user/getOrderById`,
+        Admin:`${proxy}admin/getOrderById`
     },
 }
 
