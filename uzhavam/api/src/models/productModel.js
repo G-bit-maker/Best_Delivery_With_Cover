@@ -29,7 +29,8 @@ let addressSchema = mongoose.Schema({
             required:[true,"Pincode can't be empty"]
         },
         mobile:{
-            type: String
+            type: String,
+            required:[true,"Mobile can't be empty"]
         },
         gst:{
             type: String
@@ -219,7 +220,9 @@ let orderSchema = mongoose.Schema({
     },
     status:{
         type: String,
-    }
+    },
+    orderedAt: 
+    { type: Date, default: new Date() },
 });
 
 const product = mongoose.model("productDetails", productDetailsSchema, "productDetails");

@@ -425,7 +425,8 @@ exports.ordersSave = async (req, res, next) => {
                 .then(function(data){
                     res.status(200).json({
                         success:"order placed Successfully",
-                        orderId:data._id
+                        orderId:orderPlaced._id,
+                        data
                     })    
                 }).catch(function (error) {
                     res.status(200).json({
@@ -485,7 +486,7 @@ exports.getOrders = async (req, res, next) => {
              { $unwind: '$productsDetails' },
              { $unwind: '$Address' },
              { "$group": {
-                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderId:"$_id",orderedDate:"$orderedAt",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({
@@ -547,7 +548,7 @@ exports.getOrderById = async (req, res, next) => {
              { $unwind: '$Address' },
              { $unwind: '$User' },
               { "$group": {
-                "_id": {orderStatus:"$status",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
+                "_id": {orderStatus:"$status",orderDate:"$orderedAt",orderId:"$_id",address:"$Address",user:"$User"},products:{$addToSet : "$productsDetails"},
               }},
         ])
         return res.status(200).json({

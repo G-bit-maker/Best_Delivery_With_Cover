@@ -20,6 +20,7 @@ import React, { useState,useEffect } from 'react';
 import GrandTotal from './Components/GrandTotal';
 import CartProductList from './Components/CartProductList';
 import session from "../session"
+import moment from 'moment';
 
 function OrderDetails(props) {
   const userType = session.getCookie("UserType")
@@ -49,7 +50,7 @@ function OrderDetails(props) {
       let grandtotal = 0
       let cgst = 0;
       let sgst = 0;
-    if(props.cartProductList.length != 0){
+    if(props.cartProductList && props.cartProductList.length != 0){
         props.cartProductList.map((data,i)=>{
             subtotal += parseInt(data.count) * (data.count < data.wholesale_quantity ? data.selling_price  : data.special_price)
             cgst += parseInt(data.cgst_amount) 
@@ -93,7 +94,8 @@ function OrderDetails(props) {
         })
       }
 
-
+      const date = props.extra.orderDate && props.extra.orderDate ? moment(props.extra.orderDate).toDate():""
+      const updatedDate = date && moment(date).format('MM/DD/YYYY')
     return (
         <>
       <Header {...props} />
@@ -111,7 +113,7 @@ function OrderDetails(props) {
                 </h2>
               </Col>
               <Col xs={12} sm={12} md={12} lg={4} className={"textAlignRight "}>
-                    <h3>14 October 2020 </h3> 
+                    <h3>{updatedDate || ""}</h3> 
               </Col>
               </Row>
             </Col>

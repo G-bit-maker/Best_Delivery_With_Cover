@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState,useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,32 +9,36 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
+import { Container, Col, Row, Tabs, Tab,Toast } from 'react-bootstrap';
 
 import {Add,Remove} from '@material-ui/icons';
 
-import { useState,useEffect } from 'react';
 
 import userimage from "../../Image/product1.jpg"
 import "../style/products.scss"
 
 export default function MediaCard(props) {
   const data=props.data
+  const [show, setShow] = useState(false);
   const [state,setState] = useState({
     count:Number(data.count) || 0
   })
 
   const cartUpdate=(count)=>{
-    console.log(count,data.wholesale_quantity,count < data.wholesale_quantity,count < data.wholesale_quantity ? data.selling_price * count : data.special_price * count)
-    if(Number.isNaN(count)){
-      return false
+    if(count === "No_Stack"){
+        setShow(true)
+    }else{
+      setShow(false)
+      if(Number.isNaN(count)){
+        return false
+      }
+      setState({
+        ...state,
+        count:Number(count) || 0
+      })
+      let price = parseInt(count) < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
+      props.cartUpdate(data._id,count,price)
     }
-    setState({
-      ...state,
-      count:Number(count) || 0
-    })
-    let price = parseInt(count) < data.wholesale_quantity ? data.selling_price * count : data.special_price * count
-    props.cartUpdate(data._id,count,price)
   }
 
   
@@ -94,7 +98,7 @@ export default function MediaCard(props) {
                       <input className={""} onChange={(e)=>cartUpdate(e.target.value)} value={state.count} />
                     </Col>
                     <Col xs={5} sm={5} md={5} lg={5} className={" "}>
-                      <Button className={"add"} onClick={()=>cartUpdate(state.count+1)}>
+                      <Button className={"add"} onClick={()=>cartUpdate(data.avail_quantity > state.count ? state.count+1:"No_Stack")}>
                         <Add fontSize="small"  />
                       </Button>
                     </Col>
@@ -106,6 +110,9 @@ export default function MediaCard(props) {
                   }
               </Col>
             </Col>
+            <Toast show={show} delay={3000} autohide className="ProductToast">
+                No more product available
+            </Toast>
       </Col>
   );
 }

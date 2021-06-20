@@ -19,6 +19,7 @@ import { Container, Col, Row, Tabs, Tab } from 'react-bootstrap';
 import React, { useState,useEffect } from 'react';
 import GrandTotal from './Components/GrandTotal';
 import CartProductList from './Components/CartProductList';
+import moment from 'moment';
 
 function Profile(props) {
     
@@ -107,7 +108,10 @@ function Profile(props) {
                                     
                                 </Col>
                         </Row> */}
-                        { props.orderList ? props.orderList.map((data,i)=>( 
+                        { props.orderList ? props.orderList.map((data,i)=>{
+                          const date = data._id.orderedDate ? moment(data._id.orderedDate).toDate():""
+                          const updatedDate = date && moment(date).format('MM/DD/YYYY')
+                          return (
                                  <Row className={"orderCon conPad"}>
                                         <Col xs={4} sm={12} md={12} lg={6} className={" "}>
                                             <Col xs={4} sm={12} md={12} lg={12} className={" "}>
@@ -122,14 +126,15 @@ function Profile(props) {
                                         </Col>
                                         <Col sm={12} md={12} lg={6} className={"textAlignRight borderLeft"}>
                                             <h6><a href="#" onClick={()=>props.history.push("/OrderDetail/"+data._id.orderId)}>ORDER ID # {data._id.orderId.toUpperCase()}</a></h6> 
-                                            <h6>14 October 2020 </h6>
+                                            <h6>{updatedDate} </h6>
                                             <h6>{data._id.orderStatus === "Pending" ? "PENDING" : data._id.orderStatus.toUpperCase()+"ED" }</h6> 
                                             { data._id.orderStatus === "Pending" ? <h6><a onClick={()=>onAction("Cancel",data._id.orderId)} href="#">Cancel order </a></h6> : ""}
                                             
                                         </Col>
                                         
                                 </Row>
-                         )):
+                                )
+                        }):
                         <Col xs={12} sm={12} md={12} lg={2} className={" textAlignRight"}>
                             <br/>
                             <br/>

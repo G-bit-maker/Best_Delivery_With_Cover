@@ -39,7 +39,6 @@ function ExcelImport(props) {
   }, []);
 
   const onSubmit=(id)=>{
-    console.log(state.file);
     if(!state.file){
       setState({
         ...state,
@@ -65,7 +64,6 @@ function ExcelImport(props) {
         /* Convert array of arrays */
         const data = XLSX.utils.sheet_to_json(ws/* ,{header:1} */);
         /* Update state */
-        console.log(data);
         setState({
             ...state,
             errorMsg:"",
@@ -91,7 +89,7 @@ function ExcelImport(props) {
           props.addProductDetails(data2)
           .then(res=>{
             resultArray[i] = true
-             if(res.success){
+             if(res && res.success){
               count++
               resultArray[i] = true
             }else{

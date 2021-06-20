@@ -11,7 +11,8 @@ import Header from "../Common/header"
 import SubHeader from "../Common/subHeader"
 import {Edit,DeleteForever} from '@material-ui/icons';
 import ModalComp from "../Common/modal"
-
+import XLSX from "xlsx";
+import FileSaver from 'file-saver';
 import { Container, Col, Row, Tabs, Tab, Table } from 'react-bootstrap';
 
 import React, { useState,useEffect } from 'react';
@@ -59,6 +60,15 @@ function ViewProduct(props) {
           })
       
   }
+  const exportExcel=()=>{
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  const fileExtension = '.xlsx';
+    let ws = XLSX.utils.json_to_sheet(props.productList)
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], {type: fileType});
+    FileSaver.saveAs(data, "Product" + fileExtension);
+  }
     return (
         <>
       <Header {...props} />
@@ -66,11 +76,18 @@ function ViewProduct(props) {
          
 
       <Container fluid>
-            <Col xs={12} sm={12} md={12} lg={12} className={" adjustRow"}>
-                <h4>
-                    View Products
-                </h4>
-            </Col>
+            <Row>
+                <Col xs={6} sm={6} md={6} lg={6} className={" "}>
+                    <h4>
+                        View Products
+                    </h4>
+                </Col>
+                <Col xs={6} sm={6} md={6} lg={6} className={"textAlignRight"}>
+                    <a onClick={exportExcel} className="cursor_pointer">
+                      Export Excel
+                    </a>
+                </Col>   
+            </Row>
             <Col xs={12} sm={12} md={12} lg={12} className={"listContainer adjustRow"}>
 
             <Table striped bordered hover size="sm">

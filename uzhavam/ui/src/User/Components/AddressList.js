@@ -8,7 +8,6 @@ import Inputbox from "../../Common/inputbox"
 import { useState,useEffect } from 'react';
 import "../style/checkout.scss"
 import ModalComp from '../../Common/modal';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import session from "../../session"
 
 
@@ -19,7 +18,7 @@ function AddressList(props) {
   const data=props.data
   const [state,setState] = useState({
     addNew:false,
-    editStatus:false,
+    editStatus:false,  
     name:"",
     flatno:"",
     street:"",
@@ -91,7 +90,6 @@ function AddressList(props) {
 
 
   const saveAddress=()=>{
-    console.log(state)
     props.addressSave(state)
     .then((data)=>(
       setState({
@@ -217,6 +215,7 @@ function AddressList(props) {
                                   className="form-control" placeholder="Pincode" 
                                   error={state.failure.pincode || ""}
                                   onlyNumber
+                                  maxlength={6}
                               />
                           </div>
                       </Col>
@@ -238,6 +237,7 @@ function AddressList(props) {
                                   className="form-control" placeholder="Mobile" 
                                   error={state.failure.mobile || ""}
                                   onlyNumber
+                                  maxlength={10}
                               />
                           </div>
                       </Col>

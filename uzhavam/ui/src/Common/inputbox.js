@@ -14,6 +14,7 @@ function InputBox(props) {
                 value={props.value}
                 //defaultValue={props.value}
                 placeholder={props.placeholder}
+                maxlength={props.maxlength}
             />
             {props.error ? <label className={"labelError"}>{props.error}</label>:""}
             </>
